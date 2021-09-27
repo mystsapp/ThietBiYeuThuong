@@ -8,7 +8,7 @@ namespace ThietBiYeuThuong.Data.Models
 {
     public class Role
     {
-        public string RoleId { get; set; }
+        public int Id { get; set; }
         public string RoleName { get; set; }
         public bool? Trangthai { get; set; }
     }

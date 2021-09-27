@@ -1,48 +1,176 @@
 ﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ThietBiYeuThuong.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/lib/AdminLTE-3.1.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- Select2 -->
+    <link href="~/lib/AdminLTE-3.1.0/plugins/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/lib/AdminLTE-3.1.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/lib/AdminLTE-3.1.0/dist/css/adminlte.css">
+    <!-- jqueryui-->
+    <link href="~/lib/AdminLTE-3.1.0/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="~/lib/AdminLTE-3.1.0/plugins/toastr/toastr.min.css">
+    <!-- pace-progress -->
+    <link href="~/lib/AdminLTE-3.1.0/plugins/pace-progress/themes/orange/pace-theme-flat-top.css" rel="stylesheet" />
+    <!--<script src="~/lib/shortcut.js"></script> -->
+    <script src="~/lib/shortcut.js"></script>
+
+    <link href="~/images/LogoLeft.ico" rel="shortcut icon" />
+    <link href="~/css/MyCss.css" rel="stylesheet" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        @*<partial name="_InChungTuGhiSo_Modal.cshtml" />
+            <partial name="_TheoDoiTUNoiBo_Modal.cshtml" />
+            <partial name="_BaoCaoQuyTienVND.cshtml" />
+            <partial name="_BaoCaoQuyTienNT.cshtml" />*@
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand-sm navbar-dark navbar-info text-sm" @*style="background-color:#3c8dbc"*@>
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ThietBiYeuThuong.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a href="~/lib/AdminLTE-3.1.0/index3.html" class="navbar-brand">
+                    @*<img src="~/lib/AdminLTE-3.1.0/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">*@
+                    <img src="~/images/heart.jpeg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light ">ThietBiYeuThuong</span>
+                </a>
+
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <!-- Left navbar links -->
+
+                    <partial name="_TopMenu.cshtml" />
+
+                    <!-- SEARCH FORM -->
+                    @*<form class="form-inline ml-0 ml-md-3">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>*@
                 </div>
             </div>
+            <partial name="_LoginPartial.cshtml" />
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        <!-- /.navbar -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: 1602px;">
+            @if (TempData["AlertMessage"] != null)
+            {
+                <div id="AlertBox" class="alert @TempData["AlertType"] hide">
+                    @TempData["AlertMessage"]
+                </div>
+            }
             @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - ThietBiYeuThuong.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="float-right d-none d-sm-inline">
+                KTTM
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2021 <a href="/">Saigontourist</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/lib/AdminLTE-3.1.0/plugins/jquery/jquery.min.js"></script>
+    <script src="~/lib/AdminLTE-3.1.0/plugins/jquery-ui/jquery-ui.js"></script>
+    <script src="~/lib/AdminLTE-3.1.0/plugins/jquery-validation/jquery.validate.js"></script>
+    <script src="~/lib/AdminLTE-3.1.0/plugins/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/AdminLTE-3.1.0/plugins/bootbox.js/bootbox.js"></script>
+    <script src="~/lib/numeral.js/numeral.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/lib/AdminLTE-3.1.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Select2-->
+    @*<script src="~/lib/AdminLTE-3.1.0/plugins/select2/js/select2.js"></script>*@
+    <script src="~/lib/AdminLTE-3.1.0/plugins/select2/js/select2.full.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/lib/jquery.maskedinput/jquery.maskedinput.js"></script>
+    <script src="~/lib/AdminLTE-3.1.0/dist/js/adminlte.min.js"></script>
+    <!-- Toastr -->
+    <script src="~/lib/AdminLTE-3.1.0/plugins/toastr/toastr.min.js"></script>
+    <!-- pace-progress -->
+    <script src="~/lib/AdminLTE-3.1.0/plugins/pace-progress/pace.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        $(function () {
+            $(".maskInput").mask("99/99/9999");
+
+            $('#AlertBox').removeClass('hide');
+            $('#AlertBox').delay(2000).slideUp(2000);
+
+        });
+    </script>
+
+    <style>
+        .error {
+            color: red;
+        }
+
+        .mytable tr:hover {
+            /*background-color: #ECF5F5;*/
+            background-color: #e5f3ff;
+            cursor: pointer;
+        }
+
+        .hoverClass {
+            background-color: #cce8ff;
+            /*background-color: #17a2b8;*/
+            /*background-color: #3C8DBC;*/
+            /*color: white;*/
+        }
+
+        .card {
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .mytable {
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #search {
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        /*select2 small input and small text*/
+        .select2-search input {
+            height: calc(1.8125rem + 2px);
+        }
+
+        .select2-results li {
+            font-size: 0.875rem !important;
+        }
+        }
+    </style>
 </body>
 </html>

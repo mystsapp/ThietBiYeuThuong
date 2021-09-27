@@ -7,6 +7,7 @@ namespace ThietBiYeuThuong.Data.Models
 {
     public class CTPhieuNX
     {
+        [Key]
         [DisplayName("Số phiếu")]
         [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
         public string SoPhieuCT { get; set; }
@@ -18,9 +19,9 @@ namespace ThietBiYeuThuong.Data.Models
         [ForeignKey("PhieuNXId")]
         public virtual PhieuNX PhieuNX { get; set; }
 
-        [DisplayName("Tên TB")]
+        [DisplayName("Thiết bị")]
         [MaxLength(100, ErrorMessage = "Chiều dài tối đa 100 ký tự"), Column(TypeName = "varchar(100)")]
-        public string TenTB { get; set; }
+        public string ThietBi { get; set; }
 
         [DisplayName("Người lập phiếu")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
@@ -55,5 +56,8 @@ namespace ThietBiYeuThuong.Data.Models
 
         [DisplayName("Số lượng HT")]
         public int SoLuongHienTai { get; set; }
+
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string LogFile { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace ThietBiYeuThuong.Data.Models
 {
     public class PhieuNX
     {
+        [Key]
         [DisplayName("Số phiếu")]
         [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
         public string SoPhieu { get; set; }
