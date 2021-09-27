@@ -1,0 +1,329 @@
+﻿@model PhieuNXViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Create";
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<ThietBiYeuThuong.Data.Models.User>("loginUser");
+
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm phiếu</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu</a></li>
+                    <li class="breadcrumb-item active">Thêm phiếu</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm phiếu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+
+            <form method="post" autocomplete="off" id="frmPhieuNXCreate">
+                <div class="pr-4 pl-4 text-sm">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-2">
+                            <label asp-for="PhieuNX.LoaiPhieu" class="control-label"></label>
+                            <select asp-for="PhieuNX.LoaiPhieu" class="form-control form-control-sm "
+                                    asp-items="@(new SelectList(Model.ListLoaiPhieu, "Name", "Name"))" id="ddlLoaiPhieu">
+                            </select>
+                            <span asp-validation-for="PhieuNX.LoaiPhieu" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div id="txtNhap">
+
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="PhieuNX.HoTenTN" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                                <input asp-for="PhieuNX.HoTenTN" class="form-control form-control-sm" id="txtHoTenTN" />
+                                <span asp-validation-for="PhieuNX.HoTenTN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label asp-for="PhieuNX.SDT_TN" class="control-label"></label>
+                                <input asp-for="PhieuNX.SDT_TN" class="form-control form-control-sm " id="txtSDT_TN" />
+                                <span asp-validation-for="PhieuNX.SDT_TN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-1">
+                                <label asp-for="PhieuNX.GT_TN" class="control-label"></label>
+                                <select asp-for="PhieuNX.GT_TN" class="form-control form-control-sm "
+                                        asp-items="@(new SelectList(Model.ListGT, "Name", "Name"))" id="ddlGT_TN">
+                                </select>
+                                <span asp-validation-for="PhieuNX.GT_TN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="PhieuNX.HoTenBN" class="control-label"></label>
+                                <input asp-for="PhieuNX.HoTenBN" class="form-control form-control-sm" id="txtHoTenBN" />
+                                <span asp-validation-for="PhieuNX.HoTenBN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <!-- qltour -->
+                                <label asp-for="PhieuNX.NamSinh" class="control-label"></label>
+                                <input asp-for="PhieuNX.NamSinh" class="form-control form-control-sm input-sm" id="txtNamSinh">
+                                <span asp-validation-for="PhieuNX.NamSinh" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="PhieuNX.CMND_CCCD_BN" class="control-label"></label>
+                                <input asp-for="PhieuNX.CMND_CCCD_BN" class="form-control form-control-sm" id="txtCMND_CCCD_BN" />
+                                <span asp-validation-for="PhieuNX.CMND_CCCD_BN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-9">
+                                <label asp-for="PhieuNX.DiaChi" class="control-label "></label>
+                                <input asp-for="PhieuNX.DiaChi" class="form-control form-control-sm" id="txtDiaChi" />
+                                <span asp-validation-for="PhieuNX.DiaChi" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-4">
+                                <label asp-for="PhieuNX.HoTenNVYTe" class="control-label"></label>
+                                <input asp-for="PhieuNX.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
+                                <span asp-validation-for="PhieuNX.HoTenNVYTe" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="PhieuNX.SDT_NVYT" class="control-label "></label>
+                                <input asp-for="PhieuNX.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
+                                <span asp-validation-for="PhieuNX.SDT_NVYT" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="PhieuNX.DonVi" class="control-label"></label>
+                                <input asp-for="PhieuNX.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                                <span asp-validation-for="PhieuNX.DonVi" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label asp-for="PhieuNX.TinhTrangBN" class="control-label "></label>
+                                <input asp-for="PhieuNX.TinhTrangBN" class="form-control form-control-sm" id="txtTinhTrangBN" />
+                                <span asp-validation-for="PhieuNX.TinhTrangBN" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-9">
+                                <label asp-for="PhieuNX.BenhNenBN" class="control-label "></label>
+                                <input asp-for="PhieuNX.BenhNenBN" class="form-control form-control-sm" id="txtBenhNenBN" />
+                                <span asp-validation-for="PhieuNX.BenhNenBN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="PhieuNX.ChiSoSPO2" class="control-label "></label>
+                                <input asp-for="PhieuNX.ChiSoSPO2" class="form-control form-control-sm" id="txtChiSoSPO2" />
+                                <span asp-validation-for="PhieuNX.ChiSoSPO2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label asp-for="PhieuNX.TinhTrangBNSauO2" class="control-label "></label>
+                                <input asp-for="PhieuNX.TinhTrangBNSauO2" class="form-control form-control-sm" id="txtTinhTrangBNSauO2" />
+                                <span asp-validation-for="PhieuNX.TinhTrangBNSauO2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label asp-for="PhieuNX.KetLuan" class="control-label "></label>
+                                <input asp-for="PhieuNX.KetLuan" class="form-control form-control-sm" id="txtKetLuan" />
+                                <span asp-validation-for="PhieuNX.KetLuan" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                <label asp-for="PhieuNX.STT" class="control-label "></label>
+                                <input asp-for="PhieuNX.STT" class="form-control form-control-sm" id="txtSTT" />
+                                <span asp-validation-for="PhieuNX.STT" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="PhieuNX.NVTruc" class="control-label "></label>
+                                <input asp-for="PhieuNX.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
+                                <span asp-validation-for="PhieuNX.NVTruc" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="txtXuat">
+
+                        <input type="hidden" asp-for="CTPhieuNX.SoLuong" value="0" />
+                        <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                                <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
+                                <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm " id="txtSoLuong" />
+                                <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
+                        <a class="btn btn-success btn-sm" asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+@section Scripts{
+    @*<script>
+
+            $(function () {
+                $(".datepicker").datepicker({
+                    dateFormat: 'dd/mm/yy'
+                });
+            });
+        </script>*@
+
+    @*<script src="~/js/Admin/Home/createController.js"></script>*@
+
+    <!-- select2 and multi select2 (bootstrap4)-->
+    @*<script>
+            //$('#txtMaKH').select2()
+            $('.select2').select2({
+            })
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+            //$('.tuyenTQ').select2({
+            //    theme: 'bootstrap4'
+            //})
+        </script>*@
+
+    <!-- Validation -->
+    <script>
+
+        $('#frmPhieuNXCreate').validate({
+            //rules: {
+            //    email: {
+            //        required: true,
+            //        email: true,
+            //    },
+            //    NgayDen: {
+            //        required: true
+            //    },
+            //    chuDetour1: {
+            //        required: true
+            //    },
+            //},
+            //messages: {
+            //    email: {
+            //        required: "Please enter a email address",
+            //        email: "Please enter a vaild email address"
+            //    },
+            //    NgayDen: {
+            //        required: "Please provide a date"
+            //    },
+            //    chuDetour1: "Please enter value"
+            //},
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                // add error text
+
+                //error.addClass('invalid-feedback').removeClass('error');
+                //element.closest('.chuDeTourGroup').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        //$('#txtChuDeTour').rules('add', {
+        //    required: true,
+        //    messages: {
+        //        //required: "Chủ đề không được để trống"
+        //    }
+        //});
+
+        //$('#txtNgayCT').rules('add', {
+        //    required: true,
+        //    dateFormat: true,
+        //    messages: {
+        //        // required: "Ngày đến không được để trống"
+        //    }
+        //});
+
+        //$('#txtNhap').hide();
+        $('#txtXuat').hide();
+        debugger
+        $('#ddlLoaiPhieu').change(function () {
+            var loaiPhieu = $('#ddlLoaiPhieu').val();
+            if (loaiPhieu === 'N') { // nhap
+                $('#txtNhap').show(500);
+                $('#txtXuat').hide(500);
+            }
+            else { // xuat
+                $('#txtNhap').hide(500);
+                $('#txtXuat').show(500);
+            }
+        })
+    </script>
+
+}

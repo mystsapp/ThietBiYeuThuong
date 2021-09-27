@@ -1,0 +1,112 @@
+﻿@model CTPhieuNXViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@using ThietBiYeuThuong.Data.Models
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<User>("loginUser");
+}
+
+<div class="pr-2 pl-2" style="overflow-x:auto; overflow-y:auto">
+    <table class="table mytable text-nowrap text-sm" id="cTPhieuTbl">
+        <thead>
+            <tr class="table-info">
+
+                <th># @*<button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_KVCTPCT" data-kvpctid="@Model.KVPCT.SoCT" title="Right click to full"><i class="fas fa-plus"></i></button>*@</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoPhieuCT)</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().ThietBi)</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayNhap)</th> <!--?-->
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayXuat)</th> <!--?-->
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().DongHoGiao)</th> <!--NgoaiTe-->
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().DongHoThu)</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NVGiaoBinh)</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().GhiChu)</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoLuong)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.CTPhieuNXes != null)
+            {
+                @foreach (var item in Model.CTPhieuNXes)
+                {
+
+                    <tr class="ctphieu-cursor-pointer ">
+
+                        <td>
+                            <div class="btn-group text-white" role="group">
+
+                                <a class="text-primary btnEditCTPhieuNX" asp-action="Edit_CTPhieuNX" asp-controller="CTPhieuNX" title="Cập nhật" asp-route-id="@item.SoPhieuCT" asp-route-page="@Model.Page"><i class="fas fa-edit"></i></a>
+                                @*<span class="text-dark"> | </span>*@
+
+                                <!--<a class="text-success" title="Chi tiết" asp-action="Details" asp-route-id="item.Id"><i class="fas fa-list"></i></a>-->
+
+                                <span class="text-dark"> | </span>
+                                <span id="confirmDeleteSpan_@item.SoPhieuCT" style="display: none">
+
+                                    <span class="text-dark ">Xoá?</span>
+                                    <button type="button" class="btn btn-danger btn-xs btnXoaDong" data-phieunxid="@Model.PhieuNX.SoPhieu" data-id="@item.SoPhieuCT">Yes</button>
+                                    <button type="button" class="btn btn-primary btn-xs" onclick="confirmDelete('@item.SoPhieuCT', false)">No</button>
+                                </span>
+                                <span id="deleteSpan_@item.SoPhieuCT">
+
+                                    <button type="button" data-id="@item.SoPhieuCT" class="text-danger border-0 bg-transparent btnXoa" title="Xoá" onclick="confirmDelete('@item.SoPhieuCT', true)"><i class="fas fa-trash-alt"></i></button>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoPhieuCT)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.ThietBi)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayNhap)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayXuat)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoGiao)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoThu)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NVGiaoBinh)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.GhiChu)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoLuong)</td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/Admin/PhieuNX/indexController.js"></script>
+<script>
+    function confirmDelete(uniqueId, isDeleteClicked) {
+
+        var deleteSpan = 'deleteSpan_' + uniqueId;
+        var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+        } else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
+    }
+
+    // btnXoaDong
+    $('.btnXoaDong').off('click').on('click',function () {
+
+        var page = @Model.Page;
+        var phieuNXId = '@Model.PhieuNX.SoPhieu';
+
+        id = $(this).data('id'); // id: SoPhieuCT
+
+        var url = '/CTPhieuNX/Delete';
+        $.post(url, { id: id }, function (response) {
+            debugger
+            if (response) {
+                toastr.success('Xoá thành công', 'Xoá!');
+                indexController.Load_CTPhieuNXPartial(phieuNXId, page);
+            }
+        });
+
+    });
+        // btnXoaDong
+</script>

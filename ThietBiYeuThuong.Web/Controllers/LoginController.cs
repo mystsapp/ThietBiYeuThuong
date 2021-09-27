@@ -78,7 +78,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         //HttpContext.Session.SetString("chinhanh", user.Macn);
                         HttpContext.Session.SetString("userId", user.Username);
 
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "PhieuNX");
                     }
                 }
             }

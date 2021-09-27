@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ThietBiYeuThuong.Data.Dtos;
 using ThietBiYeuThuong.Data.Models;
 using ThietBiYeuThuong.Data.Repositories;
+using ThietBiYeuThuong.Data.Utilities;
 using X.PagedList;
 
 namespace ThietBiYeuThuong.Web.Services
@@ -16,6 +17,14 @@ namespace ThietBiYeuThuong.Web.Services
         Task<PhieuNX> GetById(string id);
 
         Task<IPagedList<PhieuNXDto>> ListPhieuNX(string searchString, string searchFromDate, string searchToDate, int? page);
+
+        string GetSoPhieu(string param);
+
+        Task CreateAsync(PhieuNX phieuNX);
+
+        Task UpdateAsync(PhieuNX phieuNX);
+
+        PhieuNX GetByIdAsNoTracking(string id);
     }
 
     public class PhieuNXService : IPhieuNXService
@@ -27,6 +36,12 @@ namespace ThietBiYeuThuong.Web.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task CreateAsync(PhieuNX phieuNX)
+        {
+            _unitOfWork.phieuNXRepository.Create(phieuNX);
+            await _unitOfWork.Complete();
+        }
+
         public async Task<List<PhieuNX>> GetAll()
         {
             return await _unitOfWork.phieuNXRepository.GetAll().ToListAsync();
@@ -35,6 +50,46 @@ namespace ThietBiYeuThuong.Web.Services
         public async Task<PhieuNX> GetById(string id)
         {
             return await _unitOfWork.phieuNXRepository.GetByIdAsync(id);
+        }
+
+        public PhieuNX GetByIdAsNoTracking(string id)
+        {
+            return _unitOfWork.phieuNXRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
+        }
+
+        public string GetSoPhieu(string param)
+        {
+            var currentYear = DateTime.Now.Year; // ngay hien tai
+            var subfix = param + currentYear.ToString(); // QT2021? ?QC2021? ?NT2021? ?NC2021?
+            var phieuNXes = _unitOfWork.phieuNXRepository
+                                   .Find(x => x.SoPhieu.Trim()
+                                   .Contains(subfix)).ToList();// chi lay nhung SoPhieu cung param: N, X + năm
+            var phieuNX = new PhieuNX();
+            if (phieuNXes.Count() > 0)
+            {
+                phieuNX = phieuNXes.OrderByDescending(x => x.SoPhieu).FirstOrDefault();
+            }
+
+            if (phieuNX == null || string.IsNullOrEmpty(phieuNX.SoPhieu))
+            {
+                return GetNextId.NextID("", "") + subfix; // 0001
+            }
+            else
+            {
+                var oldYear = phieuNX.SoPhieu.Substring(6, 4);
+
+                // cung nam
+                if (oldYear == currentYear.ToString())
+                {
+                    var oldSoCT = phieuNX.SoPhieu.Substring(0, 4);
+                    return GetNextId.NextID(oldSoCT, "") + subfix;
+                }
+                else
+                {
+                    // sang nam khac' chay lai tu dau
+                    return GetNextId.NextID("", "") + subfix; // 0001
+                }
+            }
         }
 
         public async Task<IPagedList<PhieuNXDto>> ListPhieuNX(string searchString, string searchFromDate, string searchToDate, int? page)
@@ -180,6 +235,12 @@ namespace ThietBiYeuThuong.Web.Services
                 return null;
 
             return listPaged;
+        }
+
+        public async Task UpdateAsync(PhieuNX phieuNX)
+        {
+            _unitOfWork.phieuNXRepository.Update(phieuNX);
+            await _unitOfWork.Complete();
         }
     }
 }

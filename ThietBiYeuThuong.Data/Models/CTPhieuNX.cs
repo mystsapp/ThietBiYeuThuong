@@ -8,7 +8,7 @@ namespace ThietBiYeuThuong.Data.Models
     public class CTPhieuNX
     {
         [Key]
-        [DisplayName("Số phiếu")]
+        [DisplayName("Số phiếu CT")]
         [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
         public string SoPhieuCT { get; set; }
 
