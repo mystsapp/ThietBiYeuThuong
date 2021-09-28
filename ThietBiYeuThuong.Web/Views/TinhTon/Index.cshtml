@@ -1,0 +1,221 @@
+﻿@model TinhTonViewModel
+
+@{
+    ViewData["Title"] = "Tinh ton";
+}
+
+<!-- Main content -->
+<section class="content" style="padding: 15px 0.5rem">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-list-alt text-info"></i> Bảng theo dõi vật tư</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+
+            <div class="pr-2 pl-2" style="padding-bottom:10px; padding-top: 6px; ">
+
+                <form asp-action="Index" method="get" autocomplete="off" id="frmTinhTon">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row rounded pl-2" style="padding-bottom:5px; background-color: aliceblue;" id="search">
+
+                        <div class="col-md-3 text-sm">
+                            <label>Từ ngày</label>
+                            <input class="form-control form-control-sm maskInput" id="txtFromDate" name="searchFromDate" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                        </div>
+
+                        <div class="col-md-3 text-sm">
+                            <label>Đến ngày</label>
+                            <input class="form-control form-control-sm maskInput" id="txtToDate" name="searchToDate" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                        </div>
+
+                        <div class="col-md-2 text-sm">
+                            <label>&nbsp;</label>
+                            <div class=" btn-block ">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnSubmit_TinhTon">
+                                    <i class="fas fa-search">Tính tồn</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*<br />*@
+            <div class="pr-2 pl-2" style="overflow-x:auto; overflow-y:auto; ">
+                <table class="table mytable text-nowrap text-sm" id="phieuTbl">
+                    <thead>
+                        <tr class="table-info">
+
+                            <th>Ngày</th>
+                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().PhieuNX.SoPhieu)</th>
+                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().PhieuNX.HoTenTN)</th>
+                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().PhieuNX.SDT_TN)</th>
+                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoLuong)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.CTPhieuNXes.Count != 0)
+                        {
+                            @foreach (var item in Model.CTPhieuNXes)
+                            {
+
+                                <tr class="cursor-pointer @item.SoPhieuCT">
+
+                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.NgayLap)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.SoPhieu)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.HoTenTN)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.SDT_TN)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.SoLuong)</td>
+                                </tr>
+
+                            }
+                            <tr>
+                                <td>
+                                    <strong>Tồn đầu</strong>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>@Model.TonDau</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cộng phát sinh nhập</strong>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>@Model.CongPhatSinhNhap</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cộng phát sinh xuất</strong>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>@Model.CongPhatSinhXuat</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Tồn cuối</strong>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>@Model.TonCuoi</strong></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <!--hiden field for status click-->
+                @*<input type="hidden" id="hidTdValId" value="@Model.Tour.Id" />*@
+                <!--hiden field for status click-->
+            </div>
+        </div>
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+@*<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>*@
+<script src="~/lib/AdminLTE-3.1.0/plugins/jquery-validation/jquery.validate.min.js"></script>
+
+<script>
+
+    $('#frmTinhTon').validate({
+        //rules: {
+        //    email: {
+        //        required: true,
+        //        email: true,
+        //    },
+        //    NgayDen: {
+        //        required: true
+        //    },
+        //    chuDetour1: {
+        //        required: true
+        //    },
+        //},
+        //messages: {
+        //    email: {
+        //        required: "Please enter a email address",
+        //        email: "Please enter a vaild email address"
+        //    },
+        //    NgayDen: {
+        //        required: "Please provide a date"
+        //    },
+        //    chuDetour1: "Please enter value"
+        //},
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            // add error text
+
+            //error.addClass('invalid-feedback').removeClass('error');
+            //element.closest('.chuDeTourGroup').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    //$('#txtChuDeTour').rules('add', {
+    //    required: true,
+    //    messages: {
+    //        //required: "Chủ đề không được để trống"
+    //    }
+    //});
+
+    $('#txtFromDate').rules('add', {
+        required: true,
+        messages: {
+            // required: "Ngày đến không được để trống"
+        }
+    });
+
+    $('#txtToDate').rules('add', {
+        required: true,
+        messages: {
+            // required: "Ngày đến không được để trống"
+        }
+    });
+
+    // btnSubmit_TinhTon
+    $('#btnSubmit_TinhTon').off('click').on('click', function () {
+        tuNgay = $('#txtFromDate').val();
+        denNgay = $('#txtToDate').val();
+
+        if (tuNgay === '' || denNgay === '') {
+            toastr.warning("Ngày không được để trống", "Thông báo!");
+
+        }
+        else {
+            $.post('/TinhTon/CheckNgayTonQuy', { tuNgay: tuNgay, denNgay: denNgay }, function (response) {
+
+                if (!response.status) {
+                    toastr.warning(response.message, "Thông báo!");
+                }
+                else {
+
+                    $('#frmTinhTon').submit();
+                }
+            })
+
+        }
+
+    })
+</script>

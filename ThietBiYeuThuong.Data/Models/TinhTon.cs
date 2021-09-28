@@ -21,6 +21,12 @@ namespace ThietBiYeuThuong.Data.Models
         [DisplayName("Tồn")]
         public int SoLuongTon { get; set; }
 
+        [DisplayName("SL nhập")]
+        public int SoLuongNhap { get; set; }
+
+        [DisplayName("SL xuất")]
+        public int SoLuongXuat { get; set; }
+
         [DisplayName("Tên TB")]
         [MaxLength(100, ErrorMessage = "Chiều dài tối đa 100 ký tự"), Column(TypeName = "varchar(100)")]
         public string TenTB { get; set; }

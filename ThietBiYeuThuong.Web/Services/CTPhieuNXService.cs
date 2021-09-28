@@ -17,6 +17,8 @@ namespace ThietBiYeuThuong.Web.Services
         string GetSoPhieuCT(string param);
 
         Task<List<CTPhieuNX>> GetCTTrongNgay();
+        Task<CTPhieuNX> GetById(string id);
+        Task DeleteAsync(CTPhieuNX cTPhieuNX);
     }
 
     public class CTPhieuNXService : ICTPhieuNXService
@@ -32,6 +34,17 @@ namespace ThietBiYeuThuong.Web.Services
         {
             _unitOfWork.cTPhieuNXRepository.Create(cTPhieuNX);
             await _unitOfWork.Complete();
+        }
+
+        public async Task DeleteAsync(CTPhieuNX cTPhieuNX)
+        {
+            _unitOfWork.cTPhieuNXRepository.Delete(cTPhieuNX);
+            await _unitOfWork.Complete();
+        }
+
+        public async Task<CTPhieuNX> GetById(string id)
+        {
+            return await _unitOfWork.cTPhieuNXRepository.GetByIdAsync(id);
         }
 
         public async Task<List<CTPhieuNX>> GetCTTrongNgay()
