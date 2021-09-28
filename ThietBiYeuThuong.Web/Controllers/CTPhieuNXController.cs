@@ -15,6 +15,7 @@ namespace ThietBiYeuThuong.Web.Controllers
         private readonly ICTPhieuNXService _cTPhieuNXService;
         private readonly IPhieuNXService _phieuNXService;
 
+        [BindProperty]
         public CTPhieuNXViewModel CTPhieuNXVM { get; set; }
 
         public CTPhieuNXController(ICTPhieuNXService cTPhieuNXService, IPhieuNXService phieuNXService)
@@ -38,7 +39,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             return PartialView(CTPhieuNXVM);
         }
 
-        public async Task<IActionResult> Create(string PhieuNXId, string strUrl, int page, long id_Dong_Da_Click)
+        public async Task<IActionResult> CTPhieuNX_Create_Partial(string PhieuNXId, string strUrl, int page, long id_Dong_Da_Click)
         {
             if (!ModelState.IsValid) // check id_Dong_Da_Click valid (da gang' = 0 trong home/index)
             {
@@ -57,20 +58,20 @@ namespace ThietBiYeuThuong.Web.Controllers
             //    KVCTPCTVM.KVCTPTC = dongCu;
             //}
 
-            return View(CTPhieuNXVM);
+            return PartialView(CTPhieuNXVM);
         }
 
-        [HttpPost, ActionName("Create")]
-        public async Task<IActionResult> CreatePost(string PhieuNXId, int page)
+        public async Task<IActionResult> CTPhieuNX_Create_Partial_Post(string PhieuNXId, int page)
         {
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
+            CTPhieuNXVM.PhieuNX = await _phieuNXService.GetById(PhieuNXId);
+            CTPhieuNXVM.Page = page;
+
             if (!ModelState.IsValid)
             {
                 // not valid
-                CTPhieuNXVM.PhieuNX = await _phieuNXService.GetById(PhieuNXId);
-                CTPhieuNXVM.Page = page;
 
                 return View(CTPhieuNXVM);
             }
@@ -78,6 +79,19 @@ namespace ThietBiYeuThuong.Web.Controllers
             CTPhieuNXVM.CTPhieuNX.PhieuNXId = PhieuNXId;
             CTPhieuNXVM.CTPhieuNX.LapPhieu = user.Username;
             CTPhieuNXVM.CTPhieuNX.NgayNhap = DateTime.Now;
+
+            // next sophieuct --> bat buoc phai co'
+            switch (CTPhieuNXVM.PhieuNX.LoaiPhieu)
+            {
+                case "PN": // nhap
+                    CTPhieuNXVM.CTPhieuNX.SoPhieuCT = _cTPhieuNXService.GetSoPhieuCT("CN");
+                    break;
+
+                default: // xuat
+                    CTPhieuNXVM.PhieuNX.SoPhieu = _cTPhieuNXService.GetSoPhieuCT("CX");
+                    break;
+            }
+            // next sophieuct
 
             // ghi log
             CTPhieuNXVM.CTPhieuNX.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username

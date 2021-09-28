@@ -15,7 +15,7 @@
         <thead>
             <tr class="table-info">
 
-                <th># @*<button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_KVCTPCT" data-kvpctid="@Model.KVPCT.SoCT" title="Right click to full"><i class="fas fa-plus"></i></button>*@</th>
+                <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_CTPhieuNX" data-phieunxid="@Model.PhieuNX.SoPhieu" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoPhieuCT)</th>
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().ThietBi)</th>
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayNhap)</th> <!--?-->
@@ -89,6 +89,24 @@
             $('#' + confirmDeleteSpan).hide();
         }
     }
+
+    // create new ctphieunx
+    $('#btn_New_CTPhieuNX').off('click').on('click', function () {
+
+        phieunxid = $(this).data('phieunxid');
+
+        $('#CTPhieuNX_Tbl').hide(500);
+        $('#CTPhieuNX_Edit_Partial').hide(500);
+
+        var url = '/CTPhieuNX/CTPhieuNX_Create_Partial';
+        $.get(url, { phieunxid: phieunxid }, function (response) {
+
+            $('#CTPhieuNX_Create_Partial').show(500);
+            $('#CTPhieuNX_Create_Partial').html(response);
+
+        });
+    });
+        // create new ctphieunx
 
     // btnXoaDong
     $('.btnXoaDong').off('click').on('click',function () {

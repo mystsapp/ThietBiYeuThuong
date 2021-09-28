@@ -1,0 +1,207 @@
+﻿@model CTPhieuNXViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@using ThietBiYeuThuong.Data.Models
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<User>("loginUser");
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm phiếu</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+
+        <form autocomplete="off" id="frmCTPhieuNXCreate">
+            <div class="pr-4 pl-4 text-sm">
+
+                <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
+                <div class="form-group row">
+
+                    <div class="col-md-2">
+                        <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                        <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
+                        <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
+                    </div>
+
+                    <!--<div class="col-md-2">
+                    <label asp-for="CTPhieuNX.NgayXuat" class="control-label"></label>-->
+                    @*(<strong class="text-red">*</strong>)*@ <!--<!---->@*asp-format="{0:dd/MM/yyyy}"*@
+                    <!--<input type="text" value="" asp-for="CTPhieuNX.NgayXuat" class="form-control form-control-sm maskInput" asp-format="{0:dd/MM/yyyy}" id="txtNgayXuat" />
+                        <span asp-validation-for="CTPhieuNX.NgayXuat" class="text-danger"></span>
+                    </div>-->
+
+                    <div class="col-md-2">
+                        <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
+                        <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                        <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-8">
+                        <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
+                        <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                        <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div id="ctXuat">
+                    <div class="form-group row">
+
+                        <div class="col-md-2">
+                            <label asp-for="CTPhieuNX.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                            <input asp-for="CTPhieuNX.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
+                            <span asp-validation-for="CTPhieuNX.DongHoGiao" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label asp-for="CTPhieuNX.DongHoThu" class="control-label"></label>
+                            <input asp-for="CTPhieuNX.DongHoThu" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="CTPhieuNX.DongHoThu" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label asp-for="CTPhieuNX.NVGiaoBinh" class="control-label"></label>
+                            <input asp-for="CTPhieuNX.NVGiaoBinh" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="CTPhieuNX.NVGiaoBinh" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-sm" id="btnSubmit_CTPhieuNX_Create"><i class="fas fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-success btn-sm" id="btnBack_CTPhieuNX_Create"><i class="fas fa-backward "></i> Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.card-body -->
+</div>
+<script src="~/js/Admin/PhieuNX/indexController.js"></script>
+
+<script>
+    $(function () {
+        $(".maskInput").mask("99/99/9999");
+
+        $('#AlertBox').removeClass('hide');
+        $('#AlertBox').delay(2000).slideUp(2000);
+
+    });
+</script>
+
+<script>
+
+    $('#frmCTPhieuNXCreate').validate({
+        //rules: {
+        //    email: {
+        //        required: true,
+        //        email: true,
+        //    },
+        //    NgayDen: {
+        //        required: true
+        //    },
+        //    chuDetour1: {
+        //        required: true
+        //    },
+        //},
+        //messages: {
+        //    email: {
+        //        required: "Please enter a email address",
+        //        email: "Please enter a vaild email address"
+        //    },
+        //    NgayDen: {
+        //        required: "Please provide a date"
+        //    },
+        //    chuDetour1: "Please enter value"
+        //},
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            // add error text
+
+            //error.addClass('invalid-feedback').removeClass('error');
+            //element.closest('.chuDeTourGroup').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    //$('#txtChuDeTour').rules('add', {
+    //    required: true,
+    //    messages: {
+    //        //required: "Chủ đề không được để trống"
+    //    }
+    //});
+
+    //$('#txtNgayCT').rules('add', {
+    //    required: true,
+    //    dateFormat: true,
+    //    messages: {
+    //        // required: "Ngày đến không được để trống"
+    //    }
+    //});
+
+    var loaiPhieu = '@Model.PhieuNX.LoaiPhieu';
+    if (loaiPhieu === 'PN') {
+        if (loaiPhieu === 'PN') { // nhap
+            $('#ctXuat').hide();
+        }
+        else { // xuat
+            $('#ctXuat').show();
+        }
+    }
+
+    $('#btnSubmit_CTPhieuNX_Create').off('click').on('click', function () {
+        debugger
+
+        if ($('#frmCTPhieuNXCreate').valid()) {
+            var cTPhieuNX = $('#frmCTPhieuNXCreate').serialize();
+            $.ajax({
+                type: "POST",
+                url: "/CTPhieuNX/CTPhieuNX_Create_Partial_Post",
+                data: cTPhieuNX,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status) {
+
+                        toastr.success('Tạo mới chi tiết thành công!'); // toastr in admin/tour/indexController.js
+
+                        $('#CTPhieuNX_Create_Partial').hide(500);
+                        debugger
+                        phieuNXId = '@Model.PhieuNX.SoPhieu';
+                        page = '@Model.Page';
+
+                        indexController.Load_CTPhieuNXPartial(phieuNXId, page);
+                    }
+                    else {
+                        toastr.error(response.message);
+
+                    }
+                }
+            });
+        }
+
+    });
+
+    $('#btnBack_CTPhieuNX_Create').click(function () {
+        $('#CTPhieuNX_Create_Partial').hide(500);
+        $('#CTPhieuNX_Tbl').show(500);
+        $('#CTPhieuNX_Edit_Partial').hide(500);
+
+    })
+</script>

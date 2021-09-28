@@ -61,7 +61,7 @@
                                 <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                <a class="btn btn-outline-info btn-sm" asp-action="Create" asp-route-strUrl="@Model.StrUrl" title="Thêm mới"><i class="fas fa-plus"></i></a>
+                                <a class="btn btn-outline-info btn-sm" asp-action="Create" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm mới"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -172,8 +172,14 @@
                         }, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "nameListContainer" }))
                 }
             </div>
-            <!-- KVCTPCT-->
+            <!-- CTPhieuNX-->
             <div id="CTPhieuNX_Tbl">
+            </div>
+
+            <div id="CTPhieuNX_Create_Partial">
+            </div>
+
+            <div id="CTPhieuNX_Create_Partial">
             </div>
         </div>
         <!-- /.card-body -->

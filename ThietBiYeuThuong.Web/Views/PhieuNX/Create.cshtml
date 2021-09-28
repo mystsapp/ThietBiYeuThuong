@@ -65,7 +65,7 @@
 
                     <div id="txtXuat">
 
-                        <input type="hidden" asp-for="CTPhieuNX.SoLuong" value="0" />
+                        @*<input type="hidden" asp-for="CTPhieuNX.SoLuong" value="0" />*@
 
                         <div class="form-group row">
 
@@ -209,13 +209,13 @@
 
                             <div class="col-md-2">
                                 <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
-                                <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm " id="txtSoLuong" />
+                                <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
                                 <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-8">
                                 <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
-                                <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtSoLuong" />
+                                <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
                                 <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
                             </div>
                         </div>

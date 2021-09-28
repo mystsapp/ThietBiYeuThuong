@@ -58,7 +58,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View(PhieuVM);
         }
 
-        public IActionResult Create(string strUrl)
+        public IActionResult Create(string strUrl, int page)
         {
             // from session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
@@ -72,7 +72,7 @@ namespace ThietBiYeuThuong.Web.Controllers
         }
 
         [HttpPost, ActionName("Create")]
-        public async Task<IActionResult> CreatePost(string strUrl)
+        public async Task<IActionResult> CreatePost(string strUrl, int page)
         {
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
@@ -93,7 +93,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             PhieuVM.PhieuNX.NgayLap = DateTime.Now;
             PhieuVM.PhieuNX.LapPhieu = user.Username;
 
-            // next SoCT --> bat buoc phai co'
+            // next sophieu --> bat buoc phai co'
             switch (PhieuVM.PhieuNX.LoaiPhieu)
             {
                 case "PN": // nhap
@@ -104,7 +104,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     PhieuVM.PhieuNX.SoPhieu = _phieuNXService.GetSoPhieu("PX");
                     break;
             }
-            // next SoCT
+            // next sophieu
 
             // ghi log
             PhieuVM.PhieuNX.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
@@ -124,6 +124,19 @@ namespace ThietBiYeuThuong.Web.Controllers
                     PhieuVM.CTPhieuNX.SoLuong = PhieuVM.CTPhieuNX.SoLuong;
                     PhieuVM.CTPhieuNX.GhiChu = PhieuVM.CTPhieuNX.GhiChu;
 
+                    // next sophieuct --> bat buoc phai co'
+                    switch (PhieuVM.PhieuNX.LoaiPhieu)
+                    {
+                        case "PN": // nhap
+                            PhieuVM.CTPhieuNX.SoPhieuCT = _cTPhieuNXService.GetSoPhieuCT("CN");
+                            break;
+
+                        default: // xuat
+                            PhieuVM.PhieuNX.SoPhieu = _cTPhieuNXService.GetSoPhieuCT("CX");
+                            break;
+                    }
+                    // next sophieuct
+
                     // ghi log
                     PhieuVM.CTPhieuNX.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
@@ -132,7 +145,7 @@ namespace ThietBiYeuThuong.Web.Controllers
 
                 SetAlert("Thêm mới thành công.", "success");
 
-                return Redirect(strUrl);
+                return RedirectToAction(nameof(Index), new { id = PhieuVM.PhieuNX.SoPhieu, page = page });
             }
             catch (Exception ex)
             {
