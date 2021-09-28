@@ -14,14 +14,16 @@ namespace ThietBiYeuThuong.Web.Controllers
     {
         private readonly ICTPhieuNXService _cTPhieuNXService;
         private readonly IPhieuNXService _phieuNXService;
+        private readonly ITinhTonService _tinhTonService;
 
         [BindProperty]
         public CTPhieuNXViewModel CTPhieuNXVM { get; set; }
 
-        public CTPhieuNXController(ICTPhieuNXService cTPhieuNXService, IPhieuNXService phieuNXService)
+        public CTPhieuNXController(ICTPhieuNXService cTPhieuNXService, IPhieuNXService phieuNXService, ITinhTonService tinhTonService)
         {
             _cTPhieuNXService = cTPhieuNXService;
             _phieuNXService = phieuNXService;
+            _tinhTonService = tinhTonService;
             CTPhieuNXVM = new CTPhieuNXViewModel()
             {
                 CTPhieuNX = new Data.Models.CTPhieuNX(),
@@ -61,25 +63,26 @@ namespace ThietBiYeuThuong.Web.Controllers
             return PartialView(CTPhieuNXVM);
         }
 
-        public async Task<IActionResult> CTPhieuNX_Create_Partial_Post(string PhieuNXId, int page)
+        public async Task<IActionResult> CTPhieuNX_Create_Partial_Post()
         {
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
-
-            CTPhieuNXVM.PhieuNX = await _phieuNXService.GetById(PhieuNXId);
-            CTPhieuNXVM.Page = page;
 
             if (!ModelState.IsValid)
             {
                 // not valid
 
+                CTPhieuNXVM.PhieuNX = await _phieuNXService.GetById(CTPhieuNXVM.PhieuNX.SoPhieu);
+                CTPhieuNXVM.Page = CTPhieuNXVM.Page;
+
                 return View(CTPhieuNXVM);
             }
 
-            CTPhieuNXVM.CTPhieuNX.PhieuNXId = PhieuNXId;
+            // CTPhieuNXVM.CTPhieuNX.PhieuNXId = CTPhieuNXVM.PhieuNX.SoPhieu;
             CTPhieuNXVM.CTPhieuNX.LapPhieu = user.Username;
             CTPhieuNXVM.CTPhieuNX.NgayNhap = DateTime.Now;
 
+            int tongNhap = 0, tongXuat = 0, ton = 0;
             // next sophieuct --> bat buoc phai co'
             switch (CTPhieuNXVM.PhieuNX.LoaiPhieu)
             {
@@ -88,7 +91,34 @@ namespace ThietBiYeuThuong.Web.Controllers
                     break;
 
                 default: // xuat
-                    CTPhieuNXVM.PhieuNX.SoPhieu = _cTPhieuNXService.GetSoPhieuCT("CX");
+                    {
+                        CTPhieuNXVM.CTPhieuNX.SoPhieuCT = _cTPhieuNXService.GetSoPhieuCT("CX");
+
+                        // tinh ton
+                        var tonDau = _tinhTonService.GetLast() == null ? 0 : _tinhTonService.GetLast().SoLuongTon;
+                        var cTPhieuNXes = await _cTPhieuNXService.GetCTTrongNgay();
+                        if (cTPhieuNXes == null || cTPhieuNXes.Count == 0)
+                        {
+                            tongNhap = 0; tongXuat = 0; ton = 0;
+                        }
+                        else
+                        {
+                            tongNhap = cTPhieuNXes.Where(x => x.PhieuNXId.Contains("PN"))
+                                                  .Sum(x => x.SoLuong);
+                            tongXuat = cTPhieuNXes.Where(x => x.PhieuNXId.Contains("PX"))
+                                                      .Sum(x => x.SoLuong);
+                            ton = tonDau + tongNhap - tongXuat;
+                        }
+
+                        if (CTPhieuNXVM.CTPhieuNX.SoLuong > ton)
+                        {
+                            return Json(new
+                            {
+                                status = false,
+                                message = $"Số lượng trong kho không đủ({ton})"
+                            });
+                        }
+                    }
                     break;
             }
             // next sophieuct
@@ -100,13 +130,18 @@ namespace ThietBiYeuThuong.Web.Controllers
             {
                 await _cTPhieuNXService.Create(CTPhieuNXVM.CTPhieuNX);
 
-                SetAlert("Thêm mới thành công.", "success");
-                return BackIndex(PhieuNXId, CTPhieuNXVM.Page); // redirect to Home/Index/?id
+                return Json(new
+                {
+                    status = true
+                });
             }
             catch (Exception ex)
             {
-                SetAlert(ex.Message, "error");
-                return View(CTPhieuNXVM);
+                return Json(new
+                {
+                    status = false,
+                    message = "Lỗi thêm CT phiếu" + ex.Message
+                });
             }
         }
 

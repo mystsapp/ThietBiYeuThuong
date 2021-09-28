@@ -15,6 +15,8 @@ namespace ThietBiYeuThuong.Web.Services
         Task Create(CTPhieuNX cTPhieuNX);
 
         string GetSoPhieuCT(string param);
+
+        Task<List<CTPhieuNX>> GetCTTrongNgay();
     }
 
     public class CTPhieuNXService : ICTPhieuNXService
@@ -30,6 +32,16 @@ namespace ThietBiYeuThuong.Web.Services
         {
             _unitOfWork.cTPhieuNXRepository.Create(cTPhieuNX);
             await _unitOfWork.Complete();
+        }
+
+        public async Task<List<CTPhieuNX>> GetCTTrongNgay()
+        {
+            var cTPhieuNXes = _unitOfWork.cTPhieuNXRepository.GetAll();//.FindAsync(x => x.NgayNhap.Value.ToShortDateString() == DateTime.Now.ToShortDateString());
+            if (cTPhieuNXes.Count() == 0) return null;
+            else
+            {
+                return cTPhieuNXes.Where(x => x.NgayNhap.Value.ToShortDateString() == DateTime.Now.ToShortDateString()).ToList();
+            }
         }
 
         public string GetSoPhieuCT(string param)

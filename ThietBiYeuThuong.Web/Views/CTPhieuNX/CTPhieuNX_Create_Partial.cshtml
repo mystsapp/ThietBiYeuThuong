@@ -28,7 +28,10 @@
         <form autocomplete="off" id="frmCTPhieuNXCreate">
             <div class="pr-4 pl-4 text-sm">
 
-                <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
+                <input type="hidden" asp-for="PhieuNX.SoPhieu" />
+                <input type="hidden" asp-for="PhieuNX.LoaiPhieu" />
+                <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="@Model.PhieuNX.SoPhieu" />
+                <input type="hidden" asp-for="Page" />
                 <div class="form-group row">
 
                     <div class="col-md-2">
