@@ -47,7 +47,7 @@ namespace ThietBiYeuThuong.Data.Models
         [MaxLength(150, ErrorMessage = "Chiều dài tối đa 150 ký tự"), Column(TypeName = "nvarchar(150)")]
         public string NVGiaoBinh { get; set; }
 
-        [DisplayName("NV giao bình")]
+        [DisplayName("Ghi chú")]
         [MaxLength(150, ErrorMessage = "Chiều dài tối đa 150 ký tự"), Column(TypeName = "nvarchar(150)")]
         public string GhiChu { get; set; }
 

@@ -15,16 +15,19 @@ namespace ThietBiYeuThuong.Web.Controllers
     public class PhieuNXController : BaseController
     {
         private readonly IPhieuNXService _phieuNXService;
+        private readonly ICTPhieuNXService _cTPhieuNXService;
 
         [BindProperty]
         public PhieuNXViewModel PhieuVM { get; set; }
 
-        public PhieuNXController(IPhieuNXService phieuNXService)
+        public PhieuNXController(IPhieuNXService phieuNXService, ICTPhieuNXService cTPhieuNXService)
         {
             _phieuNXService = phieuNXService;
+            _cTPhieuNXService = cTPhieuNXService;
             PhieuVM = new PhieuNXViewModel()
             {
-                PhieuNX = new Data.Models.PhieuNX()
+                PhieuNX = new Data.Models.PhieuNX(),
+                CTPhieuNX = new CTPhieuNX()
             };
         }
 
@@ -109,6 +112,23 @@ namespace ThietBiYeuThuong.Web.Controllers
             try
             {
                 await _phieuNXService.CreateAsync(PhieuVM.PhieuNX); // save
+
+                // if loaiphieu = pn --> save vao CTPhieu
+                if (PhieuVM.PhieuNX.LoaiPhieu == "PN")
+                {
+                    PhieuVM.CTPhieuNX.PhieuNXId = PhieuVM.PhieuNX.SoPhieu;
+                    PhieuVM.CTPhieuNX.LapPhieu = user.Username;
+                    PhieuVM.CTPhieuNX.NgayNhap = DateTime.Now;
+
+                    PhieuVM.CTPhieuNX.ThietBi = PhieuVM.CTPhieuNX.ThietBi;
+                    PhieuVM.CTPhieuNX.SoLuong = PhieuVM.CTPhieuNX.SoLuong;
+                    PhieuVM.CTPhieuNX.GhiChu = PhieuVM.CTPhieuNX.GhiChu;
+
+                    // ghi log
+                    PhieuVM.CTPhieuNX.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+
+                    await _cTPhieuNXService.Create(PhieuVM.CTPhieuNX);
+                }
 
                 SetAlert("Thêm mới thành công.", "success");
 

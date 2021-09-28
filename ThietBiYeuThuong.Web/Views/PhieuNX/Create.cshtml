@@ -63,7 +63,9 @@
                         </div>
                     </div>
 
-                    <div id="txtNhap">
+                    <div id="txtXuat">
+
+                        <input type="hidden" asp-for="CTPhieuNX.SoLuong" value="0" />
 
                         <div class="form-group row">
 
@@ -195,13 +197,11 @@
                         </div>
                     </div>
 
-                    <div id="txtXuat">
-
-                        <input type="hidden" asp-for="CTPhieuNX.SoLuong" value="0" />
+                    <div id="txtNhap">
                         <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
                         <div class="form-group row">
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
                                 <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
                                 <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
@@ -211,6 +211,12 @@
                                 <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
                                 <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm " id="txtSoLuong" />
                                 <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtSoLuong" />
+                                <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -315,7 +321,7 @@
         debugger
         $('#ddlLoaiPhieu').change(function () {
             var loaiPhieu = $('#ddlLoaiPhieu').val();
-            if (loaiPhieu === 'N') { // nhap
+            if (loaiPhieu === 'PN') { // nhap
                 $('#txtNhap').show(500);
                 $('#txtXuat').hide(500);
             }

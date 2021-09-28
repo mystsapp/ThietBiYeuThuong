@@ -76,6 +76,7 @@
 
                             <th>#</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SoPhieu)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().LoaiPhieu)</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().HoTenTN)</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SDT_TN)</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().GT_TN)</th>
@@ -121,6 +122,7 @@
                                     </td>
 
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SoPhieu)</td>
+                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.LoaiPhieu)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.HoTenTN)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SDT_TN)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.GT_TN)</td>
@@ -172,7 +174,6 @@
             </div>
             <!-- KVCTPCT-->
             <div id="CTPhieuNX_Tbl">
-
             </div>
         </div>
         <!-- /.card-body -->
