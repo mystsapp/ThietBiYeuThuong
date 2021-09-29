@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ThietBiYeuThuong.Data.Models;
 using ThietBiYeuThuong.Data.Utilities;
+using ThietBiYeuThuong.Data.ViewModels;
 using ThietBiYeuThuong.Web.Models;
 using ThietBiYeuThuong.Web.Services;
 
@@ -14,17 +16,19 @@ namespace ThietBiYeuThuong.Web.Controllers
     public class TinhTonController : BaseController
     {
         private readonly ITinhTonService _tinhTonService;
+        private readonly ICTPhieuNXService _cTPhieuNXService;
 
         [BindProperty]
         public TinhTonViewModel TinhVM { get; set; }
 
-        public TinhTonController(ITinhTonService tinhTonService)
+        public TinhTonController(ITinhTonService tinhTonService, ICTPhieuNXService cTPhieuNXService)
         {
             TinhVM = new TinhTonViewModel()
             {
                 TinhTon = new Data.Models.TinhTon()
             };
             _tinhTonService = tinhTonService;
+            _cTPhieuNXService = cTPhieuNXService;
         }
 
         public async Task<IActionResult> Index(string searchFromDate, string searchToDate)
@@ -89,7 +93,38 @@ namespace ThietBiYeuThuong.Web.Controllers
                 SetAlert("Tính thành công!", "success");
             }
 
+            if (!string.IsNullOrEmpty(searchFromDate) && !string.IsNullOrEmpty(searchToDate))
+            {
+                string dateString = await _cTPhieuNXService.CheckTonDau(DateTime.Parse(searchFromDate));
+                if (!string.IsNullOrEmpty(dateString))
+                {
+                    ModelState.AddModelError("", "Ngày " + dateString + " chưa tính tồn!");
+                }
+            }
+
             return View(TinhVM);
+        }
+
+        public async Task<JsonResult> CheckTonDau(string tuNgay)
+        {
+            DateTime fromDate = DateTime.Parse(tuNgay);
+
+            // tonquy truoc ngay fromdate => xem co ton dau` ko ( tranh truong hop chua tinh ton dau cho vai phieu )
+            string kVCTPTCs1 = await _cTPhieuNXService.CheckTonDau(DateTime.Parse(tuNgay));
+            if (!string.IsNullOrEmpty(kVCTPTCs1))
+            {
+                return Json(new
+                {
+                    status = false,
+                    message = "Ngày " + kVCTPTCs1 + " chưa tính tồn!"
+                });
+            }
+
+            return Json(new
+            {
+                status = true,
+                message = "Good job!"
+            });
         }
 
         public async Task<JsonResult> CheckNgayTonQuy(string tuNgay, string denNgay)

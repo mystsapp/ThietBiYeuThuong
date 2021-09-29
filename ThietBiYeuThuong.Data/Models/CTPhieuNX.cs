@@ -31,6 +31,8 @@ namespace ThietBiYeuThuong.Data.Models
         [Column(TypeName = "datetime")]
         public DateTime? NgayNhap { get; set; }
 
+        public DateTime? NgayTao { get; set; }
+
         [DisplayName("Ngày xuất")]
         [Column(TypeName = "datetime")]
         public DateTime? NgayXuat { get; set; }

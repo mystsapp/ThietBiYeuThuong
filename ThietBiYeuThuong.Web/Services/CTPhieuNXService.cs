@@ -17,8 +17,12 @@ namespace ThietBiYeuThuong.Web.Services
         string GetSoPhieuCT(string param);
 
         Task<List<CTPhieuNX>> GetCTTrongNgay();
+
         Task<CTPhieuNX> GetById(string id);
+
         Task DeleteAsync(CTPhieuNX cTPhieuNX);
+
+        Task<string> CheckTonDau(DateTime fromDate);
     }
 
     public class CTPhieuNXService : ICTPhieuNXService
@@ -95,6 +99,52 @@ namespace ThietBiYeuThuong.Web.Services
         public async Task<IEnumerable<CTPhieuNX>> List_CTPhieuNX_By_PhieuNXId(string phieuNXId)
         {
             return await _unitOfWork.cTPhieuNXRepository.FindIncludeOneAsync(x => x.PhieuNX, x => x.PhieuNXId == phieuNXId);
+        }
+
+        public async Task<string> CheckTonDau(DateTime fromDate)
+        {
+            //var date = DateTime.Now.AddDays(1);
+            // ds tonquy truoc tuNgay
+            List<TinhTon> tinhTons = new List<TinhTon>();
+            try
+            {
+                // lay tat ca chi tiet truóc tuNgay(fromDate)
+                var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
+                                                   .FindIncludeOneAsync(x => x.PhieuNX, y => y.NgayTao < fromDate.AddDays(1));
+                string stringDate = "";
+
+                tinhTons = _unitOfWork.tinhTonRepository.Find(x => x.NgayCT <= fromDate).ToList();
+
+                if (tinhTons.Count == 0)
+                {
+                    var stringDates = cTPhieuNXes.Select(x => x.NgayTao.Value.ToShortDateString()).Distinct();
+                    foreach (var item in stringDates)
+                    {
+                        stringDate += item + "-";
+                    }
+                }
+                else
+                {
+                    // tonquy sau cung nhat
+                    TinhTon tinhTon = tinhTons.OrderByDescending(x => x.NgayCT).FirstOrDefault();
+
+                    // tonQuy.NgayCT (sau cung nhat) < nhung chi tiet < tuNggay (fromdate)
+                    for (DateTime i = tinhTon.NgayCT.Value.AddDays(1); i < fromDate; i = i.AddDays(1)) // chay tu ngay tonquy den fromday
+                    {
+                        var boolK = cTPhieuNXes.ToList().Exists(x => x.NgayTao.Value.ToShortDateString() == i.ToShortDateString());
+                        if (boolK)
+                        {
+                            stringDate += i.ToString("dd/MM/yyyy") + "-";
+                        }
+                    }
+                }
+
+                return stringDate;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
     }
 }

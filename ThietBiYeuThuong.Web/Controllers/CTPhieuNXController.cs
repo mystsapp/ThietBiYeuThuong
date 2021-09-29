@@ -81,6 +81,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             // CTPhieuNXVM.CTPhieuNX.PhieuNXId = CTPhieuNXVM.PhieuNX.SoPhieu;
             CTPhieuNXVM.CTPhieuNX.LapPhieu = user.Username;
             CTPhieuNXVM.CTPhieuNX.NgayNhap = DateTime.Now;
+            CTPhieuNXVM.CTPhieuNX.NgayTao = DateTime.Now;
 
             int tongNhap = 0, tongXuat = 0, ton = 0;
             // next sophieuct --> bat buoc phai co'
@@ -98,18 +99,18 @@ namespace ThietBiYeuThuong.Web.Controllers
                         var tinhTon = _tinhTonService.GetLast("", DateTime.Now.ToShortDateString());
                         var tonDau = tinhTon == null ? 0 : tinhTon.SoLuongTon;
                         var cTPhieuNXes = await _cTPhieuNXService.GetCTTrongNgay();
-                        if (cTPhieuNXes == null || cTPhieuNXes.Count == 0)
-                        {
-                            tongNhap = 0; tongXuat = 0; ton = 0;
-                        }
-                        else
-                        {
-                            tongNhap = cTPhieuNXes.Where(x => x.PhieuNXId.Contains("PN"))
+                        //if (cTPhieuNXes == null || cTPhieuNXes.Count == 0)
+                        //{
+                        //    tongNhap = 0; tongXuat = 0; ton = 0;
+                        //}
+                        //else
+                        //{
+                        tongNhap = cTPhieuNXes.Where(x => x.PhieuNXId.Contains("PN"))
+                                              .Sum(x => x.SoLuong);
+                        tongXuat = cTPhieuNXes.Where(x => x.PhieuNXId.Contains("PX"))
                                                   .Sum(x => x.SoLuong);
-                            tongXuat = cTPhieuNXes.Where(x => x.PhieuNXId.Contains("PX"))
-                                                      .Sum(x => x.SoLuong);
-                            ton = tonDau + tongNhap - tongXuat;
-                        }
+                        ton = tonDau + tongNhap - tongXuat;
+                        //}
 
                         if (CTPhieuNXVM.CTPhieuNX.SoLuong > ton)
                         {
@@ -349,6 +350,28 @@ namespace ThietBiYeuThuong.Web.Controllers
         public IActionResult BackIndex(string phieuNXId, int page)
         {
             return RedirectToAction(nameof(Index), "PhieuNX", new { id = phieuNXId, page });
+        }
+
+        public async Task<JsonResult> CheckTonDau(string tuNgay)
+        {
+            DateTime fromDate = DateTime.Parse(tuNgay);
+
+            // tonquy truoc ngay fromdate => xem co ton dau` ko ( tranh truong hop chua tinh ton dau cho vai phieu )
+            string kVCTPTCs1 = await _cTPhieuNXService.CheckTonDau(DateTime.Parse(tuNgay));
+            if (!string.IsNullOrEmpty(kVCTPTCs1))
+            {
+                return Json(new
+                {
+                    status = false,
+                    message = "Ngày " + kVCTPTCs1 + " chưa tính tồn!"
+                });
+            }
+
+            return Json(new
+            {
+                status = true,
+                message = "Good job!"
+            });
         }
     }
 }

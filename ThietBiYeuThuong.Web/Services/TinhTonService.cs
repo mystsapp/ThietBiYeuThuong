@@ -180,7 +180,7 @@ namespace ThietBiYeuThuong.Web.Services
 
                 if (tinhTons.Count == 0) return "";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return "";
             }
