@@ -204,25 +204,7 @@
 
         }
         else {
-            //$.post('/CTPhieuNX/CheckTonDau', { tuNgay: tuNgay }, function (response) { // check
 
-            //    if (!response.status) {
-            //        toastr.warning(response.message, "Thông báo!");
-            //    }
-            //    else {
-
-            //        $.post('/TinhTon/CheckNgayTonQuy', { tuNgay: tuNgay, denNgay: denNgay }, function (response) {
-
-            //            if (!response.status) {
-            //                toastr.warning(response.message, "Thông báo!");
-            //            }
-            //            else {
-
-            //                $('#frmTinhTon').submit();
-            //            }
-            //        })
-            //    }
-            //})
             $.post('/TinhTon/CheckNgayTonQuy', { tuNgay: tuNgay, denNgay: denNgay }, function (response) {
 
                 if (!response.status) {

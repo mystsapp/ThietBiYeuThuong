@@ -113,20 +113,27 @@ namespace ThietBiYeuThuong.Web.Services
             {
                 try
                 {
+                    List<CTPhieuNX> cTPhieuNXes = new List<CTPhieuNX>();
                     fromDate = DateTime.Parse(searchFromDate); // NgayCT
                     toDate = DateTime.Parse(searchToDate); // NgayCT
 
-                    if (fromDate > toDate)
-                    {
-                        return null; //
-                    }
+                    //if (searchFromDate == searchToDate)
+                    //{
+                    //    var cTPhieuNXes1 = await _unitOfWork.cTPhieuNXRepository
+                    //                  .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao.Equals(searchFromDate));
+                    //    cTPhieuNXes = cTPhieuNXes1.ToList();
+                    //}
+                    //else
+                    //{
+                    var cTPhieuNXes1 = await _unitOfWork.cTPhieuNXRepository
+                                  .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao.Value >= fromDate &&
+                                   x.NgayTao < toDate.AddDays(1));
+                    cTPhieuNXes = cTPhieuNXes1.ToList();
+                    //}
 
-                    var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
-                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.PhieuNX.NgayLap >= fromDate &&
-                                       x.PhieuNX.NgayLap < toDate.AddDays(1));
                     list = await cTPhieuNXes.ToListAsync();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return null;
                 }
@@ -139,7 +146,7 @@ namespace ThietBiYeuThuong.Web.Services
                     {
                         fromDate = DateTime.Parse(searchFromDate);
                         var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
-                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.PhieuNX.NgayLap >= fromDate);
+                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao >= fromDate);
                         list = await cTPhieuNXes.ToListAsync();
                     }
                     catch (Exception)
@@ -153,7 +160,7 @@ namespace ThietBiYeuThuong.Web.Services
                     {
                         toDate = DateTime.Parse(searchToDate);
                         var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
-                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.PhieuNX.NgayLap < toDate.AddDays(1));
+                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao < toDate.AddDays(1));
                         list = await cTPhieuNXes.ToListAsync();
                     }
                     catch (Exception)

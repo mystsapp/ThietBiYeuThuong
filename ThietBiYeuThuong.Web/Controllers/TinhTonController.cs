@@ -130,18 +130,17 @@ namespace ThietBiYeuThuong.Web.Controllers
         public async Task<JsonResult> CheckNgayTonQuy(string tuNgay, string denNgay)
         {
             DateTime fromDate = DateTime.Parse(tuNgay);
-            //DateTime compareDate = DateTime.Parse("03/01/2020");
-
-            //if (fromDate < compareDate)
-            //{
-            //    return Json(new
-            //    {
-            //        status = false,
-            //        message = "Không đồng ý tồn quỹ trước 03/01/2020"
-            //    });
-            //}
-
             DateTime toDate = DateTime.Parse(denNgay);
+
+            if (fromDate > DateTime.Now || toDate > DateTime.Now)
+            {
+                return Json(new
+                {
+                    status = false,
+                    message = "Ngày tháng không hợp lệ"
+                });
+            }
+
             if (fromDate > toDate) // dao nguoc lai
             {
                 return Json(new
