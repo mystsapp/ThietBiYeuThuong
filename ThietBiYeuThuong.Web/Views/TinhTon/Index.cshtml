@@ -33,12 +33,12 @@
 
                         <div class="col-md-3 text-sm">
                             <label>Từ ngày</label>
-                            <input class="form-control form-control-sm maskInput" id="txtFromDate" name="searchFromDate" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                            <input class="form-control form-control-sm maskInput" id="txtFromDate" name="searchFromDate" value="@ViewBag.searchFromDate" />
                         </div>
 
                         <div class="col-md-3 text-sm">
                             <label>Đến ngày</label>
-                            <input class="form-control form-control-sm maskInput" id="txtToDate" name="searchToDate" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                            <input class="form-control form-control-sm maskInput" id="txtToDate" name="searchToDate" value="@ViewBag.searchToDate" />
                         </div>
 
                         <div class="col-md-2 text-sm">

@@ -29,19 +29,27 @@ namespace ThietBiYeuThuong.Web.Controllers
 
         public async Task<IActionResult> Index(string searchFromDate, string searchToDate)
         {
+            // moi load vao
+            if (string.IsNullOrEmpty(searchFromDate) && string.IsNullOrEmpty(searchToDate))
+            {
+                ViewBag.searchFromDate = DateTime.Now.ToString("dd/MM/yyyy");
+                ViewBag.searchToDate = DateTime.Now.ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                ViewBag.searchFromDate = searchFromDate;
+                ViewBag.searchToDate = searchToDate;
+            }
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
             TinhVM.StrUrl = UriHelper.GetDisplayUrl(Request);
 
-            //ViewBag.searchFromDate = searchFromDate;
-            //ViewBag.searchToDate = searchToDate;
-
             TinhVM.CTPhieuNXes = await _tinhTonService.ListCTPhieuNX(searchFromDate, searchToDate);
 
             if (TinhVM.CTPhieuNXes.Count > 0)
             {
-                var tinhTonLast = _tinhTonService.GetLast("", searchFromDate);
+                var tinhTonLast = _tinhTonService.GetLast("", DateTime.Parse(searchFromDate).AddDays(-1).ToShortDateString());
                 TinhVM.TonDau = tinhTonLast == null ? 0 : tinhTonLast.SoLuongTon;
                 TinhVM.CongPhatSinhNhap = TinhVM.CTPhieuNXes.Where(x => x.PhieuNX.LoaiPhieu == "PN").Sum(x => x.SoLuong); // tong nhap
                 TinhVM.CongPhatSinhXuat = TinhVM.CTPhieuNXes.Where(x => x.PhieuNX.LoaiPhieu == "PX").Sum(x => x.SoLuong); // tong xuat
