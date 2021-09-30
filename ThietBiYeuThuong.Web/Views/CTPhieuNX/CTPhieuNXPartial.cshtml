@@ -121,6 +121,37 @@
     });
         // create new ctphieunx
 
+    // edit ctphieunx
+    $('#btn_New_CTPhieuNX').off('click').on('click', function () {
+
+        var tuNgay = '@DateTime.Now.ToShortDateString()';
+
+        $.post('/CTPhieuNX/CheckTonDau', { tuNgay: tuNgay }, function (response) {
+
+            if (!response.status) {
+                toastr.warning(response.message, "Thông báo!");
+            }
+            else {
+                debugger
+                //phieunxid = $(this).data('phieunxid');
+                phieunxid = '@Model.PhieuNX.SoPhieu';
+
+                $('#CTPhieuNX_Tbl').hide(500);
+                $('#CTPhieuNX_Edit_Partial').hide(500);
+
+                var url = '/CTPhieuNX/CTPhieuNX_Create_Partial';
+                $.get(url, { phieunxid: phieunxid }, function (response) {
+
+                    $('#CTPhieuNX_Create_Partial').show(500);
+                    $('#CTPhieuNX_Create_Partial').html(response);
+
+                });
+            }
+        })
+
+    });
+        // edit ctphieunx
+
     // btnXoaDong
     $('.btnXoaDong').off('click').on('click',function () {
 

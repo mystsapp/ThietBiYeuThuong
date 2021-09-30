@@ -173,9 +173,9 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View(CTPhieuNXVM);
         }
 
-        [HttpPost, ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(string id, string strUrl)
+        public async Task<IActionResult> CTPhieuNX_Edit_Partial_Post(string id, string strUrl)
         {
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");

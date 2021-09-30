@@ -47,7 +47,7 @@
         </div>
         <div class="card-body p-0">
 
-            <form method="post" autocomplete="off" id="frmPhieuNXCreate">
+            <form method="post" autocomplete="off" id="frmPhieuNXEdit">
                 <div class="pr-4 pl-4 text-sm">
 
                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -55,6 +55,7 @@
                     <input asp-for="PhieuNX.SoPhieu" type="hidden" />
                     <input asp-for="PhieuNX.LapPhieu" type="hidden" />
                     <input asp-for="PhieuNX.NgayLap" type="hidden" />
+                    <input asp-for="PhieuNX.LogFile" type="hidden" />
                     <div class="form-group row">
 
                         <div class="col-md-2">
