@@ -14,6 +14,8 @@ namespace ThietBiYeuThuong.Web.Services
 
         Task Create(CTPhieuNX cTPhieuNX);
 
+        Task UpdateAsync(CTPhieuNX cTPhieuNX);
+
         string GetSoPhieuCT(string param);
 
         Task<List<CTPhieuNX>> GetCTTrongNgay();
@@ -23,6 +25,8 @@ namespace ThietBiYeuThuong.Web.Services
         Task DeleteAsync(CTPhieuNX cTPhieuNX);
 
         Task<string> CheckTonDau(DateTime fromDate);
+
+        CTPhieuNX GetByIdAsNoTracking(string id);
     }
 
     public class CTPhieuNXService : ICTPhieuNXService
@@ -145,6 +149,17 @@ namespace ThietBiYeuThuong.Web.Services
             {
                 return "";
             }
+        }
+
+        public CTPhieuNX GetByIdAsNoTracking(string id)
+        {
+            return _unitOfWork.cTPhieuNXRepository.GetByIdAsNoTracking(x => x.SoPhieuCT == id);
+        }
+
+        public async Task UpdateAsync(CTPhieuNX cTPhieuNX)
+        {
+            _unitOfWork.cTPhieuNXRepository.Update(cTPhieuNX);
+            await _unitOfWork.Complete();
         }
     }
 }

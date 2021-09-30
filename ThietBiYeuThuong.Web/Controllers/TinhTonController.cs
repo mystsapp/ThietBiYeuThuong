@@ -78,7 +78,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     tinhTon1.LogFile += "==== người chạy lại " + user.Username + " lúc: " + DateTime.Now;
                     tinhTon1.SoLuongTon = TinhVM.TonCuoi;
                     tinhTon1.SoLuongNhap = TinhVM.CongPhatSinhNhap;
-                    tinhTon1.SoLuongTon = TinhVM.CongPhatSinhXuat;
+                    tinhTon1.SoLuongXuat = TinhVM.CongPhatSinhXuat;
 
                     await _tinhTonService.UpdateAsync(tinhTon1);
                 }

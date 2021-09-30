@@ -38,7 +38,7 @@
                         <td>
                             <div class="btn-group text-white" role="group">
 
-                                <a class="text-primary btnEditCTPhieuNX" asp-action="Edit_CTPhieuNX" asp-controller="CTPhieuNX" title="Cập nhật" asp-route-id="@item.SoPhieuCT" asp-route-page="@Model.Page"><i class="fas fa-edit"></i></a>
+                                <a class="text-primary btnEditCTPhieuNX" title="Cập nhật" data-ctphieuid="@item.SoPhieuCT"><i class="fas fa-edit"></i></a>
                                 @*<span class="text-dark"> | </span>*@
 
                                 <!--<a class="text-success" title="Chi tiết" asp-action="Details" asp-route-id="item.Id"><i class="fas fa-list"></i></a>-->
@@ -122,7 +122,8 @@
         // create new ctphieunx
 
     // edit ctphieunx
-    $('#btn_New_CTPhieuNX').off('click').on('click', function () {
+    $('.btnEditCTPhieuNX').off('click').on('click', function (e) {
+        e.preventDefault();
 
         var tuNgay = '@DateTime.Now.ToShortDateString()';
 
@@ -135,12 +136,15 @@
                 debugger
                 //phieunxid = $(this).data('phieunxid');
                 phieunxid = '@Model.PhieuNX.SoPhieu';
+                id = $('.btnEditCTPhieuNX').data('ctphieuid');
+                page = '@Model.Page';
+                strUrl = '@Model.StrUrl';
 
                 $('#CTPhieuNX_Tbl').hide(500);
                 $('#CTPhieuNX_Edit_Partial').hide(500);
 
-                var url = '/CTPhieuNX/CTPhieuNX_Create_Partial';
-                $.get(url, { phieunxid: phieunxid }, function (response) {
+                var url = '/CTPhieuNX/CTPhieuNX_Edit_Partial';
+                $.get(url, { phieunxid: phieunxid, id: id, strUrl: strUrl, page: page }, function (response) {
 
                     $('#CTPhieuNX_Create_Partial').show(500);
                     $('#CTPhieuNX_Create_Partial').html(response);

@@ -52,36 +52,6 @@ var indexController = {
         });
         // phieu click --> load kvctpct
 
-        // show cashier modal
-        $('.btnCashier').off('click').on('click', function () {
-            var page = $('.active span').text();
-
-            kvptcId = $('#hidKVPCTId').val();
-            strUrl = $('.layDataCashier').data('url');
-            $.get('/KVCTPTCs/LayDataCashierPartial', { kVPTCId: kvptcId, strUrl: strUrl, page: page }, function (data) {
-                $('#layDataCashier').modal('show');
-                $('.layDataCashier_Body').html(data);
-                $('#layDataCashier').draggable();
-            });
-        });
-
-        // contextmenu for themdong
-        $('#btnThemDong').contextmenu(function (e) {
-            e.preventDefault();
-            var loaiPhieu = $('#hidLoaiPhieu').val();
-            if (loaiPhieu === 'C')
-                $('#frmThemDong_ContextMenu').submit();
-            else
-                return;
-        });
-        // contextmenu for themdong
-
-        // themdong click
-        $('#btnThemDong').click(function () {
-            $('#frmThemDong').submit();
-        });
-        // themdong click
-
         // giu trang thai phieu click
         $('#phieuTbl .cursor-pointer').off('click').on('click', function () {
             if ($(this).hasClass("hoverClass"))

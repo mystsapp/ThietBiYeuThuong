@@ -80,8 +80,16 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             // CTPhieuNXVM.CTPhieuNX.PhieuNXId = CTPhieuNXVM.PhieuNX.SoPhieu;
             CTPhieuNXVM.CTPhieuNX.LapPhieu = user.Username;
-            CTPhieuNXVM.CTPhieuNX.NgayNhap = DateTime.Now;
             CTPhieuNXVM.CTPhieuNX.NgayTao = DateTime.Now;
+
+            if (CTPhieuNXVM.PhieuNX.LoaiPhieu == "PN")
+            {
+                CTPhieuNXVM.CTPhieuNX.NgayNhap = DateTime.Now;
+            }
+            else
+            {
+                CTPhieuNXVM.CTPhieuNX.NgayXuat = DateTime.Now;
+            }
 
             int tongNhap = 0, tongXuat = 0, ton = 0;
             // next sophieuct --> bat buoc phai co'
@@ -147,19 +155,21 @@ namespace ThietBiYeuThuong.Web.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(string id, string strUrl)
+        public async Task<IActionResult> CTPhieuNX_Edit_Partial(string phieunxid, string id, int page)
         {
             // from session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
-            CTPhieuNXVM.StrUrl = strUrl;
+            CTPhieuNXVM.Page = page;
+
             if (string.IsNullOrEmpty(id))
             {
                 ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            CTPhieuNXVM.PhieuNX = await _phieuNXService.GetById(id);
+            CTPhieuNXVM.PhieuNX = await _phieuNXService.GetById(phieunxid);
+            CTPhieuNXVM.CTPhieuNX = await _cTPhieuNXService.GetById(id);
 
             if (CTPhieuNXVM.PhieuNX == null)
             {
@@ -170,23 +180,23 @@ namespace ThietBiYeuThuong.Web.Controllers
             //CTPhieuNXVM.ListGT = ListGT();
             //CTPhieuNXVM.ListLoaiPhieu = ListLoaiPhieu();
 
-            return View(CTPhieuNXVM);
+            return PartialView(CTPhieuNXVM);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CTPhieuNX_Edit_Partial_Post(string id, string strUrl)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> CTPhieuNX_Edit_Partial_Post()
         {
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
             string temp = "", log = "";
 
-            if (id != CTPhieuNXVM.PhieuNX.SoPhieu)
-            {
-                ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
+            //if (id != CTPhieuNXVM.PhieuNX.SoPhieu)
+            //{
+            //    ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
+            //    return View("~/Views/Shared/NotFound.cshtml");
+            //}
 
             if (ModelState.IsValid)
             {
@@ -198,81 +208,36 @@ namespace ThietBiYeuThuong.Web.Controllers
                 #region log file
 
                 //var t = _unitOfWork.tourRepository.GetById(id);
-                var t = _phieuNXService.GetByIdAsNoTracking(id);
+                var t = _cTPhieuNXService.GetByIdAsNoTracking(CTPhieuNXVM.CTPhieuNX.SoPhieuCT);
 
-                if (t.HoTenTN != CTPhieuNXVM.PhieuNX.HoTenTN)
+                if (t.ThietBi != CTPhieuNXVM.CTPhieuNX.ThietBi)
                 {
-                    temp += String.Format("- HoTenTN thay đổi: {0}->{1}", t.HoTenTN, CTPhieuNXVM.PhieuNX.HoTenTN);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.ThietBi, CTPhieuNXVM.CTPhieuNX.ThietBi);
                 }
 
-                if (t.SDT_TN != CTPhieuNXVM.PhieuNX.SDT_TN)
+                if (t.DongHoGiao != CTPhieuNXVM.CTPhieuNX.DongHoGiao)
                 {
-                    temp += String.Format("- SDT_TN thay đổi: {0}->{1}", t.SDT_TN, CTPhieuNXVM.PhieuNX.SDT_TN);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.DongHoGiao, CTPhieuNXVM.CTPhieuNX.DongHoGiao);
                 }
 
-                if (t.GT_TN != CTPhieuNXVM.PhieuNX.GT_TN)
+                if (t.DongHoThu != CTPhieuNXVM.CTPhieuNX.DongHoThu)
                 {
-                    temp += String.Format("- GT_TN thay đổi: {0}->{1}", t.GT_TN, CTPhieuNXVM.PhieuNX.GT_TN);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.DongHoThu, CTPhieuNXVM.CTPhieuNX.DongHoThu);
                 }
 
-                if (t.HoTenBN != CTPhieuNXVM.PhieuNX.HoTenBN)
+                if (t.SoLuong != CTPhieuNXVM.CTPhieuNX.SoLuong)
                 {
-                    temp += String.Format("- HoTenBN thay đổi: {0}->{1}", t.HoTenBN, CTPhieuNXVM.PhieuNX.HoTenBN);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.SoLuong, CTPhieuNXVM.CTPhieuNX.SoLuong);
                 }
 
-                if (t.NamSinh != CTPhieuNXVM.PhieuNX.NamSinh)
+                if (t.NVGiaoBinh != CTPhieuNXVM.CTPhieuNX.NVGiaoBinh)
                 {
-                    temp += String.Format("- NamSinh thay đổi: {0}->{1}", t.NamSinh, CTPhieuNXVM.PhieuNX.NamSinh);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.NVGiaoBinh, CTPhieuNXVM.CTPhieuNX.NVGiaoBinh);
                 }
 
-                if (t.CMND_CCCD_BN != CTPhieuNXVM.PhieuNX.CMND_CCCD_BN)
+                if (t.GhiChu != CTPhieuNXVM.CTPhieuNX.GhiChu)
                 {
-                    temp += String.Format("- CMND_CCCD_BN thay đổi: {0}->{1}", t.CMND_CCCD_BN, CTPhieuNXVM.PhieuNX.CMND_CCCD_BN);
-                }
-
-                if (t.DiaChi != CTPhieuNXVM.PhieuNX.DiaChi)
-                {
-                    temp += String.Format("- DiaChi thay đổi: {0}->{1}", t.DiaChi, CTPhieuNXVM.PhieuNX.DiaChi);
-                }
-
-                if (t.HoTenNVYTe != CTPhieuNXVM.PhieuNX.HoTenNVYTe)
-                {
-                    temp += String.Format("- HoTenNVYTe thay đổi: {0}->{1}", t.HoTenNVYTe, CTPhieuNXVM.PhieuNX.HoTenNVYTe);
-                }
-
-                if (t.SDT_NVYT != CTPhieuNXVM.PhieuNX.SDT_NVYT)
-                {
-                    temp += String.Format("- SDT_NVYT thay đổi: {0}->{1}", t.SDT_NVYT, CTPhieuNXVM.PhieuNX.SDT_NVYT);
-                }
-
-                if (t.DonVi != CTPhieuNXVM.PhieuNX.DonVi)
-                {
-                    temp += String.Format("- DonVi thay đổi: {0}->{1}", t.DonVi, CTPhieuNXVM.PhieuNX.DonVi);
-                }
-
-                if (t.TinhTrangBN != CTPhieuNXVM.PhieuNX.TinhTrangBN)
-                {
-                    temp += String.Format("- TinhTrangBN thay đổi: {0}->{1}", t.TinhTrangBN, CTPhieuNXVM.PhieuNX.TinhTrangBN);
-                }
-
-                if (t.BenhNenBN != CTPhieuNXVM.PhieuNX.BenhNenBN)
-                {
-                    temp += String.Format("- BenhNenBN thay đổi: {0}->{1}", t.BenhNenBN, CTPhieuNXVM.PhieuNX.BenhNenBN);
-                }
-
-                if (t.ChiSoSPO2 != CTPhieuNXVM.PhieuNX.ChiSoSPO2)
-                {
-                    temp += String.Format("- ChiSoSPO2 thay đổi: {0}->{1}", t.ChiSoSPO2, CTPhieuNXVM.PhieuNX.ChiSoSPO2);
-                }
-
-                if (t.TinhTrangBNSauO2 != CTPhieuNXVM.PhieuNX.TinhTrangBNSauO2)
-                {
-                    temp += String.Format("- TinhTrangBNSauO2 thay đổi: {0}->{1}", t.TinhTrangBNSauO2, CTPhieuNXVM.PhieuNX.TinhTrangBNSauO2);
-                }
-
-                if (t.KetLuan != CTPhieuNXVM.PhieuNX.KetLuan)
-                {
-                    temp += String.Format("- KetLuan thay đổi: {0}->{1}", t.KetLuan, CTPhieuNXVM.PhieuNX.KetLuan);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.GhiChu, CTPhieuNXVM.CTPhieuNX.GhiChu);
                 }
 
                 #endregion log file
@@ -285,22 +250,25 @@ namespace ThietBiYeuThuong.Web.Controllers
                     log += System.Environment.NewLine;
                     log += temp + " -User cập nhật tour: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // username
                     t.LogFile = t.LogFile + log;
-                    CTPhieuNXVM.PhieuNX.LogFile = t.LogFile;
+                    CTPhieuNXVM.CTPhieuNX.LogFile = t.LogFile;
                 }
 
                 try
                 {
-                    await _phieuNXService.UpdateAsync(CTPhieuNXVM.PhieuNX);
-                    SetAlert("Cập nhật thành công", "success");
+                    await _cTPhieuNXService.UpdateAsync(CTPhieuNXVM.CTPhieuNX);
 
-                    //return Redirect(strUrl);
-                    return RedirectToAction(nameof(Index), new { id = id });
+                    return Json(new
+                    {
+                        status = true
+                    });
                 }
                 catch (Exception ex)
                 {
-                    SetAlert(ex.Message, "error");
-
-                    return View(CTPhieuNXVM);
+                    return Json(new
+                    {
+                        status = false,
+                        message = "Lỗi cập nhật"
+                    });
                 }
             }
             // not valid

@@ -20,7 +20,13 @@ namespace ThietBiYeuThuong.Data.Models
         [MaxLength(100, ErrorMessage = "Chiều dài tối đa 100 ký tự"), Column(TypeName = "varchar(100)")]
         public string TenTB { get; set; }
 
-        [DisplayName("Số lượng")]
-        public int SoLuong { get; set; }
+        [DisplayName("Trạng thái")]
+        public int TrangThaiId { get; set; }
+
+        [DisplayName("Loại TB")]
+        public int LoaiTBId { get; set; }
+
+        [ForeignKey("LoaiTBId")]
+        public LoaiThietBi LoaiThietBi { get; set; }
     }
 }

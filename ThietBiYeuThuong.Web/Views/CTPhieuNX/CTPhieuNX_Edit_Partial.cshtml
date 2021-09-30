@@ -1,0 +1,244 @@
+﻿@model CTPhieuNXViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Sửa CT phiếu";
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<ThietBiYeuThuong.Data.Models.User>("loginUser");
+
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Sửa CT phiếu</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu</a></li>
+                    <li class="breadcrumb-item active">Sửa CT phiếu</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Sửa CT phiếu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+
+            <form method="post" autocomplete="off" id="frmCTPhieuNXEdit">
+                <div class="pr-4 pl-4 text-sm">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="PhieuNX.SoPhieu" />
+                    <input type="hidden" asp-for="PhieuNX.LoaiPhieu" />
+                    <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="@Model.PhieuNX.SoPhieu" />
+                    <input type="hidden" asp-for="Page" />
+                    <input type="hidden" asp-for="StrUrl" />
+
+                    <input asp-for="CTPhieuNX.SoPhieuCT" type="hidden" />
+                    <input asp-for="CTPhieuNX.LapPhieu" type="hidden" />
+                    <input asp-for="CTPhieuNX.NgayNhap" type="hidden" />
+                    <input asp-for="CTPhieuNX.NgayTao" type="hidden" />
+                    <input asp-for="CTPhieuNX.NgayXuat" type="hidden" />
+                    <input asp-for="CTPhieuNX.LogFile" type="hidden" />
+
+                    <div id="txtNhap">
+
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                                <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
+                                <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieuNX.DongHoGiao" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.DongHoGiao" class="form-control form-control-sm" id="txtSoLuong" />
+                                <span asp-validation-for="CTPhieuNX.DongHoGiao" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieuNX.DongHoThu" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.DongHoThu" class="form-control form-control-sm" id="txtSoLuong" />
+                                <span asp-validation-for="CTPhieuNX.DongHoThu" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                                <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieuNX.NVGiaoBinh" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.NVGiaoBinh" class="form-control form-control-sm" id="txtSoLuong" />
+                                <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-9">
+                                <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
+                                <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                                <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm" id="btnSubmit_CTPhieuNX_Edit"><i class="fas fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-success btn-sm" id="btnBack_CTPhieuNX_Edit"><i class="fas fa-backward "></i> Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+@*<script>
+
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+    </script>*@
+
+@*<script src="~/js/Admin/Home/createController.js"></script>*@
+
+<!-- select2 and multi select2 (bootstrap4)-->
+@*<script>
+        //$('#txtMaKH').select2()
+        $('.select2').select2({
+        })
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        //$('.tuyenTQ').select2({
+        //    theme: 'bootstrap4'
+        //})
+    </script>*@
+
+<!-- Validation -->
+<script>
+
+    $('#frmCTPhieuNXEdit').validate({
+            //rules: {
+            //    email: {
+            //        required: true,
+            //        email: true,
+            //    },
+            //    NgayDen: {
+            //        required: true
+            //    },
+            //    chuDetour1: {
+            //        required: true
+            //    },
+            //},
+            //messages: {
+            //    email: {
+            //        required: "Please enter a email address",
+            //        email: "Please enter a vaild email address"
+            //    },
+            //    NgayDen: {
+            //        required: "Please provide a date"
+            //    },
+            //    chuDetour1: "Please enter value"
+            //},
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                // add error text
+
+                //error.addClass('invalid-feedback').removeClass('error');
+                //element.closest('.chuDeTourGroup').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        //$('#txtChuDeTour').rules('add', {
+        //    required: true,
+        //    messages: {
+        //        //required: "Chủ đề không được để trống"
+        //    }
+        //});
+
+        //$('#txtNgayCT').rules('add', {
+        //    required: true,
+        //    dateFormat: true,
+        //    messages: {
+        //        // required: "Ngày đến không được để trống"
+        //    }
+        //});
+
+        $('#btnSubmit_CTPhieuNX_Edit').click(function () { //.off('click').on('click', function () {
+        debugger
+
+        if ($('#frmCTPhieuNXEdit').valid()) {
+            var cTPhieuNX = $('#frmCTPhieuNXEdit').serialize();
+            $.ajax({
+                type: "POST",
+                url: "/CTPhieuNX/CTPhieuNX_Edit_Partial_Post",
+                data: cTPhieuNX,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status) {
+
+                        toastr.success('Sửa chi tiết thành công!'); // toastr in admin/tour/indexController.js
+
+                        $('#CTPhieuNX_Create_Partial').hide(500);
+                        $('#CTPhieuNX_Edit_Partial').hide(500);
+                        debugger
+                        phieuNXId = '@Model.PhieuNX.SoPhieu';
+                        page = '@Model.Page';
+
+                        indexController.Load_CTPhieuNXPartial(phieuNXId, page);
+                    }
+                    else {
+                        toastr.error(response.message);
+
+                    }
+                }
+            });
+        }
+
+    });
+
+    $('#btnBack_CTPhieuNX_Edit').click(function () {
+        $('#CTPhieuNX_Create_Partial').hide(500);
+        $('#CTPhieuNX_Tbl').show(500);
+        $('#CTPhieuNX_Edit_Partial').hide(500);
+
+    })
+</script>
