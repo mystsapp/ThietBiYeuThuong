@@ -106,16 +106,12 @@ namespace ThietBiYeuThuong.Web.Services
             // search for sgtcode in kvctptC
             if (!string.IsNullOrEmpty(searchString))
             {
-                phieuNXs = _unitOfWork.phieuNXRepository.Find(x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
-                                           (!string.IsNullOrEmpty(x.HoTenTN) && x.HoTenTN.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.SDT_TN) && x.SDT_TN.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.HoTenBN) && x.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.CMND_CCCD_BN.ToString()) && x.CMND_CCCD_BN.ToString().Contains(searchString)) ||
-                                           (!string.IsNullOrEmpty(x.NamSinh.ToString()) && x.NamSinh.ToString().Contains(searchString)) ||
-                                           (!string.IsNullOrEmpty(x.DiaChi) && x.DiaChi.ToLower().Contains(searchString.ToLower())) ||
+                var phieuNXes = await _unitOfWork.phieuNXRepository.FindIncludeOneAsync(bn => bn.BenhNhan, x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
+                                           (!string.IsNullOrEmpty(x.BenhNhan.HoTenBN) && x.BenhNhan.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.HoTenNVYTe) && x.HoTenNVYTe.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.SDT_NVYT) && x.SDT_NVYT.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower()))).ToList();
+                                           (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower())));
+                phieuNXs = phieuNXes.ToList();
             }
             else
             {
@@ -132,27 +128,17 @@ namespace ThietBiYeuThuong.Web.Services
                 var phieuNXDto = new PhieuNXDto();
 
                 phieuNXDto.SoPhieu = item.SoPhieu;
-                phieuNXDto.BenhNenBN = item.BenhNenBN;
-                phieuNXDto.ChiSoSPO2 = item.ChiSoSPO2;
-                phieuNXDto.CMND_CCCD_BN = item.CMND_CCCD_BN;
-                phieuNXDto.DiaChi = item.DiaChi;
                 phieuNXDto.DonVi = item.DonVi;
-                phieuNXDto.GT_TN = item.GT_TN;
-                phieuNXDto.HoTenBN = item.HoTenBN;
                 phieuNXDto.HoTenNVYTe = item.HoTenNVYTe;
-                phieuNXDto.HoTenTN = item.HoTenTN;
-                phieuNXDto.KetLuan = item.KetLuan;
                 phieuNXDto.LapPhieu = item.LapPhieu;
                 phieuNXDto.LoaiPhieu = item.LoaiPhieu;
-                phieuNXDto.NamSinh = item.NamSinh;
-
                 phieuNXDto.NgayLap = item.NgayLap;
+                phieuNXDto.NgaySua = item.NgaySua;
+                phieuNXDto.NguoiSua = item.NguoiSua;
                 phieuNXDto.NVTruc = item.NVTruc;
                 phieuNXDto.SDT_NVYT = item.SDT_NVYT;
-                phieuNXDto.SDT_TN = item.SDT_TN;
                 phieuNXDto.STT = item.STT;
-                phieuNXDto.TinhTrangBN = item.TinhTrangBN;
-                phieuNXDto.TinhTrangBNSauO2 = item.TinhTrangBNSauO2;
+                phieuNXDto.TenBN = item.BenhNhan.HoTenBN;
 
                 list.Add(phieuNXDto);
             }

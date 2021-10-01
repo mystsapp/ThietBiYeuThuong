@@ -210,9 +210,9 @@ namespace ThietBiYeuThuong.Web.Controllers
                 //var t = _unitOfWork.tourRepository.GetById(id);
                 var t = _cTPhieuNXService.GetByIdAsNoTracking(CTPhieuNXVM.CTPhieuNX.SoPhieuCT);
 
-                if (t.ThietBi != CTPhieuNXVM.CTPhieuNX.ThietBi)
+                if (t.ThietBiId != CTPhieuNXVM.CTPhieuNX.ThietBiId)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.ThietBi, CTPhieuNXVM.CTPhieuNX.ThietBi);
+                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.ThietBiId, CTPhieuNXVM.CTPhieuNX.ThietBiId);
                 }
 
                 if (t.DongHoGiao != CTPhieuNXVM.CTPhieuNX.DongHoGiao)

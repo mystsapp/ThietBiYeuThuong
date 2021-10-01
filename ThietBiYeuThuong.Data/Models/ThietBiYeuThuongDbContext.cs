@@ -18,5 +18,16 @@ namespace ThietBiYeuThuong.Data.Models
         public DbSet<TinhTon> TinhTons { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<BenhNhan> BenhNhans { get; set; }
+        public DbSet<BenhNhanThietBi> BenhNhanThietBis { get; set; }
+        public DbSet<LoaiThietBi> LoaiThietBis { get; set; }
+        public DbSet<ThietBi> ThietBis { get; set; }
+        public DbSet<TinhTrangBN> TinhTrangBNs { get; set; }
+        public DbSet<TrangThai> TrangThais { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BenhNhanThietBi>().HasKey(x => new { x.BenhNhanId, x.ThietBiId });
+        }
     }
 }

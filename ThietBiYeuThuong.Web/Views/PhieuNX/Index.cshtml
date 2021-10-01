@@ -76,24 +76,13 @@
 
                             <th>#</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SoPhieu)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().LoaiPhieu)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().NgayLap)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().HoTenTN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SDT_TN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().GT_TN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().HoTenBN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().NamSinh)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().CMND_CCCD_BN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().DiaChi)</th>
-
+                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().TenBN)</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().HoTenNVYTe)</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SDT_NVYT)</th>
                             <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().DonVi)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().TinhTrangBN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().BenhNenBN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().ChiSoSPO2)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().TinhTrangBNSauO2)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().KetLuan)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().STT)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().NVTruc)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().NgayLap)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,24 +112,13 @@
                                     </td>
 
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SoPhieu)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.LoaiPhieu)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.Raw(item.NgayLap.Value)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.HoTenTN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SDT_TN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.GT_TN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.HoTenBN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.NamSinh)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.CMND_CCCD_BN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.DiaChi)</td>
-
+                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.TenBN)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.HoTenNVYTe)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SDT_NVYT)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.DonVi)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.TinhTrangBN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.BenhNenBN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.ChiSoSPO2)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.TinhTrangBNSauO2)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.KetLuan)</td>
+                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.STT)</td>
+                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.NVTruc)</td>
+                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.Raw(item.NgayLap.Value)</td>
                                 </tr>
 
                                 @* } *@

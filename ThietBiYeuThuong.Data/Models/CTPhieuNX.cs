@@ -19,9 +19,12 @@ namespace ThietBiYeuThuong.Data.Models
         [ForeignKey("PhieuNXId")]
         public virtual PhieuNX PhieuNX { get; set; }
 
-        [DisplayName("Thiết bị")]
-        [MaxLength(100, ErrorMessage = "Chiều dài tối đa 100 ký tự"), Column(TypeName = "varchar(100)")]
-        public string ThietBi { get; set; }
+        [DisplayName("Tên TB")]
+        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        public string ThietBiId { get; set; }
+
+        [ForeignKey("ThietBiId")]
+        public ThietBi ThietBi { get; set; }
 
         [DisplayName("Người lập phiếu")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]

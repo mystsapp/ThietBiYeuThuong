@@ -120,7 +120,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     PhieuVM.CTPhieuNX.LapPhieu = user.Username;
                     PhieuVM.CTPhieuNX.NgayNhap = DateTime.Now;
 
-                    PhieuVM.CTPhieuNX.ThietBi = PhieuVM.CTPhieuNX.ThietBi;
+                    PhieuVM.CTPhieuNX.ThietBiId = PhieuVM.CTPhieuNX.ThietBiId;
                     PhieuVM.CTPhieuNX.SoLuong = PhieuVM.CTPhieuNX.SoLuong;
                     PhieuVM.CTPhieuNX.GhiChu = PhieuVM.CTPhieuNX.GhiChu;
 
@@ -207,39 +207,9 @@ namespace ThietBiYeuThuong.Web.Controllers
                 //var t = _unitOfWork.tourRepository.GetById(id);
                 var t = _phieuNXService.GetByIdAsNoTracking(id);
 
-                if (t.HoTenTN != PhieuVM.PhieuNX.HoTenTN)
+                if (t.BenhNhanId != PhieuVM.PhieuNX.BenhNhanId)
                 {
-                    temp += String.Format("- HoTenTN thay đổi: {0}->{1}", t.HoTenTN, PhieuVM.PhieuNX.HoTenTN);
-                }
-
-                if (t.SDT_TN != PhieuVM.PhieuNX.SDT_TN)
-                {
-                    temp += String.Format("- SDT_TN thay đổi: {0}->{1}", t.SDT_TN, PhieuVM.PhieuNX.SDT_TN);
-                }
-
-                if (t.GT_TN != PhieuVM.PhieuNX.GT_TN)
-                {
-                    temp += String.Format("- GT_TN thay đổi: {0}->{1}", t.GT_TN, PhieuVM.PhieuNX.GT_TN);
-                }
-
-                if (t.HoTenBN != PhieuVM.PhieuNX.HoTenBN)
-                {
-                    temp += String.Format("- HoTenBN thay đổi: {0}->{1}", t.HoTenBN, PhieuVM.PhieuNX.HoTenBN);
-                }
-
-                if (t.NamSinh != PhieuVM.PhieuNX.NamSinh)
-                {
-                    temp += String.Format("- NamSinh thay đổi: {0}->{1}", t.NamSinh, PhieuVM.PhieuNX.NamSinh);
-                }
-
-                if (t.CMND_CCCD_BN != PhieuVM.PhieuNX.CMND_CCCD_BN)
-                {
-                    temp += String.Format("- CMND_CCCD_BN thay đổi: {0}->{1}", t.CMND_CCCD_BN, PhieuVM.PhieuNX.CMND_CCCD_BN);
-                }
-
-                if (t.DiaChi != PhieuVM.PhieuNX.DiaChi)
-                {
-                    temp += String.Format("- DiaChi thay đổi: {0}->{1}", t.DiaChi, PhieuVM.PhieuNX.DiaChi);
+                    temp += String.Format("- BenhNhanId thay đổi: {0}->{1}", t.BenhNhanId, PhieuVM.PhieuNX.BenhNhanId);
                 }
 
                 if (t.HoTenNVYTe != PhieuVM.PhieuNX.HoTenNVYTe)
@@ -255,31 +225,6 @@ namespace ThietBiYeuThuong.Web.Controllers
                 if (t.DonVi != PhieuVM.PhieuNX.DonVi)
                 {
                     temp += String.Format("- DonVi thay đổi: {0}->{1}", t.DonVi, PhieuVM.PhieuNX.DonVi);
-                }
-
-                if (t.TinhTrangBN != PhieuVM.PhieuNX.TinhTrangBN)
-                {
-                    temp += String.Format("- TinhTrangBN thay đổi: {0}->{1}", t.TinhTrangBN, PhieuVM.PhieuNX.TinhTrangBN);
-                }
-
-                if (t.BenhNenBN != PhieuVM.PhieuNX.BenhNenBN)
-                {
-                    temp += String.Format("- BenhNenBN thay đổi: {0}->{1}", t.BenhNenBN, PhieuVM.PhieuNX.BenhNenBN);
-                }
-
-                if (t.ChiSoSPO2 != PhieuVM.PhieuNX.ChiSoSPO2)
-                {
-                    temp += String.Format("- ChiSoSPO2 thay đổi: {0}->{1}", t.ChiSoSPO2, PhieuVM.PhieuNX.ChiSoSPO2);
-                }
-
-                if (t.TinhTrangBNSauO2 != PhieuVM.PhieuNX.TinhTrangBNSauO2)
-                {
-                    temp += String.Format("- TinhTrangBNSauO2 thay đổi: {0}->{1}", t.TinhTrangBNSauO2, PhieuVM.PhieuNX.TinhTrangBNSauO2);
-                }
-
-                if (t.KetLuan != PhieuVM.PhieuNX.KetLuan)
-                {
-                    temp += String.Format("- KetLuan thay đổi: {0}->{1}", t.KetLuan, PhieuVM.PhieuNX.KetLuan);
                 }
 
                 #endregion log file

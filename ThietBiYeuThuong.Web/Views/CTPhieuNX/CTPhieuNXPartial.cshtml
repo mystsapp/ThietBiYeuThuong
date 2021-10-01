@@ -17,7 +17,7 @@
 
                 <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_CTPhieuNX" data-phieunxid="@Model.PhieuNX.SoPhieu" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoPhieuCT)</th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().ThietBi)</th>
+                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().ThietBiId)</th>
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayNhap)</th> <!--?-->
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayXuat)</th> <!--?-->
                 <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().DongHoGiao)</th> <!--NgoaiTe-->
@@ -58,7 +58,7 @@
                         </td>
 
                         <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoPhieuCT)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.ThietBi)</td>
+                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.ThietBi.TenTB)</td>
                         <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayNhap)</td>
                         <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayXuat)</td>
                         <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoGiao)</td>

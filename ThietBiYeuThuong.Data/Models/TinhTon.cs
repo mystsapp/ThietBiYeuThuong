@@ -41,5 +41,15 @@ namespace ThietBiYeuThuong.Data.Models
 
         [Column(TypeName = "nvarchar(MAX)")]
         public string LogFile { get; set; }
+
+        ///
+        /// thiet bi oxy
+        ///
+
+        public int SLNhap_Day { get; set; }
+        public int SLNhap_ThuHoi { get; set; }
+        public int SLNhap_VuaBomVe { get; set; }
+        public int SLXuat_GoiBom { get; set; }
+        public int SLXuat_BenhNhan { get; set; }
     }
 }

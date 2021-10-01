@@ -65,167 +65,74 @@
 
                     <div id="txtXuat">
 
-                        @*<input type="hidden" asp-for="CTPhieuNX.SoLuong" value="0" />*@
-
                         <div class="form-group row">
 
-                            <div class="col-md-3">
-                                <label asp-for="PhieuNX.HoTenTN" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                                <input asp-for="PhieuNX.HoTenTN" class="form-control form-control-sm" id="txtHoTenTN" />
-                                <span asp-validation-for="PhieuNX.HoTenTN" class="text-danger"></span>
+                            <div class="form-group row">
+
+                                <div class="col-md-4">
+                                    <label asp-for="PhieuNX.HoTenNVYTe" class="control-label"></label>
+                                    <input asp-for="PhieuNX.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
+                                    <span asp-validation-for="PhieuNX.HoTenNVYTe" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="PhieuNX.SDT_NVYT" class="control-label "></label>
+                                    <input asp-for="PhieuNX.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
+                                    <span asp-validation-for="PhieuNX.SDT_NVYT" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="PhieuNX.DonVi" class="control-label"></label>
+                                    <input asp-for="PhieuNX.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                                    <span asp-validation-for="PhieuNX.DonVi" class="text-danger"></span>
+                                </div>
                             </div>
 
-                            <div class="col-md-2">
-                                <label asp-for="PhieuNX.SDT_TN" class="control-label"></label>
-                                <input asp-for="PhieuNX.SDT_TN" class="form-control form-control-sm " id="txtSDT_TN" />
-                                <span asp-validation-for="PhieuNX.SDT_TN" class="text-danger"></span>
-                            </div>
+                            <div class="form-group row">
 
-                            <div class="col-md-1">
-                                <label asp-for="PhieuNX.GT_TN" class="control-label"></label>
-                                <select asp-for="PhieuNX.GT_TN" class="form-control form-control-sm "
-                                        asp-items="@(new SelectList(Model.ListGT, "Name", "Name"))" id="ddlGT_TN">
-                                </select>
-                                <span asp-validation-for="PhieuNX.GT_TN" class="text-danger"></span>
-                            </div>
+                                <div class="col-md-6">
+                                    <label asp-for="PhieuNX.STT" class="control-label "></label>
+                                    <input asp-for="PhieuNX.STT" class="form-control form-control-sm" id="txtSTT" />
+                                    <span asp-validation-for="PhieuNX.STT" class="text-danger"></span>
+                                </div>
 
-                            <div class="col-md-3">
-                                <label asp-for="PhieuNX.HoTenBN" class="control-label"></label>
-                                <input asp-for="PhieuNX.HoTenBN" class="form-control form-control-sm" id="txtHoTenBN" />
-                                <span asp-validation-for="PhieuNX.HoTenBN" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-3">
-                                <!-- qltour -->
-                                <label asp-for="PhieuNX.NamSinh" class="control-label"></label>
-                                <input asp-for="PhieuNX.NamSinh" class="form-control form-control-sm input-sm" id="txtNamSinh">
-                                <span asp-validation-for="PhieuNX.NamSinh" class="text-danger"></span>
+                                <div class="col-md-6">
+                                    <label asp-for="PhieuNX.NVTruc" class="control-label "></label>
+                                    <input asp-for="PhieuNX.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
+                                    <span asp-validation-for="PhieuNX.NVTruc" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div id="txtNhap">
+                            <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
+                            <div class="form-group row">
 
-                            <div class="col-md-3">
-                                <label asp-for="PhieuNX.CMND_CCCD_BN" class="control-label"></label>
-                                <input asp-for="PhieuNX.CMND_CCCD_BN" class="form-control form-control-sm" id="txtCMND_CCCD_BN" />
-                                <span asp-validation-for="PhieuNX.CMND_CCCD_BN" class="text-danger"></span>
-                            </div>
+                                <div class="col-md-2">
+                                    <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                                    <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
+                                    <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
+                                </div>
 
-                            <div class="col-md-9">
-                                <label asp-for="PhieuNX.DiaChi" class="control-label "></label>
-                                <input asp-for="PhieuNX.DiaChi" class="form-control form-control-sm" id="txtDiaChi" />
-                                <span asp-validation-for="PhieuNX.DiaChi" class="text-danger"></span>
-                            </div>
-                        </div>
+                                <div class="col-md-2">
+                                    <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
+                                    <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                                    <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                                </div>
 
-                        <div class="form-group row">
-
-                            <div class="col-md-4">
-                                <label asp-for="PhieuNX.HoTenNVYTe" class="control-label"></label>
-                                <input asp-for="PhieuNX.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
-                                <span asp-validation-for="PhieuNX.HoTenNVYTe" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label asp-for="PhieuNX.SDT_NVYT" class="control-label "></label>
-                                <input asp-for="PhieuNX.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
-                                <span asp-validation-for="PhieuNX.SDT_NVYT" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label asp-for="PhieuNX.DonVi" class="control-label"></label>
-                                <input asp-for="PhieuNX.DonVi" class="form-control form-control-sm" id="txtDonVi" />
-                                <span asp-validation-for="PhieuNX.DonVi" class="text-danger"></span>
+                                <div class="col-md-8">
+                                    <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
+                                    <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                                    <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-
-                            <div class="col-md-12">
-                                <label asp-for="PhieuNX.TinhTrangBN" class="control-label "></label>
-                                <input asp-for="PhieuNX.TinhTrangBN" class="form-control form-control-sm" id="txtTinhTrangBN" />
-                                <span asp-validation-for="PhieuNX.TinhTrangBN" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-9">
-                                <label asp-for="PhieuNX.BenhNenBN" class="control-label "></label>
-                                <input asp-for="PhieuNX.BenhNenBN" class="form-control form-control-sm" id="txtBenhNenBN" />
-                                <span asp-validation-for="PhieuNX.BenhNenBN" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label asp-for="PhieuNX.ChiSoSPO2" class="control-label "></label>
-                                <input asp-for="PhieuNX.ChiSoSPO2" class="form-control form-control-sm" id="txtChiSoSPO2" />
-                                <span asp-validation-for="PhieuNX.ChiSoSPO2" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-12">
-                                <label asp-for="PhieuNX.TinhTrangBNSauO2" class="control-label "></label>
-                                <input asp-for="PhieuNX.TinhTrangBNSauO2" class="form-control form-control-sm" id="txtTinhTrangBNSauO2" />
-                                <span asp-validation-for="PhieuNX.TinhTrangBNSauO2" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-12">
-                                <label asp-for="PhieuNX.KetLuan" class="control-label "></label>
-                                <input asp-for="PhieuNX.KetLuan" class="form-control form-control-sm" id="txtKetLuan" />
-                                <span asp-validation-for="PhieuNX.KetLuan" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-6">
-                                <label asp-for="PhieuNX.STT" class="control-label "></label>
-                                <input asp-for="PhieuNX.STT" class="form-control form-control-sm" id="txtSTT" />
-                                <span asp-validation-for="PhieuNX.STT" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label asp-for="PhieuNX.NVTruc" class="control-label "></label>
-                                <input asp-for="PhieuNX.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
-                                <span asp-validation-for="PhieuNX.NVTruc" class="text-danger"></span>
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
+                            <a class="btn btn-success btn-sm" asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
                         </div>
                     </div>
-
-                    <div id="txtNhap">
-                        <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
-                        <div class="form-group row">
-
-                            <div class="col-md-2">
-                                <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                                <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
-                                <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
-                                <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
-                                <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-8">
-                                <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
-                                <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
-                                <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
-                        <a class="btn btn-success btn-sm" asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
-                    </div>
-                </div>
             </form>
         </div>
         <!-- /.card-body -->

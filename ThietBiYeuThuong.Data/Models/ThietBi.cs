@@ -28,5 +28,8 @@ namespace ThietBiYeuThuong.Data.Models
 
         [ForeignKey("LoaiTBId")]
         public LoaiThietBi LoaiThietBi { get; set; }
+
+        [DisplayName("Tình trạng")]
+        public bool TinhTrang { get; set; } // Đã giao ?
     }
 }

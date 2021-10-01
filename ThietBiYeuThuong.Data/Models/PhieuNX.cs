@@ -20,6 +20,13 @@ namespace ThietBiYeuThuong.Data.Models
         [MaxLength(3, ErrorMessage = "Chiều dài tối đa 3 ký tự"), Column(TypeName = "varchar(3)")]
         public string LoaiPhieu { get; set; }
 
+        [DisplayName("Bệnh nhân")]
+        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        public string BenhNhanId { get; set; }
+
+        [ForeignKey("BenhNhanId")]
+        public BenhNhan BenhNhan { get; set; }
+
         [DisplayName("Người lập phiếu")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
         public string LapPhieu { get; set; }
