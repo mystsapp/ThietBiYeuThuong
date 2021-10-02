@@ -13,7 +13,7 @@ namespace ThietBiYeuThuong.Data.Models
     {
         [Key]
         [DisplayName("Mã BN")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string MaBN { get; set; }
 
         [DisplayName("Họ tên T.N")]
@@ -42,10 +42,19 @@ namespace ThietBiYeuThuong.Data.Models
         [MaxLength(250, ErrorMessage = "Chiều dài tối đa 250 ký tự"), Column(TypeName = "nvarchar(250)")]
         public string DiaChi { get; set; }
 
-        [DisplayName("Tình trạng BN")]
-        public long TinhTrangBNId { get; set; }
+        public DateTime NgayTao { get; set; }
 
-        [ForeignKey("TinhTrangBNId")]
-        public TinhTrangBN TinhTrangBN { get; set; }
+        [DisplayName("Người tạo")]
+        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
+        public string NguoiTao { get; set; }
+
+        public DateTime NgaySua { get; set; }
+
+        [DisplayName("Người sửa")]
+        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
+        public string NguoiSua { get; set; }
+
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string LogFile { get; set; }
     }
 }

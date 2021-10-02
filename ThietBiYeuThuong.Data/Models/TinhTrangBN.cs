@@ -13,6 +13,13 @@ namespace ThietBiYeuThuong.Data.Models
     {
         public long Id { get; set; }
 
+        [DisplayName("Bệnh nhân")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
+        public string BenhNhanId { get; set; }
+
+        [ForeignKey("BenhNhanId")]
+        public BenhNhan BenhNhan { get; set; }
+
         [DisplayName("Tình trạng B.N")]
         [MaxLength(200, ErrorMessage = "Chiều dài tối đa 200 ký tự"), Column(TypeName = "nvarchar(200)")]
         public string TinhTrang { get; set; }

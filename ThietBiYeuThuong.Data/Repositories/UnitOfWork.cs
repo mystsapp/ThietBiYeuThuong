@@ -14,6 +14,12 @@ namespace ThietBiYeuThuong.Data.Repositories
         ITinhTonRepository tinhTonRepository { get; }
         IPhieuNXRepository phieuNXRepository { get; }
         ICTPhieuNXRepository cTPhieuNXRepository { get; }
+        ILoaiThietBiRepository loaiThietBiRepository { get; }
+        IBenhNhanRepository benhNhanRepository { get; }
+        IBenhNhanThietBiRepository benhNhanThietBiRepository { get; }
+        IThietBiRepository thietBiRepository { get; }
+        ITinhTrangBNRepository tinhTrangBNRepository { get; }
+        ITrangThaiRepository trangThaiRepository { get; }
 
         Task<int> Complete();
     }
@@ -31,6 +37,12 @@ namespace ThietBiYeuThuong.Data.Repositories
             tinhTonRepository = new TinhTonRepository(_context);
             phieuNXRepository = new PhieuNXRepository(_context);
             cTPhieuNXRepository = new CTPhieuNXRepository(_context);
+            loaiThietBiRepository = new LoaiThietBiRepository(_context);
+            benhNhanRepository = new BenhNhanRepository(_context);
+            benhNhanThietBiRepository = new BenhNhanThietBiRepository(_context);
+            thietBiRepository = new ThietBiRepository(_context);
+            tinhTrangBNRepository = new TinhTrangBNRepository(_context);
+            trangThaiRepository = new TrangThaiRepository(_context);
         }
 
         public IUserRepository userRepository { get; }
@@ -42,6 +54,17 @@ namespace ThietBiYeuThuong.Data.Repositories
         public IPhieuNXRepository phieuNXRepository { get; }
 
         public ICTPhieuNXRepository cTPhieuNXRepository { get; }
+
+        public ILoaiThietBiRepository loaiThietBiRepository { get; }
+
+        public IBenhNhanRepository benhNhanRepository { get; }
+
+        public IBenhNhanThietBiRepository benhNhanThietBiRepository { get; }
+        public IThietBiRepository thietBiRepository { get; }
+
+        public ITinhTrangBNRepository tinhTrangBNRepository { get; }
+
+        public ITrangThaiRepository trangThaiRepository { get; }
 
         public async Task<int> Complete()
         {

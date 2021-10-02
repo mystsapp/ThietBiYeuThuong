@@ -37,12 +37,20 @@ namespace ThietBiYeuThuong.Web
             services.AddTransient<IPhieuNXRepository, PhieuNXRepository>();
             services.AddTransient<ICTPhieuNXRepository, CTPhieuNXRepository>();
             services.AddTransient<ITinhTonRepository, TinhTonRepository>();
+            services.AddTransient<ILoaiThietBiRepository, LoaiThietBiRepository>();
+            services.AddTransient<IBenhNhanRepository, BenhNhanRepository>();
+            services.AddTransient<IBenhNhanThietBiRepository, BenhNhanThietBiRepository>();
+            services.AddTransient<IThietBiRepository, ThietBiRepository>();
+            services.AddTransient<ITinhTrangBNRepository, TinhTrangBNRepository>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<IPhieuNXService, PhieuNXService>();
             services.AddTransient<ICTPhieuNXService, CTPhieuNXService>();
             services.AddTransient<ITinhTonService, TinhTonService>();
+            services.AddTransient<ILoaiThietBiService, LoaiThietBiService>();
+            services.AddTransient<IBenhNhanService, BenhNhanService>();
+            services.AddTransient<ITinhTrangBNService, TinhTrangBNService>();
 
             // FOR session
             services.AddSession(options =>

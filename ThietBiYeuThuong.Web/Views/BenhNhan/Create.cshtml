@@ -1,0 +1,201 @@
+﻿@model BenhNhanViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Thêm BN";
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<ThietBiYeuThuong.Data.Models.User>("loginUser");
+
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm bệnh nhân</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách bệnh nhân</a></li>
+                    <li class="breadcrumb-item active">Thêm bệnh nhân</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm bệnh nhân</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+
+            <form method="post" autocomplete="off" id="frmBenhNhanCreate">
+                <div class="pr-4 pl-4 text-sm">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-3">
+                            <label asp-for="BenhNhan.HoTenTN" class="control-label"></label>
+                            <input asp-for="BenhNhan.HoTenTN" class="form-control form-control-sm" id="txtHoTenTN" />
+                            <span asp-validation-for="BenhNhan.HoTenTN" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label asp-for="BenhNhan.SDT_TN" class="control-label "></label>
+                            <input asp-for="BenhNhan.SDT_TN" class="form-control form-control-sm" id="txtSDT_TN" />
+                            <span asp-validation-for="BenhNhan.SDT_TN" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label asp-for="BenhNhan.GT_TN" class="control-label"></label>
+                            <select asp-for="BenhNhan.GT_TN" class="form-control form-control-sm "
+                                    asp-items="@(new SelectList(Model.ListGT, "Name", "Name"))" id="ddlGT_TN">
+                            </select>
+                            <span asp-validation-for="BenhNhan.GT_TN" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label asp-for="BenhNhan.HoTenBN" class="control-label "></label>
+                            <input asp-for="BenhNhan.HoTenBN" class="form-control form-control-sm" id="txtHoTenBN" />
+                            <span asp-validation-for="BenhNhan.HoTenBN" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-1">
+                            <label asp-for="BenhNhan.NamSinh" class="control-label"></label>
+                            <input asp-for="BenhNhan.NamSinh" class="form-control form-control-sm" id="txtNamSinh" />
+                            <span asp-validation-for="BenhNhan.NamSinh" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label asp-for="BenhNhan.CMND_CCCD_BN" class="control-label "></label>
+                            <input asp-for="BenhNhan.CMND_CCCD_BN" class="form-control form-control-sm" id="txtCMND_CCCD_BN" />
+                            <span asp-validation-for="BenhNhan.CMND_CCCD_BN" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-9">
+                            <label asp-for="BenhNhan.DiaChi" class="control-label"></label>
+                            <input asp-for="BenhNhan.DiaChi" class="form-control form-control-sm " id="txtDiaChi" />
+                            <span asp-validation-for="BenhNhan.GT_TN" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
+                        <a class="btn btn-success btn-sm" asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+@section Scripts{
+    @*<script>
+
+            $(function () {
+                $(".datepicker").datepicker({
+                    dateFormat: 'dd/mm/yy'
+                });
+            });
+        </script>*@
+
+    @*<script src="~/js/Admin/Home/createController.js"></script>*@
+
+    <!-- select2 and multi select2 (bootstrap4)-->
+    @*<script>
+            //$('#txtMaKH').select2()
+            $('.select2').select2({
+            })
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+            //$('.tuyenTQ').select2({
+            //    theme: 'bootstrap4'
+            //})
+        </script>*@
+
+    <!-- Validation -->
+    <script>
+
+        $('#frmBenhNhanCreate').validate({
+            //rules: {
+            //    email: {
+            //        required: true,
+            //        email: true,
+            //    },
+            //    NgayDen: {
+            //        required: true
+            //    },
+            //    chuDetour1: {
+            //        required: true
+            //    },
+            //},
+            //messages: {
+            //    email: {
+            //        required: "Please enter a email address",
+            //        email: "Please enter a vaild email address"
+            //    },
+            //    NgayDen: {
+            //        required: "Please provide a date"
+            //    },
+            //    chuDetour1: "Please enter value"
+            //},
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                // add error text
+
+                //error.addClass('invalid-feedback').removeClass('error');
+                //element.closest('.chuDeTourGroup').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+                                //$('#txtChuDeTour').rules('add', {
+                                //    required: true,
+                                //    messages: {
+                                //        //required: "Chủ đề không được để trống"
+                                //    }
+                                //});
+
+                                //$('#txtNgayCT').rules('add', {
+                                //    required: true,
+                                //    dateFormat: true,
+                                //    messages: {
+                                //        // required: "Ngày đến không được để trống"
+                                //    }
+                                //});
+    </script>
+
+}

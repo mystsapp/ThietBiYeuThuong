@@ -31,5 +31,20 @@ namespace ThietBiYeuThuong.Data.Models
 
         [DisplayName("Tình trạng")]
         public bool TinhTrang { get; set; } // Đã giao ?
+
+        public DateTime NgayTao { get; set; }
+
+        [DisplayName("Người tạo")]
+        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
+        public string NguoiTao { get; set; }
+
+        public DateTime NgaySua { get; set; }
+
+        [DisplayName("Người sửa")]
+        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
+        public string NguoiSua { get; set; }
+
+        [Column(TypeName = "nvarchar(MAX)")]
+        public string LogFile { get; set; }
     }
 }

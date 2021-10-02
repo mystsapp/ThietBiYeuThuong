@@ -21,7 +21,7 @@ namespace ThietBiYeuThuong.Data.Models
         public string LoaiPhieu { get; set; }
 
         [DisplayName("Bệnh nhân")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string BenhNhanId { get; set; }
 
         [ForeignKey("BenhNhanId")]
