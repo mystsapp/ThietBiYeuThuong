@@ -14,16 +14,16 @@ namespace ThietBiYeuThuong.Web.Controllers
 {
     public class BenhNhanController : BaseController
     {
-        private readonly IPhieuNXService _phieuNXService;
-        private readonly ICTPhieuNXService _cTPhieuNXService;
+        private readonly IHoSoBNService _phieuNXService;
+        private readonly ICTHoSoBNService _cTPhieuNXService;
         private readonly IBenhNhanService _benhNhanService;
         private readonly ITinhTrangBNService _tinhTrangBNService;
 
         [BindProperty]
         public BenhNhanViewModel BenhNhanVM { get; set; }
 
-        public BenhNhanController(IPhieuNXService phieuNXService,
-                                  ICTPhieuNXService cTPhieuNXService,
+        public BenhNhanController(IHoSoBNService phieuNXService,
+                                  ICTHoSoBNService cTPhieuNXService,
                                   IBenhNhanService benhNhanService,
                                   ITinhTrangBNService tinhTrangBNService)
         {

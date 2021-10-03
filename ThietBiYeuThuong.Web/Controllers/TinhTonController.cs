@@ -16,12 +16,12 @@ namespace ThietBiYeuThuong.Web.Controllers
     public class TinhTonController : BaseController
     {
         private readonly ITinhTonService _tinhTonService;
-        private readonly ICTPhieuNXService _cTPhieuNXService;
+        private readonly ICTHoSoBNService _cTPhieuNXService;
 
         [BindProperty]
         public TinhTonViewModel TinhVM { get; set; }
 
-        public TinhTonController(ITinhTonService tinhTonService, ICTPhieuNXService cTPhieuNXService)
+        public TinhTonController(ITinhTonService tinhTonService, ICTHoSoBNService cTPhieuNXService)
         {
             TinhVM = new TinhTonViewModel()
             {

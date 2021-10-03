@@ -13,8 +13,8 @@ namespace ThietBiYeuThuong.Data.Models
         {
         }
 
-        public DbSet<PhieuNX> PhieuNXes { get; set; }
-        public DbSet<CTPhieuNX> CTPhieuNXes { get; set; }
+        public DbSet<HoSoBN> HoSoBNs { get; set; }
+        public DbSet<CTHoSoBN> CTHoSoBNs { get; set; }
         public DbSet<TinhTon> TinhTons { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

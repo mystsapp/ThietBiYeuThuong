@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ThietBiYeuThuong.Data.Dtos
 {
-    public class PhieuNXDto
+    public class HoSoBNDto
     {
         [Key]
         [DisplayName("Số phiếu")]
@@ -20,9 +20,6 @@ namespace ThietBiYeuThuong.Data.Dtos
 
         [DisplayName("Bệnh nhân")]
         public string TenBN { get; set; }
-
-        [DisplayName("Người lập phiếu")]
-        public string LapPhieu { get; set; }
 
         [DisplayName("Ngày lập")]
         public DateTime? NgayLap { get; set; }

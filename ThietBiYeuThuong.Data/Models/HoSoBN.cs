@@ -9,16 +9,12 @@ using System.Threading.Tasks;
 
 namespace ThietBiYeuThuong.Data.Models
 {
-    public class PhieuNX
+    public class HoSoBN
     {
         [Key]
         [DisplayName("Số phiếu")]
         [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
         public string SoPhieu { get; set; }
-
-        [DisplayName("Loại phiếu")]
-        [MaxLength(3, ErrorMessage = "Chiều dài tối đa 3 ký tự"), Column(TypeName = "varchar(3)")]
-        public string LoaiPhieu { get; set; }
 
         [DisplayName("Bệnh nhân")]
         [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]

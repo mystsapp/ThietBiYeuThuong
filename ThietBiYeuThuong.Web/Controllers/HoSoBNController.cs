@@ -12,22 +12,22 @@ using ThietBiYeuThuong.Web.Services;
 
 namespace ThietBiYeuThuong.Web.Controllers
 {
-    public class PhieuNXController : BaseController
+    public class HoSoBNController : BaseController
     {
-        private readonly IPhieuNXService _phieuNXService;
-        private readonly ICTPhieuNXService _cTPhieuNXService;
+        private readonly IHoSoBNService _hoSoBNService;
+        private readonly ICTHoSoBNService _cTHoSoBNService;
 
         [BindProperty]
-        public PhieuNXViewModel PhieuVM { get; set; }
+        public HoSoBNViewModel HoSoBNVM { get; set; }
 
-        public PhieuNXController(IPhieuNXService phieuNXService, ICTPhieuNXService cTPhieuNXService)
+        public HoSoBNController(IHoSoBNService hoSoBNService, ICTHoSoBNService cTHoSoBNService)
         {
-            _phieuNXService = phieuNXService;
-            _cTPhieuNXService = cTPhieuNXService;
-            PhieuVM = new PhieuNXViewModel()
+            _hoSoBNService = hoSoBNService;
+            _cTHoSoBNService = cTHoSoBNService;
+            HoSoBNVM = new HoSoBNViewModel()
             {
-                PhieuNX = new Data.Models.PhieuNX(),
-                CTPhieuNX = new CTPhieuNX()
+                HoSoBN = new Data.Models.HoSoBN(),
+                CTHoSoBN = new CTHoSoBN()
             };
         }
 
@@ -38,8 +38,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                 ViewBag.id = "";
             }
 
-            PhieuVM.StrUrl = UriHelper.GetDisplayUrl(Request);
-            PhieuVM.Page = page;
+            HoSoBNVM.StrUrl = UriHelper.GetDisplayUrl(Request);
+            HoSoBNVM.Page = page;
 
             ViewBag.searchString = searchString;
             ViewBag.searchFromDate = searchFromDate;
@@ -47,15 +47,15 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             if (!string.IsNullOrEmpty(id)) // for redirect with id
             {
-                PhieuVM.PhieuNX = await _phieuNXService.GetById(id);
-                ViewBag.id = PhieuVM.PhieuNX.SoPhieu;
+                HoSoBNVM.HoSoBN = await _hoSoBNService.GetById(id);
+                ViewBag.id = HoSoBNVM.HoSoBN.SoPhieu;
             }
             else
             {
-                PhieuVM.PhieuNX = new Data.Models.PhieuNX();
+                HoSoBNVM.HoSoBN = new Data.Models.HoSoBN();
             }
-            PhieuVM.PhieuNXDtos = await _phieuNXService.ListPhieuNX(searchString, searchFromDate, searchToDate, page);
-            return View(PhieuVM);
+            HoSoBNVM.HoSoBNDtos = await _hoSoBNService.ListHoSoBN(searchString, searchFromDate, searchToDate, page);
+            return View(HoSoBNVM);
         }
 
         public IActionResult Create(string strUrl, int page)
@@ -63,12 +63,12 @@ namespace ThietBiYeuThuong.Web.Controllers
             // from session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
-            PhieuVM.StrUrl = strUrl;
+            HoSoBNVM.StrUrl = strUrl;
 
-            PhieuVM.ListGT = ListGT();
-            PhieuVM.ListLoaiPhieu = ListLoaiPhieu();
+            //HoSoBNVM.ListGT = ListGT();
+            //HoSoBNVM.ListLoaiPhieu = ListLoaiPhieu();
 
-            return View(PhieuVM);
+            return View(HoSoBNVM);
         }
 
         [HttpPost, ActionName("Create")]
@@ -79,78 +79,79 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                PhieuVM = new PhieuNXViewModel()
+                HoSoBNVM = new HoSoBNViewModel()
                 {
-                    PhieuNX = new PhieuNX(),
-                    ListGT = ListGT(),
-                    ListLoaiPhieu = ListLoaiPhieu(),
+                    HoSoBN = new HoSoBN(),
+                    //ListGT = ListGT(),
+                    //ListLoaiPhieu = ListLoaiPhieu(),
                     StrUrl = strUrl
                 };
 
-                return View(PhieuVM);
+                return View(HoSoBNVM);
             }
 
-            PhieuVM.PhieuNX.NgayLap = DateTime.Now;
-            PhieuVM.PhieuNX.LapPhieu = user.Username;
+            HoSoBNVM.HoSoBN.NgayLap = DateTime.Now;
+            HoSoBNVM.HoSoBN.LapPhieu = user.Username;
 
-            // next sophieu --> bat buoc phai co'
-            switch (PhieuVM.PhieuNX.LoaiPhieu)
-            {
-                case "PN": // nhap
-                    PhieuVM.PhieuNX.SoPhieu = _phieuNXService.GetSoPhieu("PN");
-                    break;
+            HoSoBNVM.HoSoBN.SoPhieu = _hoSoBNService.GetSoPhieu("PN");
+            //// next sophieu --> bat buoc phai co'
+            //switch (HoSoBNVM.PhieuNX.LoaiPhieu)
+            //{
+            //    case "PN": // nhap
+            //        HoSoBNVM.PhieuNX.SoPhieu = _phieuNXService.GetSoPhieu("PN");
+            //        break;
 
-                default: // xuat
-                    PhieuVM.PhieuNX.SoPhieu = _phieuNXService.GetSoPhieu("PX");
-                    break;
-            }
-            // next sophieu
+            //    default: // xuat
+            //        HoSoBNVM.PhieuNX.SoPhieu = _phieuNXService.GetSoPhieu("PX");
+            //        break;
+            //}
+            //// next sophieu
 
             // ghi log
-            PhieuVM.PhieuNX.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            HoSoBNVM.HoSoBN.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
             try
             {
-                await _phieuNXService.CreateAsync(PhieuVM.PhieuNX); // save
+                await _hoSoBNService.CreateAsync(HoSoBNVM.HoSoBN); // save
 
                 // if loaiphieu = pn --> save vao CTPhieu
-                if (PhieuVM.PhieuNX.LoaiPhieu == "PN")
+                if (HoSoBNVM.HoSoBN.LoaiPhieu == "PN")
                 {
-                    PhieuVM.CTPhieuNX.PhieuNXId = PhieuVM.PhieuNX.SoPhieu;
-                    PhieuVM.CTPhieuNX.LapPhieu = user.Username;
-                    PhieuVM.CTPhieuNX.NgayNhap = DateTime.Now;
+                    HoSoBNVM.CTHoSoBN.HoSoBNId = HoSoBNVM.HoSoBN.SoPhieu;
+                    HoSoBNVM.CTHoSoBN.LapPhieu = user.Username;
+                    HoSoBNVM.CTHoSoBN.NgayNhap = DateTime.Now;
 
-                    PhieuVM.CTPhieuNX.ThietBiId = PhieuVM.CTPhieuNX.ThietBiId;
-                    PhieuVM.CTPhieuNX.SoLuong = PhieuVM.CTPhieuNX.SoLuong;
-                    PhieuVM.CTPhieuNX.GhiChu = PhieuVM.CTPhieuNX.GhiChu;
+                    HoSoBNVM.CTHoSoBN.ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId;
+                    HoSoBNVM.CTHoSoBN.SoLuong = HoSoBNVM.CTHoSoBN.SoLuong;
+                    HoSoBNVM.CTHoSoBN.GhiChu = HoSoBNVM.CTHoSoBN.GhiChu;
 
                     // next sophieuct --> bat buoc phai co'
-                    switch (PhieuVM.PhieuNX.LoaiPhieu)
+                    switch (HoSoBNVM.HoSoBN.LoaiPhieu)
                     {
                         case "PN": // nhap
-                            PhieuVM.CTPhieuNX.SoPhieuCT = _cTPhieuNXService.GetSoPhieuCT("CN");
+                            HoSoBNVM.CTHoSoBN.SoPhieuCT = _cTHoSoBNService.GetSoPhieuCT("CN");
                             break;
 
                         default: // xuat
-                            PhieuVM.PhieuNX.SoPhieu = _cTPhieuNXService.GetSoPhieuCT("CX");
+                            HoSoBNVM.HoSoBN.SoPhieu = _cTHoSoBNService.GetSoPhieuCT("CX");
                             break;
                     }
                     // next sophieuct
 
                     // ghi log
-                    PhieuVM.CTPhieuNX.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+                    HoSoBNVM.CTHoSoBN.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
-                    await _cTPhieuNXService.Create(PhieuVM.CTPhieuNX);
+                    await _cTHoSoBNService.Create(HoSoBNVM.CTHoSoBN);
                 }
 
                 SetAlert("Thêm mới thành công.", "success");
 
-                return RedirectToAction(nameof(Index), new { id = PhieuVM.PhieuNX.SoPhieu, page = page });
+                return RedirectToAction(nameof(Index), new { id = HoSoBNVM.HoSoBN.SoPhieu, page = page });
             }
             catch (Exception ex)
             {
                 SetAlert(ex.Message, "error");
-                return View(PhieuVM);
+                return View(HoSoBNVM);
             }
         }
 
@@ -159,25 +160,25 @@ namespace ThietBiYeuThuong.Web.Controllers
             // from session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
-            PhieuVM.StrUrl = strUrl;
+            HoSoBNVM.StrUrl = strUrl;
             if (string.IsNullOrEmpty(id))
             {
                 ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            PhieuVM.PhieuNX = await _phieuNXService.GetById(id);
+            HoSoBNVM.HoSoBN = await _hoSoBNService.GetById(id);
 
-            if (PhieuVM.PhieuNX == null)
+            if (HoSoBNVM.HoSoBN == null)
             {
                 ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            PhieuVM.ListGT = ListGT();
-            PhieuVM.ListLoaiPhieu = ListLoaiPhieu();
+            HoSoBNVM.ListGT = ListGT();
+            HoSoBNVM.ListLoaiPhieu = ListLoaiPhieu();
 
-            return View(PhieuVM);
+            return View(HoSoBNVM);
         }
 
         [HttpPost, ActionName("Edit")]
@@ -189,7 +190,7 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             string temp = "", log = "";
 
-            if (id != PhieuVM.PhieuNX.SoPhieu)
+            if (id != HoSoBNVM.HoSoBN.SoPhieu)
             {
                 ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
                 return View("~/Views/Shared/NotFound.cshtml");
@@ -197,34 +198,34 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                PhieuVM.PhieuNX.NgaySua = DateTime.Now;
-                PhieuVM.PhieuNX.NguoiSua = user.Username;
+                HoSoBNVM.HoSoBN.NgaySua = DateTime.Now;
+                HoSoBNVM.HoSoBN.NguoiSua = user.Username;
 
                 // kiem tra thay doi : trong getbyid() va ngoai view
 
                 #region log file
 
                 //var t = _unitOfWork.tourRepository.GetById(id);
-                var t = _phieuNXService.GetByIdAsNoTracking(id);
+                var t = _hoSoBNService.GetByIdAsNoTracking(id);
 
-                if (t.BenhNhanId != PhieuVM.PhieuNX.BenhNhanId)
+                if (t.BenhNhanId != HoSoBNVM.HoSoBN.BenhNhanId)
                 {
-                    temp += String.Format("- BenhNhanId thay đổi: {0}->{1}", t.BenhNhanId, PhieuVM.PhieuNX.BenhNhanId);
+                    temp += String.Format("- BenhNhanId thay đổi: {0}->{1}", t.BenhNhanId, HoSoBNVM.HoSoBN.BenhNhanId);
                 }
 
-                if (t.HoTenNVYTe != PhieuVM.PhieuNX.HoTenNVYTe)
+                if (t.HoTenNVYTe != HoSoBNVM.HoSoBN.HoTenNVYTe)
                 {
-                    temp += String.Format("- HoTenNVYTe thay đổi: {0}->{1}", t.HoTenNVYTe, PhieuVM.PhieuNX.HoTenNVYTe);
+                    temp += String.Format("- HoTenNVYTe thay đổi: {0}->{1}", t.HoTenNVYTe, HoSoBNVM.HoSoBN.HoTenNVYTe);
                 }
 
-                if (t.SDT_NVYT != PhieuVM.PhieuNX.SDT_NVYT)
+                if (t.SDT_NVYT != HoSoBNVM.HoSoBN.SDT_NVYT)
                 {
-                    temp += String.Format("- SDT_NVYT thay đổi: {0}->{1}", t.SDT_NVYT, PhieuVM.PhieuNX.SDT_NVYT);
+                    temp += String.Format("- SDT_NVYT thay đổi: {0}->{1}", t.SDT_NVYT, HoSoBNVM.HoSoBN.SDT_NVYT);
                 }
 
-                if (t.DonVi != PhieuVM.PhieuNX.DonVi)
+                if (t.DonVi != HoSoBNVM.HoSoBN.DonVi)
                 {
-                    temp += String.Format("- DonVi thay đổi: {0}->{1}", t.DonVi, PhieuVM.PhieuNX.DonVi);
+                    temp += String.Format("- DonVi thay đổi: {0}->{1}", t.DonVi, HoSoBNVM.HoSoBN.DonVi);
                 }
 
                 #endregion log file
@@ -237,12 +238,12 @@ namespace ThietBiYeuThuong.Web.Controllers
                     log += System.Environment.NewLine;
                     log += temp + " -User cập nhật tour: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // username
                     t.LogFile = t.LogFile + log;
-                    PhieuVM.PhieuNX.LogFile = t.LogFile;
+                    HoSoBNVM.HoSoBN.LogFile = t.LogFile;
                 }
 
                 try
                 {
-                    await _phieuNXService.UpdateAsync(PhieuVM.PhieuNX);
+                    await _hoSoBNService.UpdateAsync(HoSoBNVM.HoSoBN);
                     SetAlert("Cập nhật thành công", "success");
 
                     //return Redirect(strUrl);
@@ -252,12 +253,12 @@ namespace ThietBiYeuThuong.Web.Controllers
                 {
                     SetAlert(ex.Message, "error");
 
-                    return View(PhieuVM);
+                    return View(HoSoBNVM);
                 }
             }
             // not valid
 
-            return View(PhieuVM);
+            return View(HoSoBNVM);
         }
 
         public IActionResult DetailsRedirect(string strUrl/*, string tabActive*/)

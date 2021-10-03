@@ -6,11 +6,11 @@ using ThietBiYeuThuong.Data.Models;
 
 namespace ThietBiYeuThuong.Web.Models
 {
-    public class CTPhieuNXViewModel
+    public class CTHoSoBNViewModel
     {
-        public PhieuNX PhieuNX { get; set; }
-        public CTPhieuNX CTPhieuNX { get; set; }
-        public IEnumerable<CTPhieuNX> CTPhieuNXes { get; set; }
+        public HoSoBN HoSoBN { get; set; }
+        public CTHoSoBN CTHoSoBN { get; set; }
+        public IEnumerable<CTHoSoBN> CTHoSoBNs { get; set; }
         public string StrUrl { get; set; }
         public int Page { get; set; }
     }

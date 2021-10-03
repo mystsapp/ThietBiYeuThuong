@@ -15,7 +15,7 @@ namespace ThietBiYeuThuong.Web.Services
 
         List<TinhTon> Find_Equal_By_Date(DateTime dateTime);
 
-        Task<List<CTPhieuNX>> ListCTPhieuNX(string searchFromDate, string searchToDate);
+        Task<List<CTHoSoBN>> ListCTPhieuNX(string searchFromDate, string searchToDate);
 
         Task CreateAsync(TinhTon tinhTon);
 
@@ -103,9 +103,9 @@ namespace ThietBiYeuThuong.Web.Services
             return list.OrderByDescending(x => x.NgayCT).FirstOrDefault();
         }
 
-        public async Task<List<CTPhieuNX>> ListCTPhieuNX(string searchFromDate, string searchToDate)
+        public async Task<List<CTHoSoBN>> ListCTPhieuNX(string searchFromDate, string searchToDate)
         {
-            var list = new List<CTPhieuNX>();
+            var list = new List<CTHoSoBN>();
 
             // search date
             DateTime fromDate, toDate;
@@ -113,7 +113,7 @@ namespace ThietBiYeuThuong.Web.Services
             {
                 try
                 {
-                    List<CTPhieuNX> cTPhieuNXes = new List<CTPhieuNX>();
+                    List<CTHoSoBN> cTPhieuNXes = new List<CTHoSoBN>();
                     fromDate = DateTime.Parse(searchFromDate); // NgayCT
                     toDate = DateTime.Parse(searchToDate); // NgayCT
 

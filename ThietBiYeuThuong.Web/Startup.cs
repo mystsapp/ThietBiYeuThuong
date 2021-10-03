@@ -45,8 +45,8 @@ namespace ThietBiYeuThuong.Web
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<IPhieuNXService, PhieuNXService>();
-            services.AddTransient<ICTPhieuNXService, CTPhieuNXService>();
+            services.AddTransient<IHoSoBNService, HoSoBNService>();
+            services.AddTransient<ICTHoSoBNService, CTHoSoBNService>();
             services.AddTransient<ITinhTonService, TinhTonService>();
             services.AddTransient<ILoaiThietBiService, LoaiThietBiService>();
             services.AddTransient<IBenhNhanService, BenhNhanService>();

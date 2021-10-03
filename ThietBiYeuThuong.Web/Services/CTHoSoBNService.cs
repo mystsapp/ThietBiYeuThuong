@@ -8,54 +8,54 @@ using ThietBiYeuThuong.Data.Utilities;
 
 namespace ThietBiYeuThuong.Web.Services
 {
-    public interface ICTPhieuNXService
+    public interface ICTHoSoBNService
     {
-        Task<IEnumerable<CTPhieuNX>> List_CTPhieuNX_By_PhieuNXId(string phieuNXId);
+        Task<IEnumerable<CTHoSoBN>> List_CTPhieuNX_By_PhieuNXId(string phieuNXId);
 
-        Task Create(CTPhieuNX cTPhieuNX);
+        Task Create(CTHoSoBN cTPhieuNX);
 
-        Task UpdateAsync(CTPhieuNX cTPhieuNX);
+        Task UpdateAsync(CTHoSoBN cTPhieuNX);
 
         string GetSoPhieuCT(string param);
 
-        Task<List<CTPhieuNX>> GetCTTrongNgay();
+        Task<List<CTHoSoBN>> GetCTTrongNgay();
 
-        Task<CTPhieuNX> GetById(string id);
+        Task<CTHoSoBN> GetById(string id);
 
-        Task DeleteAsync(CTPhieuNX cTPhieuNX);
+        Task DeleteAsync(CTHoSoBN cTPhieuNX);
 
         Task<string> CheckTonDau(DateTime fromDate);
 
-        CTPhieuNX GetByIdAsNoTracking(string id);
+        CTHoSoBN GetByIdAsNoTracking(string id);
     }
 
-    public class CTPhieuNXService : ICTPhieuNXService
+    public class CTHoSoBNService : ICTHoSoBNService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CTPhieuNXService(IUnitOfWork unitOfWork)
+        public CTHoSoBNService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(CTPhieuNX cTPhieuNX)
+        public async Task Create(CTHoSoBN cTPhieuNX)
         {
             _unitOfWork.cTPhieuNXRepository.Create(cTPhieuNX);
             await _unitOfWork.Complete();
         }
 
-        public async Task DeleteAsync(CTPhieuNX cTPhieuNX)
+        public async Task DeleteAsync(CTHoSoBN cTPhieuNX)
         {
             _unitOfWork.cTPhieuNXRepository.Delete(cTPhieuNX);
             await _unitOfWork.Complete();
         }
 
-        public async Task<CTPhieuNX> GetById(string id)
+        public async Task<CTHoSoBN> GetById(string id)
         {
             return await _unitOfWork.cTPhieuNXRepository.GetByIdAsync(id);
         }
 
-        public async Task<List<CTPhieuNX>> GetCTTrongNgay()
+        public async Task<List<CTHoSoBN>> GetCTTrongNgay()
         {
             var cTPhieuNXes = _unitOfWork.cTPhieuNXRepository.GetAll();//.FindAsync(x => x.NgayNhap.Value.ToShortDateString() == DateTime.Now.ToShortDateString());
             if (cTPhieuNXes.Count() == 0) return null;
@@ -72,7 +72,7 @@ namespace ThietBiYeuThuong.Web.Services
             var cTPhieuNXes = _unitOfWork.cTPhieuNXRepository
                                    .Find(x => x.SoPhieuCT.Trim()
                                    .Contains(subfix)).ToList();// chi lay nhung SoPhieu cung param: N, X + năm
-            var cTPhieuNX = new CTPhieuNX();
+            var cTPhieuNX = new CTHoSoBN();
             if (cTPhieuNXes.Count() > 0)
             {
                 cTPhieuNX = cTPhieuNXes.OrderByDescending(x => x.SoPhieuCT).FirstOrDefault();
@@ -100,9 +100,9 @@ namespace ThietBiYeuThuong.Web.Services
             }
         }
 
-        public async Task<IEnumerable<CTPhieuNX>> List_CTPhieuNX_By_PhieuNXId(string phieuNXId)
+        public async Task<IEnumerable<CTHoSoBN>> List_CTPhieuNX_By_PhieuNXId(string hoSoBNId)
         {
-            return await _unitOfWork.cTPhieuNXRepository.FindIncludeOneAsync(x => x.PhieuNX, x => x.PhieuNXId == phieuNXId);
+            return await _unitOfWork.cTPhieuNXRepository.FindIncludeOneAsync(x => x.HoSoBN, x => x.HoSoBNId == hoSoBNId);
         }
 
         public async Task<string> CheckTonDau(DateTime fromDate)
@@ -114,7 +114,7 @@ namespace ThietBiYeuThuong.Web.Services
             {
                 // lay tat ca chi tiet truóc tuNgay(fromDate)
                 var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
-                                                   .FindIncludeOneAsync(x => x.PhieuNX, y => y.NgayTao < fromDate.AddDays(1));
+                                                   .FindIncludeOneAsync(x => x.HoSoBN, y => y.NgayTao < fromDate.AddDays(1));
                 string stringDate = "";
 
                 tinhTons = _unitOfWork.tinhTonRepository.Find(x => x.NgayCT <= fromDate).ToList();
@@ -151,12 +151,12 @@ namespace ThietBiYeuThuong.Web.Services
             }
         }
 
-        public CTPhieuNX GetByIdAsNoTracking(string id)
+        public CTHoSoBN GetByIdAsNoTracking(string id)
         {
             return _unitOfWork.cTPhieuNXRepository.GetByIdAsNoTracking(x => x.SoPhieuCT == id);
         }
 
-        public async Task UpdateAsync(CTPhieuNX cTPhieuNX)
+        public async Task UpdateAsync(CTHoSoBN cTPhieuNX)
         {
             _unitOfWork.cTPhieuNXRepository.Update(cTPhieuNX);
             await _unitOfWork.Complete();

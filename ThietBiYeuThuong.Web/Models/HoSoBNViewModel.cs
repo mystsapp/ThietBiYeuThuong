@@ -9,15 +9,15 @@ using X.PagedList;
 
 namespace ThietBiYeuThuong.Web.Models
 {
-    public class PhieuNXViewModel
+    public class HoSoBNViewModel
     {
-        public PhieuNX PhieuNX { get; set; }
-        public CTPhieuNX CTPhieuNX { get; set; }
-        public IPagedList<PhieuNXDto> PhieuNXDtos { get; set; }
+        public HoSoBN HoSoBN { get; set; }
+        public CTHoSoBN CTHoSoBN { get; set; }
+        public IPagedList<HoSoBNDto> HoSoBNDtos { get; set; }
         public string StrUrl { get; set; }
         public int Page { get; set; }
 
-        public List<ListViewModel> ListGT { get; set; }
-        public List<ListViewModel> ListLoaiPhieu { get; set; }
+        //public List<ListViewModel> ListGT { get; set; }
+        //public List<ListViewModel> ListLoaiPhieu { get; set; }
     }
 }

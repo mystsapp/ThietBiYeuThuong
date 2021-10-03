@@ -5,19 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ThietBiYeuThuong.Data.Models
 {
-    public class CTPhieuNX
+    public class CTHoSoBN
     {
         [Key]
         [DisplayName("Số phiếu CT")]
         [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
         public string SoPhieuCT { get; set; }
 
-        [DisplayName("PhieuNX")]
+        [DisplayName("Số hồ sơ")]
         [Required(ErrorMessage = "Trường này không được để trống")]
-        public string PhieuNXId { get; set; }
+        public string HoSoBNId { get; set; }
 
-        [ForeignKey("PhieuNXId")]
-        public virtual PhieuNX PhieuNX { get; set; }
+        [ForeignKey("HoSoBNId")]
+        public virtual HoSoBN HoSoBN { get; set; }
 
         [DisplayName("Tên TB")]
         [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]

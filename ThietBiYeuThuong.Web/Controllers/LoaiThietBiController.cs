@@ -13,14 +13,14 @@ namespace ThietBiYeuThuong.Web.Controllers
 {
     public class LoaiThietBiController : BaseController
     {
-        private readonly IPhieuNXService _phieuNXService;
-        private readonly ICTPhieuNXService _cTPhieuNXService;
+        private readonly IHoSoBNService _phieuNXService;
+        private readonly ICTHoSoBNService _cTPhieuNXService;
         private readonly ILoaiThietBiService _loaiThietBiService;
 
         [BindProperty]
         public LoaiThietBiViewModel LoaiVM { get; set; }
 
-        public LoaiThietBiController(IPhieuNXService phieuNXService, ICTPhieuNXService cTPhieuNXService, ILoaiThietBiService loaiThietBiService)
+        public LoaiThietBiController(IHoSoBNService phieuNXService, ICTHoSoBNService cTPhieuNXService, ILoaiThietBiService loaiThietBiService)
         {
             _phieuNXService = phieuNXService;
             _cTPhieuNXService = cTPhieuNXService;

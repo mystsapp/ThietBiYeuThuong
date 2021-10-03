@@ -10,49 +10,49 @@ using X.PagedList;
 
 namespace ThietBiYeuThuong.Web.Services
 {
-    public interface IPhieuNXService
+    public interface IHoSoBNService
     {
-        Task<List<PhieuNX>> GetAll();
+        Task<List<HoSoBN>> GetAll();
 
-        Task<PhieuNX> GetById(string id);
+        Task<HoSoBN> GetById(string id);
 
-        Task<IPagedList<PhieuNXDto>> ListPhieuNX(string searchString, string searchFromDate, string searchToDate, int? page);
+        Task<IPagedList<HoSoBNDto>> ListHoSoBN(string searchString, string searchFromDate, string searchToDate, int? page);
 
         string GetSoPhieu(string param);
 
-        Task CreateAsync(PhieuNX phieuNX);
+        Task CreateAsync(HoSoBN phieuNX);
 
-        Task UpdateAsync(PhieuNX phieuNX);
+        Task UpdateAsync(HoSoBN phieuNX);
 
-        PhieuNX GetByIdAsNoTracking(string id);
+        HoSoBN GetByIdAsNoTracking(string id);
     }
 
-    public class PhieuNXService : IPhieuNXService
+    public class HoSoBNService : IHoSoBNService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public PhieuNXService(IUnitOfWork unitOfWork)
+        public HoSoBNService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateAsync(PhieuNX phieuNX)
+        public async Task CreateAsync(HoSoBN phieuNX)
         {
             _unitOfWork.phieuNXRepository.Create(phieuNX);
             await _unitOfWork.Complete();
         }
 
-        public async Task<List<PhieuNX>> GetAll()
+        public async Task<List<HoSoBN>> GetAll()
         {
             return await _unitOfWork.phieuNXRepository.GetAll().ToListAsync();
         }
 
-        public async Task<PhieuNX> GetById(string id)
+        public async Task<HoSoBN> GetById(string id)
         {
             return await _unitOfWork.phieuNXRepository.GetByIdAsync(id);
         }
 
-        public PhieuNX GetByIdAsNoTracking(string id)
+        public HoSoBN GetByIdAsNoTracking(string id)
         {
             return _unitOfWork.phieuNXRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
         }
@@ -64,7 +64,7 @@ namespace ThietBiYeuThuong.Web.Services
             var phieuNXes = _unitOfWork.phieuNXRepository
                                    .Find(x => x.SoPhieu.Trim()
                                    .Contains(subfix)).ToList();// chi lay nhung SoPhieu cung param: N, X + năm
-            var phieuNX = new PhieuNX();
+            var phieuNX = new HoSoBN();
             if (phieuNXes.Count() > 0)
             {
                 phieuNX = phieuNXes.OrderByDescending(x => x.SoPhieu).FirstOrDefault();
@@ -92,7 +92,7 @@ namespace ThietBiYeuThuong.Web.Services
             }
         }
 
-        public async Task<IPagedList<PhieuNXDto>> ListPhieuNX(string searchString, string searchFromDate, string searchToDate, int? page)
+        public async Task<IPagedList<HoSoBNDto>> ListHoSoBN(string searchString, string searchFromDate, string searchToDate, int? page)
         {
             // return a 404 if user browses to before the first page
             if (page.HasValue && page < 1)
@@ -100,47 +100,45 @@ namespace ThietBiYeuThuong.Web.Services
 
             // retrieve list from database/whereverand
 
-            var list = new List<PhieuNXDto>();
-            var phieuNXs = new List<PhieuNX>();
+            var list = new List<HoSoBNDto>();
+            var hoSoBNs = new List<HoSoBN>();
 
             // search for sgtcode in kvctptC
             if (!string.IsNullOrEmpty(searchString))
             {
-                var phieuNXes = await _unitOfWork.phieuNXRepository.FindIncludeOneAsync(bn => bn.BenhNhan, x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
+                var hoSoBNs1 = await _unitOfWork.phieuNXRepository.FindIncludeOneAsync(bn => bn.BenhNhan, x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
                                            (!string.IsNullOrEmpty(x.BenhNhan.HoTenBN) && x.BenhNhan.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.HoTenNVYTe) && x.HoTenNVYTe.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.SDT_NVYT) && x.SDT_NVYT.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower())));
-                phieuNXs = phieuNXes.ToList();
+                hoSoBNs = hoSoBNs1.ToList();
             }
             else
             {
-                phieuNXs = await GetAll();
+                hoSoBNs = await GetAll();
 
-                if (phieuNXs == null)
+                if (hoSoBNs == null)
                 {
                     return null;
                 }
             }
 
-            foreach (var item in phieuNXs)
+            foreach (var item in hoSoBNs)
             {
-                var phieuNXDto = new PhieuNXDto();
+                var hoSoBNDto = new HoSoBNDto();
 
-                phieuNXDto.SoPhieu = item.SoPhieu;
-                phieuNXDto.DonVi = item.DonVi;
-                phieuNXDto.HoTenNVYTe = item.HoTenNVYTe;
-                phieuNXDto.LapPhieu = item.LapPhieu;
-                phieuNXDto.LoaiPhieu = item.LoaiPhieu;
-                phieuNXDto.NgayLap = item.NgayLap;
-                phieuNXDto.NgaySua = item.NgaySua;
-                phieuNXDto.NguoiSua = item.NguoiSua;
-                phieuNXDto.NVTruc = item.NVTruc;
-                phieuNXDto.SDT_NVYT = item.SDT_NVYT;
-                phieuNXDto.STT = item.STT;
-                phieuNXDto.TenBN = item.BenhNhan.HoTenBN;
+                hoSoBNDto.SoPhieu = item.SoPhieu;
+                hoSoBNDto.DonVi = item.DonVi;
+                hoSoBNDto.HoTenNVYTe = item.HoTenNVYTe;
+                hoSoBNDto.NgayLap = item.NgayLap;
+                hoSoBNDto.NgaySua = item.NgaySua;
+                hoSoBNDto.NguoiSua = item.NguoiSua;
+                hoSoBNDto.NVTruc = item.NVTruc;
+                hoSoBNDto.SDT_NVYT = item.SDT_NVYT;
+                hoSoBNDto.STT = item.STT;
+                hoSoBNDto.TenBN = item.BenhNhan.HoTenBN;
 
-                list.Add(phieuNXDto);
+                list.Add(hoSoBNDto);
             }
 
             list = list.OrderByDescending(x => x.NgayLap).ToList();
@@ -223,7 +221,7 @@ namespace ThietBiYeuThuong.Web.Services
             return listPaged;
         }
 
-        public async Task UpdateAsync(PhieuNX phieuNX)
+        public async Task UpdateAsync(HoSoBN phieuNX)
         {
             _unitOfWork.phieuNXRepository.Update(phieuNX);
             await _unitOfWork.Complete();
