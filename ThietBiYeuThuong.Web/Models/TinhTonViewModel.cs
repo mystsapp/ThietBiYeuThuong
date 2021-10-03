@@ -10,7 +10,7 @@ namespace ThietBiYeuThuong.Web.Models
     public class TinhTonViewModel
     {
         public TinhTon TinhTon { get; set; }
-        public List<CTHoSoBN> CTPhieuNXes { get; set; }
+        public List<CTHoSoBN> CTHoSoBNs { get; set; }
         public string StrUrl { get; set; }
         public int Page { get; set; }
 

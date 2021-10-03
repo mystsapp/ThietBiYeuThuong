@@ -125,8 +125,8 @@ namespace ThietBiYeuThuong.Web.Services
                     //}
                     //else
                     //{
-                    var cTPhieuNXes1 = await _unitOfWork.cTPhieuNXRepository
-                                  .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao.Value >= fromDate &&
+                    var cTPhieuNXes1 = await _unitOfWork.cTHoSoBNRepository
+                                  .FindIncludeOneAsync(p => p.HoSoBN, x => x.NgayTao.Value >= fromDate &&
                                    x.NgayTao < toDate.AddDays(1));
                     cTPhieuNXes = cTPhieuNXes1.ToList();
                     //}
@@ -145,8 +145,8 @@ namespace ThietBiYeuThuong.Web.Services
                     try
                     {
                         fromDate = DateTime.Parse(searchFromDate);
-                        var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
-                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao >= fromDate);
+                        var cTPhieuNXes = await _unitOfWork.cTHoSoBNRepository
+                                      .FindIncludeOneAsync(p => p.HoSoBN, x => x.NgayTao >= fromDate);
                         list = await cTPhieuNXes.ToListAsync();
                     }
                     catch (Exception)
@@ -159,8 +159,8 @@ namespace ThietBiYeuThuong.Web.Services
                     try
                     {
                         toDate = DateTime.Parse(searchToDate);
-                        var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository
-                                      .FindIncludeOneAsync(p => p.PhieuNX, x => x.NgayTao < toDate.AddDays(1));
+                        var cTPhieuNXes = await _unitOfWork.cTHoSoBNRepository
+                                      .FindIncludeOneAsync(p => p.HoSoBN, x => x.NgayTao < toDate.AddDays(1));
                         list = await cTPhieuNXes.ToListAsync();
                     }
                     catch (Exception)
@@ -171,7 +171,7 @@ namespace ThietBiYeuThuong.Web.Services
             }
             // search date
 
-            list = list.OrderByDescending(x => x.PhieuNX.SoPhieu).ToList();
+            list = list.OrderByDescending(x => x.HoSoBN.SoPhieu).ToList();
 
             return list;
         }
@@ -195,13 +195,13 @@ namespace ThietBiYeuThuong.Web.Services
             TinhTon tinhTon = tinhTons.OrderByDescending(x => x.NgayCT).FirstOrDefault();
 
             // lay tat ca chi tiet truóc tuNgay(fromDate)
-            var cTPhieuNXes = await _unitOfWork.cTPhieuNXRepository.FindIncludeOneAsync(x => x.PhieuNX, y => y.PhieuNX.NgayLap < fromDate.AddDays(1));
+            var cTPhieuNXes = await _unitOfWork.cTHoSoBNRepository.FindIncludeOneAsync(x => x.HoSoBN, y => y.HoSoBN.NgayLap < fromDate.AddDays(1));
             string stringDate = "";
 
             // tonQuy.NgayCT (sau cung nhat) < nhung chi tiet < tuNggay (fromdate)
             for (DateTime i = tinhTon.NgayCT.Value.AddDays(1); i < fromDate; i = i.AddDays(1)) // chay tu ngay tonquy den fromday
             {
-                var boolK = cTPhieuNXes.ToList().Exists(x => x.PhieuNX.NgayLap.Value.ToShortDateString() == i.ToShortDateString());
+                var boolK = cTPhieuNXes.ToList().Exists(x => x.HoSoBN.NgayLap.Value.ToShortDateString() == i.ToShortDateString());
                 if (boolK)
                 {
                     stringDate += i.ToString("dd/MM/yyyy") + "-";

@@ -20,7 +20,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu</a></li>
                     <li class="breadcrumb-item active">Thêm phiếu</li>
                 </ol>
             </div>
@@ -47,21 +47,21 @@
         </div>
         <div class="card-body p-0">
 
-            <form method="post" autocomplete="off" id="frmPhieuNXCreate">
+            <form method="post" autocomplete="off" id="frmHoSoBNCreate">
                 <div class="pr-4 pl-4 text-sm">
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <div class="form-group row">
+                    @*<div class="form-group row">
 
-                        <div class="col-md-2">
-                            <label asp-for="PhieuNX.LoaiPhieu" class="control-label"></label>
-                            <select asp-for="PhieuNX.LoaiPhieu" class="form-control form-control-sm "
-                                    asp-items="@(new SelectList(Model.ListLoaiPhieu, "Name", "Name"))" id="ddlLoaiPhieu">
-                            </select>
-                            <span asp-validation-for="PhieuNX.LoaiPhieu" class="text-danger"></span>
-                        </div>
-                    </div>
+                            <div class="col-md-2">
+                                <label asp-for="HoSoBN.LoaiPhieu" class="control-label"></label>
+                                <select asp-for="HoSoBN.LoaiPhieu" class="form-control form-control-sm "
+                                        asp-items="@(new SelectList(Model.ListLoaiPhieu, "Name", "Name"))" id="ddlLoaiPhieu">
+                                </select>
+                                <span asp-validation-for="HoSoBN.LoaiPhieu" class="text-danger"></span>
+                            </div>
+                        </div>*@
 
                     <div id="txtXuat">
 
@@ -70,67 +70,67 @@
                             <div class="form-group row">
 
                                 <div class="col-md-4">
-                                    <label asp-for="PhieuNX.HoTenNVYTe" class="control-label"></label>
-                                    <input asp-for="PhieuNX.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
-                                    <span asp-validation-for="PhieuNX.HoTenNVYTe" class="text-danger"></span>
+                                    <label asp-for="HoSoBN.HoTenNVYTe" class="control-label"></label>
+                                    <input asp-for="HoSoBN.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
+                                    <span asp-validation-for="HoSoBN.HoTenNVYTe" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label asp-for="PhieuNX.SDT_NVYT" class="control-label "></label>
-                                    <input asp-for="PhieuNX.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
-                                    <span asp-validation-for="PhieuNX.SDT_NVYT" class="text-danger"></span>
+                                    <label asp-for="HoSoBN.SDT_NVYT" class="control-label "></label>
+                                    <input asp-for="HoSoBN.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
+                                    <span asp-validation-for="HoSoBN.SDT_NVYT" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label asp-for="PhieuNX.DonVi" class="control-label"></label>
-                                    <input asp-for="PhieuNX.DonVi" class="form-control form-control-sm" id="txtDonVi" />
-                                    <span asp-validation-for="PhieuNX.DonVi" class="text-danger"></span>
+                                    <label asp-for="HoSoBN.DonVi" class="control-label"></label>
+                                    <input asp-for="HoSoBN.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                                    <span asp-validation-for="HoSoBN.DonVi" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group row">
 
                                 <div class="col-md-6">
-                                    <label asp-for="PhieuNX.STT" class="control-label "></label>
-                                    <input asp-for="PhieuNX.STT" class="form-control form-control-sm" id="txtSTT" />
-                                    <span asp-validation-for="PhieuNX.STT" class="text-danger"></span>
+                                    <label asp-for="HoSoBN.STT" class="control-label "></label>
+                                    <input asp-for="HoSoBN.STT" class="form-control form-control-sm" id="txtSTT" />
+                                    <span asp-validation-for="HoSoBN.STT" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label asp-for="PhieuNX.NVTruc" class="control-label "></label>
-                                    <input asp-for="PhieuNX.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
-                                    <span asp-validation-for="PhieuNX.NVTruc" class="text-danger"></span>
+                                    <label asp-for="HoSoBN.NVTruc" class="control-label "></label>
+                                    <input asp-for="HoSoBN.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
+                                    <span asp-validation-for="HoSoBN.NVTruc" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
 
                         <div id="txtNhap">
-                            <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="0" />
+                            <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="0" />
                             <div class="form-group row">
 
                                 <div class="col-md-2">
-                                    <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                                    <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
-                                    <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
+                                    <label asp-for="CTHoSoBN.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                                    <input asp-for="CTHoSoBN.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
+                                    <span asp-validation-for="CTHoSoBN.ThietBi" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-2">
-                                    <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
-                                    <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
-                                    <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                                    <label asp-for="CTHoSoBN.SoLuong" class="control-label"></label>
+                                    <input asp-for="CTHoSoBN.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                                    <span asp-validation-for="CTHoSoBN.SoLuong" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-8">
-                                    <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
-                                    <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
-                                    <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
+                                    <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
+                                    <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                                    <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
-                            <a class="btn btn-success btn-sm" asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
+                            <a class="btn btn-success btn-sm" asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
     <!-- Validation -->
     <script>
 
-        $('#frmPhieuNXCreate').validate({
+        $('#frmHoSoBNCreate').validate({
             //rules: {
             //    email: {
             //        required: true,

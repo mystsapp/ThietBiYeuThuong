@@ -1,4 +1,4 @@
-﻿@model CTPhieuNXViewModel
+﻿@model CTHoSoBNViewModel
 
 @using Microsoft.AspNetCore.Http
 @using ThietBiYeuThuong.Data.Utilities
@@ -25,38 +25,37 @@
     </div>
     <div class="card-body p-0">
 
-        <form autocomplete="off" id="frmCTPhieuNXCreate">
+        <form autocomplete="off" id="frmCTHoSoBNCreate">
             <div class="pr-4 pl-4 text-sm">
 
-                <input type="hidden" asp-for="PhieuNX.SoPhieu" />
-                <input type="hidden" asp-for="PhieuNX.LoaiPhieu" />
-                <input type="hidden" asp-for="CTPhieuNX.PhieuNXId" value="@Model.PhieuNX.SoPhieu" />
+                <input type="hidden" asp-for="HoSoBN.SoPhieu" />
+                <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="@Model.HoSoBN.SoPhieu" />
                 <input type="hidden" asp-for="Page" />
                 <div class="form-group row">
 
                     <div class="col-md-2">
-                        <label asp-for="CTPhieuNX.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                        <input asp-for="CTPhieuNX.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
-                        <span asp-validation-for="CTPhieuNX.ThietBi" class="text-danger"></span>
+                        <label asp-for="CTHoSoBN.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                        <input asp-for="CTHoSoBN.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
+                        <span asp-validation-for="CTHoSoBN.ThietBi" class="text-danger"></span>
                     </div>
 
                     <!--<div class="col-md-2">
-                    <label asp-for="CTPhieuNX.NgayXuat" class="control-label"></label>-->
+                    <label asp-for="CTHoSoBN.NgayXuat" class="control-label"></label>-->
                     @*(<strong class="text-red">*</strong>)*@ <!--<!---->@*asp-format="{0:dd/MM/yyyy}"*@
-                    <!--<input type="text" value="" asp-for="CTPhieuNX.NgayXuat" class="form-control form-control-sm maskInput" asp-format="{0:dd/MM/yyyy}" id="txtNgayXuat" />
-                        <span asp-validation-for="CTPhieuNX.NgayXuat" class="text-danger"></span>
+                    <!--<input type="text" value="" asp-for="CTHoSoBN.NgayXuat" class="form-control form-control-sm maskInput" asp-format="{0:dd/MM/yyyy}" id="txtNgayXuat" />
+                        <span asp-validation-for="CTHoSoBN.NgayXuat" class="text-danger"></span>
                     </div>-->
 
                     <div class="col-md-2">
-                        <label asp-for="CTPhieuNX.SoLuong" class="control-label"></label>
-                        <input asp-for="CTPhieuNX.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
-                        <span asp-validation-for="CTPhieuNX.SoLuong" class="text-danger"></span>
+                        <label asp-for="CTHoSoBN.SoLuong" class="control-label"></label>
+                        <input asp-for="CTHoSoBN.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                        <span asp-validation-for="CTHoSoBN.SoLuong" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-8">
-                        <label asp-for="CTPhieuNX.GhiChu" class="control-label"></label>
-                        <input asp-for="CTPhieuNX.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
-                        <span asp-validation-for="CTPhieuNX.GhiChu" class="text-danger"></span>
+                        <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
+                        <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                        <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -64,35 +63,35 @@
                     <div class="form-group row">
 
                         <div class="col-md-2">
-                            <label asp-for="CTPhieuNX.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                            <input asp-for="CTPhieuNX.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
-                            <span asp-validation-for="CTPhieuNX.DongHoGiao" class="text-danger"></span>
+                            <label asp-for="CTHoSoBN.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                            <input asp-for="CTHoSoBN.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
+                            <span asp-validation-for="CTHoSoBN.DongHoGiao" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-2">
-                            <label asp-for="CTPhieuNX.DongHoThu" class="control-label"></label>
-                            <input asp-for="CTPhieuNX.DongHoThu" class="form-control form-control-sm" id="txtSoLuong" />
-                            <span asp-validation-for="CTPhieuNX.DongHoThu" class="text-danger"></span>
+                            <label asp-for="CTHoSoBN.DongHoThu" class="control-label"></label>
+                            <input asp-for="CTHoSoBN.DongHoThu" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="CTHoSoBN.DongHoThu" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-2">
-                            <label asp-for="CTPhieuNX.NVGiaoBinh" class="control-label"></label>
-                            <input asp-for="CTPhieuNX.NVGiaoBinh" class="form-control form-control-sm" id="txtSoLuong" />
-                            <span asp-validation-for="CTPhieuNX.NVGiaoBinh" class="text-danger"></span>
+                            <label asp-for="CTHoSoBN.NVGiaoBinh" class="control-label"></label>
+                            <input asp-for="CTHoSoBN.NVGiaoBinh" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="CTHoSoBN.NVGiaoBinh" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary btn-sm" id="btnSubmit_CTPhieuNX_Create"><i class="fas fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-success btn-sm" id="btnBack_CTPhieuNX_Create"><i class="fas fa-backward "></i> Back</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="btnSubmit_CTHoSoBN_Create"><i class="fas fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-success btn-sm" id="btnBack_CTHoSoBN_Create"><i class="fas fa-backward "></i> Back</button>
                 </div>
             </div>
         </form>
     </div>
     <!-- /.card-body -->
 </div>
-<script src="~/js/Admin/PhieuNX/indexController.js"></script>
+<script src="~/js/Admin/HoSoBN/indexController.js"></script>
 
 <script>
     $(function () {
@@ -106,7 +105,7 @@
 
 <script>
 
-    $('#frmCTPhieuNXCreate').validate({
+    $('#frmCTHoSoBNCreate').validate({
         //rules: {
         //    email: {
         //        required: true,
@@ -159,7 +158,7 @@
     //    }
     //});
 
-    var loaiPhieu = '@Model.PhieuNX.LoaiPhieu';
+    @*var loaiPhieu = '@Model.HoSoBN.LoaiPhieu';
     if (loaiPhieu === 'PN') {
         if (loaiPhieu === 'PN') { // nhap
             $('#ctXuat').hide();
@@ -167,29 +166,29 @@
         else { // xuat
             $('#ctXuat').show();
         }
-    }
+    }*@
 
-    $('#btnSubmit_CTPhieuNX_Create').off('click').on('click', function () {
+    $('#btnSubmit_CTHoSoBN_Create').off('click').on('click', function () {
         debugger
 
-        if ($('#frmCTPhieuNXCreate').valid()) {
-            var cTPhieuNX = $('#frmCTPhieuNXCreate').serialize();
+        if ($('#frmCTHoSoBNCreate').valid()) {
+            var cTHoSoBN = $('#frmCTHoSoBNCreate').serialize();
             $.ajax({
                 type: "POST",
-                url: "/CTPhieuNX/CTPhieuNX_Create_Partial_Post",
-                data: cTPhieuNX,
+                url: "/CTHoSoBN/CTHoSoBN_Create_Partial_Post",
+                data: cTHoSoBN,
                 dataType: "json",
                 success: function (response) {
                     if (response.status) {
 
                         toastr.success('Tạo mới chi tiết thành công!'); // toastr in admin/tour/indexController.js
 
-                        $('#CTPhieuNX_Create_Partial').hide(500);
+                        $('#CTHoSoBN_Create_Partial').hide(500);
                         debugger
-                        phieuNXId = '@Model.PhieuNX.SoPhieu';
+                        HoSoBNId = '@Model.HoSoBN.SoPhieu';
                         page = '@Model.Page';
 
-                        indexController.Load_CTPhieuNXPartial(phieuNXId, page);
+                        indexController.Load_CTHoSoBNPartial(HoSoBNId, page);
                     }
                     else {
                         toastr.error(response.message);
@@ -201,10 +200,10 @@
 
     });
 
-    $('#btnBack_CTPhieuNX_Create').click(function () {
-        $('#CTPhieuNX_Create_Partial').hide(500);
-        $('#CTPhieuNX_Tbl').show(500);
-        $('#CTPhieuNX_Edit_Partial').hide(500);
+    $('#btnBack_CTHoSoBN_Create').click(function () {
+        $('#CTHoSoBN_Create_Partial').hide(500);
+        $('#CTHoSoBN_Tbl').show(500);
+        $('#CTHoSoBN_Edit_Partial').hide(500);
 
     })
 </script>

@@ -114,35 +114,35 @@ namespace ThietBiYeuThuong.Web.Controllers
             {
                 await _hoSoBNService.CreateAsync(HoSoBNVM.HoSoBN); // save
 
-                // if loaiphieu = pn --> save vao CTPhieu
-                if (HoSoBNVM.HoSoBN.LoaiPhieu == "PN")
-                {
-                    HoSoBNVM.CTHoSoBN.HoSoBNId = HoSoBNVM.HoSoBN.SoPhieu;
-                    HoSoBNVM.CTHoSoBN.LapPhieu = user.Username;
-                    HoSoBNVM.CTHoSoBN.NgayNhap = DateTime.Now;
+                //// if loaiphieu = pn --> save vao CTPhieu
+                //if (HoSoBNVM.HoSoBN.LoaiPhieu == "PN")
+                //{
+                //    HoSoBNVM.CTHoSoBN.HoSoBNId = HoSoBNVM.HoSoBN.SoPhieu;
+                //    HoSoBNVM.CTHoSoBN.LapPhieu = user.Username;
+                //    HoSoBNVM.CTHoSoBN.NgayNhap = DateTime.Now;
 
-                    HoSoBNVM.CTHoSoBN.ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId;
-                    HoSoBNVM.CTHoSoBN.SoLuong = HoSoBNVM.CTHoSoBN.SoLuong;
-                    HoSoBNVM.CTHoSoBN.GhiChu = HoSoBNVM.CTHoSoBN.GhiChu;
+                //    HoSoBNVM.CTHoSoBN.ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId;
+                //    HoSoBNVM.CTHoSoBN.SoLuong = HoSoBNVM.CTHoSoBN.SoLuong;
+                //    HoSoBNVM.CTHoSoBN.GhiChu = HoSoBNVM.CTHoSoBN.GhiChu;
 
-                    // next sophieuct --> bat buoc phai co'
-                    switch (HoSoBNVM.HoSoBN.LoaiPhieu)
-                    {
-                        case "PN": // nhap
-                            HoSoBNVM.CTHoSoBN.SoPhieuCT = _cTHoSoBNService.GetSoPhieuCT("CN");
-                            break;
+                //    // next sophieuct --> bat buoc phai co'
+                //    switch (HoSoBNVM.HoSoBN.LoaiPhieu)
+                //    {
+                //        case "PN": // nhap
+                //            HoSoBNVM.CTHoSoBN.SoPhieuCT = _cTHoSoBNService.GetSoPhieuCT("CN");
+                //            break;
 
-                        default: // xuat
-                            HoSoBNVM.HoSoBN.SoPhieu = _cTHoSoBNService.GetSoPhieuCT("CX");
-                            break;
-                    }
-                    // next sophieuct
+                //        default: // xuat
+                //            HoSoBNVM.HoSoBN.SoPhieu = _cTHoSoBNService.GetSoPhieuCT("CX");
+                //            break;
+                //    }
+                //    // next sophieuct
 
-                    // ghi log
-                    HoSoBNVM.CTHoSoBN.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+                //    // ghi log
+                //    HoSoBNVM.CTHoSoBN.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
-                    await _cTHoSoBNService.Create(HoSoBNVM.CTHoSoBN);
-                }
+                //    await _cTHoSoBNService.Create(HoSoBNVM.CTHoSoBN);
+                //}
 
                 SetAlert("Thêm mới thành công.", "success");
 
@@ -175,8 +175,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            HoSoBNVM.ListGT = ListGT();
-            HoSoBNVM.ListLoaiPhieu = ListLoaiPhieu();
+            //HoSoBNVM.ListGT = ListGT();
+            //HoSoBNVM.ListLoaiPhieu = ListLoaiPhieu();
 
             return View(HoSoBNVM);
         }

@@ -38,30 +38,30 @@ namespace ThietBiYeuThuong.Web.Services
 
         public async Task CreateAsync(HoSoBN phieuNX)
         {
-            _unitOfWork.phieuNXRepository.Create(phieuNX);
+            _unitOfWork.hoSoBNRepository.Create(phieuNX);
             await _unitOfWork.Complete();
         }
 
         public async Task<List<HoSoBN>> GetAll()
         {
-            return await _unitOfWork.phieuNXRepository.GetAll().ToListAsync();
+            return await _unitOfWork.hoSoBNRepository.GetAll().ToListAsync();
         }
 
         public async Task<HoSoBN> GetById(string id)
         {
-            return await _unitOfWork.phieuNXRepository.GetByIdAsync(id);
+            return await _unitOfWork.hoSoBNRepository.GetByIdAsync(id);
         }
 
         public HoSoBN GetByIdAsNoTracking(string id)
         {
-            return _unitOfWork.phieuNXRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
+            return _unitOfWork.hoSoBNRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
         }
 
         public string GetSoPhieu(string param)
         {
             var currentYear = DateTime.Now.Year; // ngay hien tai
             var subfix = param + currentYear.ToString(); // QT2021? ?QC2021? ?NT2021? ?NC2021?
-            var phieuNXes = _unitOfWork.phieuNXRepository
+            var phieuNXes = _unitOfWork.hoSoBNRepository
                                    .Find(x => x.SoPhieu.Trim()
                                    .Contains(subfix)).ToList();// chi lay nhung SoPhieu cung param: N, X + năm
             var phieuNX = new HoSoBN();
@@ -106,7 +106,7 @@ namespace ThietBiYeuThuong.Web.Services
             // search for sgtcode in kvctptC
             if (!string.IsNullOrEmpty(searchString))
             {
-                var hoSoBNs1 = await _unitOfWork.phieuNXRepository.FindIncludeOneAsync(bn => bn.BenhNhan, x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
+                var hoSoBNs1 = await _unitOfWork.hoSoBNRepository.FindIncludeOneAsync(bn => bn.BenhNhan, x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
                                            (!string.IsNullOrEmpty(x.BenhNhan.HoTenBN) && x.BenhNhan.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.HoTenNVYTe) && x.HoTenNVYTe.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.SDT_NVYT) && x.SDT_NVYT.ToLower().Contains(searchString.ToLower())) ||
@@ -223,7 +223,7 @@ namespace ThietBiYeuThuong.Web.Services
 
         public async Task UpdateAsync(HoSoBN phieuNX)
         {
-            _unitOfWork.phieuNXRepository.Update(phieuNX);
+            _unitOfWork.hoSoBNRepository.Update(phieuNX);
             await _unitOfWork.Complete();
         }
     }

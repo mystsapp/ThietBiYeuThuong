@@ -1,4 +1,4 @@
-﻿@model PhieuNXViewModel
+﻿@model HoSoBNViewModel
 
 @using X.PagedList;
 @using X.PagedList.Mvc.Core
@@ -75,20 +75,20 @@
                         <tr class="table-info">
 
                             <th>#</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SoPhieu)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().TenBN)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().HoTenNVYTe)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().SDT_NVYT)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().DonVi)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().STT)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().NVTruc)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNXDtos.FirstOrDefault().NgayLap)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().SoPhieu)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().TenBN)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().HoTenNVYTe)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().SDT_NVYT)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().DonVi)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().STT)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().NVTruc)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().NgayLap)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.PhieuNXDtos != null)
+                        @if (Model.HoSoBNDtos != null)
                         {
-                            @foreach (var item in Model.PhieuNXDtos)
+                            @foreach (var item in Model.HoSoBNDtos)
                             {
 
                                 <tr class="cursor-pointer @item.SoPhieu" @*data-huy="@item.HuyTour"*@ onclick="CTPhieuNX_Tbl()">
@@ -132,9 +132,9 @@
                 <!--hiden field for status click-->
             </div>
             <div class="p-2" style="background-color: aliceblue;">
-                @if (Model.PhieuNXDtos != null)
+                @if (Model.HoSoBNDtos != null)
                 {
-                    @Html.PagedListPager((IPagedList)Model.PhieuNXDtos, page => Url.Action("Index", new
+                    @Html.PagedListPager((IPagedList)Model.HoSoBNDtos, page => Url.Action("Index", new
                {
                    page = page,
                    option = Context.Request.Query["option"],

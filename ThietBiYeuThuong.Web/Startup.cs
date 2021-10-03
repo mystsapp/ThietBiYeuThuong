@@ -34,14 +34,17 @@ namespace ThietBiYeuThuong.Web
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<IPhieuNXRepository, PhieuNXRepository>();
-            services.AddTransient<ICTPhieuNXRepository, CTPhieuNXRepository>();
+            services.AddTransient<IHoSoBNRepository, HoSoBNRepository>();
+            services.AddTransient<ICTHoSoBNRepository, CTHoSoBNRepository>();
             services.AddTransient<ITinhTonRepository, TinhTonRepository>();
             services.AddTransient<ILoaiThietBiRepository, LoaiThietBiRepository>();
             services.AddTransient<IBenhNhanRepository, BenhNhanRepository>();
             services.AddTransient<IBenhNhanThietBiRepository, BenhNhanThietBiRepository>();
             services.AddTransient<IThietBiRepository, ThietBiRepository>();
             services.AddTransient<ITinhTrangBNRepository, TinhTrangBNRepository>();
+            services.AddTransient<IPhieuNhapRepository, PhieuNhapRepository>();
+            services.AddTransient<IPhieuXuatRepository, PhieuXuatRepository>();
+            services.AddTransient<ICTPhieuRepository, CTPhieuRepository>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -51,6 +54,9 @@ namespace ThietBiYeuThuong.Web
             services.AddTransient<ILoaiThietBiService, LoaiThietBiService>();
             services.AddTransient<IBenhNhanService, BenhNhanService>();
             services.AddTransient<ITinhTrangBNService, TinhTrangBNService>();
+            services.AddTransient<IPhieuNhapRepository, PhieuNhapRepository>();
+            services.AddTransient<IPhieuXuatRepository, PhieuXuatRepository>();
+            services.AddTransient<ICTPhieuRepository, CTPhieuRepository>();
 
             // FOR session
             services.AddSession(options =>

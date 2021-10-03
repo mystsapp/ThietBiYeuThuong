@@ -8,13 +8,13 @@ using ThietBiYeuThuong.Data.Models;
 
 namespace ThietBiYeuThuong.Data.Repositories
 {
-    public interface ICTPhieuNXRepository : IRepository<CTHoSoBN>
+    public interface IPhieuNhapRepository : IRepository<PhieuNhap>
     {
     }
 
-    public class CTPhieuNXRepository : Repository<CTHoSoBN>, ICTPhieuNXRepository
+    public class PhieuNhapRepository : Repository<PhieuNhap>, IPhieuNhapRepository
     {
-        public CTPhieuNXRepository(ThietBiYeuThuongDbContext context) : base(context)
+        public PhieuNhapRepository(ThietBiYeuThuongDbContext context) : base(context)
         {
         }
     }

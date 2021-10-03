@@ -49,14 +49,14 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             TinhVM.StrUrl = UriHelper.GetDisplayUrl(Request);
 
-            TinhVM.CTPhieuNXes = await _tinhTonService.ListCTPhieuNX(searchFromDate, searchToDate);
+            TinhVM.CTHoSoBNs = await _tinhTonService.ListCTPhieuNX(searchFromDate, searchToDate);
 
-            if (TinhVM.CTPhieuNXes.Count > 0)
+            if (TinhVM.CTHoSoBNs.Count > 0)
             {
                 var tinhTonLast = _tinhTonService.GetLast("", DateTime.Parse(searchFromDate).AddDays(-1).ToShortDateString());
                 TinhVM.TonDau = tinhTonLast == null ? 0 : tinhTonLast.SoLuongTon;
-                TinhVM.CongPhatSinhNhap = TinhVM.CTPhieuNXes.Where(x => x.PhieuNX.LoaiPhieu == "PN").Sum(x => x.SoLuong); // tong nhap
-                TinhVM.CongPhatSinhXuat = TinhVM.CTPhieuNXes.Where(x => x.PhieuNX.LoaiPhieu == "PX").Sum(x => x.SoLuong); // tong xuat
+                //TinhVM.CongPhatSinhNhap = TinhVM.CTPhieuNXes.Where(x => x.PhieuNX.LoaiPhieu == "PN").Sum(x => x.SoLuong); // tong nhap
+                //TinhVM.CongPhatSinhXuat = TinhVM.CTPhieuNXes.Where(x => x.PhieuNX.LoaiPhieu == "PX").Sum(x => x.SoLuong); // tong xuat
                 TinhVM.TonCuoi = TinhVM.TonDau + TinhVM.CongPhatSinhNhap - TinhVM.CongPhatSinhXuat;
 
                 //SetAlert("")

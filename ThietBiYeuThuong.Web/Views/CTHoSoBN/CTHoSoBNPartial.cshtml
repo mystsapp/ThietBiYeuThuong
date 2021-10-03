@@ -1,4 +1,4 @@
-﻿@model CTPhieuNXViewModel
+﻿@model CTHoSoBNViewModel
 
 @using Microsoft.AspNetCore.Http
 @using ThietBiYeuThuong.Data.Utilities
@@ -15,22 +15,22 @@
         <thead>
             <tr class="table-info">
 
-                <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_CTPhieuNX" data-phieunxid="@Model.PhieuNX.SoPhieu" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoPhieuCT)</th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().ThietBiId)</th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayNhap)</th> <!--?-->
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NgayXuat)</th> <!--?-->
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().DongHoGiao)</th> <!--NgoaiTe-->
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().DongHoThu)</th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().NVGiaoBinh)</th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().GhiChu)</th>
-                <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoLuong)</th>
+                <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_CTPhieuNX" data-hosobnid="@Model.HoSoBN.SoPhieu" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().SoPhieuCT)</th>
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().ThietBiId)</th>
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().NgayNhap)</th> <!--?-->
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().NgayXuat)</th> <!--?-->
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().DongHoGiao)</th> <!--NgoaiTe-->
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().DongHoThu)</th>
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().NVGiaoBinh)</th>
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().GhiChu)</th>
+                <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().SoLuong)</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model.CTPhieuNXes != null)
+            @if (Model.CTHoSoBNs != null)
             {
-                @foreach (var item in Model.CTPhieuNXes)
+                @foreach (var item in Model.CTHoSoBNs)
                 {
 
                     <tr class="ctphieu-cursor-pointer ">
@@ -47,7 +47,7 @@
                                 <span id="confirmDeleteSpan_@item.SoPhieuCT" style="display: none">
 
                                     <span class="text-dark ">Xoá?</span>
-                                    <button type="button" class="btn btn-danger btn-xs btnXoaDong" data-phieunxid="@Model.PhieuNX.SoPhieu" data-id="@item.SoPhieuCT">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-xs btnXoaDong" data-phieunxid="@Model.HoSoBN.SoPhieu" data-id="@item.SoPhieuCT">Yes</button>
                                     <button type="button" class="btn btn-primary btn-xs" onclick="confirmDelete('@item.SoPhieuCT', false)">No</button>
                                 </span>
                                 <span id="deleteSpan_@item.SoPhieuCT">
@@ -57,15 +57,15 @@
                             </div>
                         </td>
 
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoPhieuCT)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.ThietBi.TenTB)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayNhap)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayXuat)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoGiao)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoThu)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NVGiaoBinh)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.GhiChu)</td>
-                        <td class="CTPhieuNXes" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoLuong)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoPhieuCT)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.ThietBi.TenTB)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayNhap)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NgayXuat)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoGiao)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.DongHoThu)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.NVGiaoBinh)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.GhiChu)</td>
+                        <td class="CTHoSoBNs" data-id="@item.SoPhieuCT">@Html.DisplayFor(m => item.SoLuong)</td>
                     </tr>
 
                 }
@@ -74,7 +74,7 @@
     </table>
 </div>
 
-<script src="~/js/Admin/PhieuNX/indexController.js"></script>
+<script src="~/js/Admin/HoSoBN/indexController.js"></script>
 <script>
     function confirmDelete(uniqueId, isDeleteClicked) {
 
@@ -103,7 +103,7 @@
             else {
                 debugger
                 //phieunxid = $(this).data('phieunxid');
-                phieunxid = '@Model.PhieuNX.SoPhieu';
+                phieunxid = '@Model.HoSoBN.SoPhieu';
 
                 $('#CTPhieuNX_Tbl').hide(500);
                 $('#CTPhieuNX_Edit_Partial').hide(500);
@@ -135,7 +135,7 @@
             else {
                 debugger
                 //phieunxid = $(this).data('phieunxid');
-                phieunxid = '@Model.PhieuNX.SoPhieu';
+                phieunxid = '@Model.HoSoBN.SoPhieu';
                 id = $('.btnEditCTPhieuNX').data('ctphieuid');
                 page = '@Model.Page';
                 strUrl = '@Model.StrUrl';
@@ -160,7 +160,7 @@
     $('.btnXoaDong').off('click').on('click',function () {
 
         var page = @Model.Page;
-        var phieuNXId = '@Model.PhieuNX.SoPhieu';
+        var phieuNXId = '@Model.HoSoBN.SoPhieu';
 
         id = $(this).data('id'); // id: SoPhieuCT
 

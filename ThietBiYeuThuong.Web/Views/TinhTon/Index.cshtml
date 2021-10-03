@@ -60,22 +60,22 @@
                         <tr class="table-info">
 
                             <th>Ngày</th>
-                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().PhieuNX.SoPhieu)</th>
-                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().PhieuNX.BenhNhan.HoTenBN)</th>
-                            <th>@Html.DisplayNameFor(m => m.CTPhieuNXes.FirstOrDefault().SoLuong)</th>
+                            <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().HoSoBN.SoPhieu)</th>
+                            <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().HoSoBN.BenhNhan.HoTenBN)</th>
+                            <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().SoLuong)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.CTPhieuNXes.Count != 0)
+                        @if (Model.CTHoSoBNs.Count != 0)
                         {
-                            @foreach (var item in Model.CTPhieuNXes)
+                            @foreach (var item in Model.CTHoSoBNs)
                             {
 
                                 <tr class="cursor-pointer @item.SoPhieuCT">
 
-                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.NgayLap)</td>
-                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.SoPhieu)</td>
-                                    <td class="tdVal">@Html.DisplayFor(m => item.PhieuNX.BenhNhan.HoTenBN)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.HoSoBN.NgayLap)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.HoSoBN.SoPhieu)</td>
+                                    <td class="tdVal">@Html.DisplayFor(m => item.HoSoBN.BenhNhan.HoTenBN)</td>
                                     <td class="tdVal">@Html.DisplayFor(m => item.SoLuong)</td>
                                 </tr>
 

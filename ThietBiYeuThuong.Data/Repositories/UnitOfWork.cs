@@ -12,14 +12,17 @@ namespace ThietBiYeuThuong.Data.Repositories
         IUserRepository userRepository { get; }
         IRoleRepository roleRepository { get; }
         ITinhTonRepository tinhTonRepository { get; }
-        IPhieuNXRepository phieuNXRepository { get; }
-        ICTPhieuNXRepository cTPhieuNXRepository { get; }
+        IHoSoBNRepository hoSoBNRepository { get; }
+        ICTHoSoBNRepository cTHoSoBNRepository { get; }
         ILoaiThietBiRepository loaiThietBiRepository { get; }
         IBenhNhanRepository benhNhanRepository { get; }
         IBenhNhanThietBiRepository benhNhanThietBiRepository { get; }
         IThietBiRepository thietBiRepository { get; }
         ITinhTrangBNRepository tinhTrangBNRepository { get; }
         ITrangThaiRepository trangThaiRepository { get; }
+        IPhieuNhapRepository phieuNhapRepository { get; }
+        IPhieuXuatRepository phieuXuatRepository { get; }
+        ICTPhieuRepository cTPhieuRepository { get; }
 
         Task<int> Complete();
     }
@@ -35,14 +38,17 @@ namespace ThietBiYeuThuong.Data.Repositories
             userRepository = new UserRepository(_context);
             roleRepository = new RoleRepository(_context);
             tinhTonRepository = new TinhTonRepository(_context);
-            phieuNXRepository = new PhieuNXRepository(_context);
-            cTPhieuNXRepository = new CTPhieuNXRepository(_context);
+            hoSoBNRepository = new HoSoBNRepository(_context);
+            cTHoSoBNRepository = new CTHoSoBNRepository(_context);
             loaiThietBiRepository = new LoaiThietBiRepository(_context);
             benhNhanRepository = new BenhNhanRepository(_context);
             benhNhanThietBiRepository = new BenhNhanThietBiRepository(_context);
             thietBiRepository = new ThietBiRepository(_context);
             tinhTrangBNRepository = new TinhTrangBNRepository(_context);
             trangThaiRepository = new TrangThaiRepository(_context);
+            phieuNhapRepository = new PhieuNhapRepository(_context);
+            phieuXuatRepository = new PhieuXuatRepository(_context);
+            cTPhieuRepository = new CTPhieuRepository(_context);
         }
 
         public IUserRepository userRepository { get; }
@@ -51,9 +57,9 @@ namespace ThietBiYeuThuong.Data.Repositories
 
         public ITinhTonRepository tinhTonRepository { get; }
 
-        public IPhieuNXRepository phieuNXRepository { get; }
+        public IHoSoBNRepository hoSoBNRepository { get; }
 
-        public ICTPhieuNXRepository cTPhieuNXRepository { get; }
+        public ICTHoSoBNRepository cTHoSoBNRepository { get; }
 
         public ILoaiThietBiRepository loaiThietBiRepository { get; }
 
@@ -65,6 +71,11 @@ namespace ThietBiYeuThuong.Data.Repositories
         public ITinhTrangBNRepository tinhTrangBNRepository { get; }
 
         public ITrangThaiRepository trangThaiRepository { get; }
+
+        public IPhieuNhapRepository phieuNhapRepository { get; }
+
+        public IPhieuXuatRepository phieuXuatRepository { get; }
+        public ICTPhieuRepository cTPhieuRepository { get; }
 
         public async Task<int> Complete()
         {

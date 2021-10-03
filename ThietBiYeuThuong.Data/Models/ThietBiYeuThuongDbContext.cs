@@ -24,6 +24,9 @@ namespace ThietBiYeuThuong.Data.Models
         public DbSet<ThietBi> ThietBis { get; set; }
         public DbSet<TinhTrangBN> TinhTrangBNs { get; set; }
         public DbSet<TrangThai> TrangThais { get; set; }
+        public DbSet<PhieuNhap> PhieuNhaps { get; set; }
+        public DbSet<PhieuXuat> PhieuXuats { get; set; }
+        public DbSet<CTPhieu> CTPhieus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

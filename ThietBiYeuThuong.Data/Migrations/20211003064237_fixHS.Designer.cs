@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThietBiYeuThuong.Data.Models;
 
 namespace ThietBiYeuThuong.Data.Migrations
 {
     [DbContext(typeof(ThietBiYeuThuongDbContext))]
-    partial class ThietBiYeuThuongDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211003064237_fixHS")]
+    partial class fixHS
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,66 +160,6 @@ namespace ThietBiYeuThuong.Data.Migrations
                     b.ToTable("CTHoSoBNs");
                 });
 
-            modelBuilder.Entity("ThietBiYeuThuong.Data.Models.CTPhieu", b =>
-                {
-                    b.Property<string>("SoPhieuCT")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("DongHoGiao")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("DongHoThu")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("GhiChu")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("LapPhieu")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("LogFile")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<string>("NVGiaoBinh")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime?>("NgayNhap")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("NgayTao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("NgayXuat")
-                        .HasColumnType("datetime");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SoLuongHienTai")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SoPhieu")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("ThietBiId")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.HasKey("SoPhieuCT");
-
-                    b.HasIndex("ThietBiId");
-
-                    b.ToTable("CTPhieus");
-                });
-
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.HoSoBN", b =>
                 {
                     b.Property<string>("SoPhieu")
@@ -306,72 +248,6 @@ namespace ThietBiYeuThuong.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LoaiThietBis");
-                });
-
-            modelBuilder.Entity("ThietBiYeuThuong.Data.Models.PhieuNhap", b =>
-                {
-                    b.Property<string>("SoPhieu")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("DonVi")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("LogFile")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<DateTime?>("NgayNhap")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("NgaySua")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("NguoiNhap")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("NguoiSua")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("SoPhieu");
-
-                    b.ToTable("PhieuNhaps");
-                });
-
-            modelBuilder.Entity("ThietBiYeuThuong.Data.Models.PhieuXuat", b =>
-                {
-                    b.Property<string>("SoPhieu")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("BenhNhanId")
-                        .HasMaxLength(12)
-                        .HasColumnType("varchar(12)");
-
-                    b.Property<string>("LogFile")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<DateTime?>("NgaySua")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("NgayXuat")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("NguoiSua")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("NguoiXuat")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("SoPhieu");
-
-                    b.HasIndex("BenhNhanId");
-
-                    b.ToTable("PhieuXuats");
                 });
 
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.Role", b =>
@@ -660,25 +536,7 @@ namespace ThietBiYeuThuong.Data.Migrations
                     b.Navigation("ThietBi");
                 });
 
-            modelBuilder.Entity("ThietBiYeuThuong.Data.Models.CTPhieu", b =>
-                {
-                    b.HasOne("ThietBiYeuThuong.Data.Models.ThietBi", "ThietBi")
-                        .WithMany()
-                        .HasForeignKey("ThietBiId");
-
-                    b.Navigation("ThietBi");
-                });
-
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.HoSoBN", b =>
-                {
-                    b.HasOne("ThietBiYeuThuong.Data.Models.BenhNhan", "BenhNhan")
-                        .WithMany()
-                        .HasForeignKey("BenhNhanId");
-
-                    b.Navigation("BenhNhan");
-                });
-
-            modelBuilder.Entity("ThietBiYeuThuong.Data.Models.PhieuXuat", b =>
                 {
                     b.HasOne("ThietBiYeuThuong.Data.Models.BenhNhan", "BenhNhan")
                         .WithMany()
