@@ -1,0 +1,230 @@
+﻿@model PhieuNhapViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Thêm đầy";
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<ThietBiYeuThuong.Data.Models.User>("loginUser");
+
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm đầy</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu nhập</a></li>
+                    <li class="breadcrumb-item active">Thêm đầy</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm đầy</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+
+            <form method="post" autocomplete="off" id="frmHoSoBNCreate">
+                <div class="pr-4 pl-4 text-sm">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input type="hidden" asp-for="CTPhieu.SoPhieu" value="0" />
+
+                    <div class="form-group row">
+
+                        <div class="col-md-10">
+                            <label asp-for="PhieuNhap.DonVi" class="control-label"></label>
+                            <input asp-for="PhieuNhap.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                            <span asp-validation-for="PhieuNhap.DonVi" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label asp-for="SoLuong" class="control-label "></label>
+                            <input asp-for="SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="SoLuong" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <fieldset class="groupbox-border ">
+                        <legend class="groupbox-border"><span style="font-size:14px">Thiết bị:</span></legend>
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="ThietBi.TenTB" class="control-label"></label>
+                                <input asp-for="ThietBi.TenTB" class="form-control form-control-sm" id="txtTenTB" />
+                                <span asp-validation-for="ThietBi.TenTB" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="ThietBi.LoaiTBId" class="control-label "></label>
+                                <select asp-for="ThietBi.LoaiTBId" class="form-control form-control-sm "
+                                        asp-items="@(new SelectList(Model.LoaiThietBis, "Id", "Name"))" id="ddlLoaiTBId">
+                                </select>
+                                <span asp-validation-for="ThietBi.LoaiTBId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieu.DongHoGiao" class="control-label"></label>
+                                <input asp-for="CTPhieu.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
+                                <span asp-validation-for="CTPhieu.DongHoGiao" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieu.DongHoThu" class="control-label"></label>
+                                <input asp-for="CTPhieu.DongHoThu" class="form-control form-control-sm" id="txtDongHoThu" />
+                                <span asp-validation-for="CTPhieu.DongHoThu" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <div class="col-md-3">
+                                <label asp-for="CTPhieu.NVGiaoBinh" class="control-label"></label>
+                                <input asp-for="CTPhieu.NVGiaoBinh" class="form-control form-control-sm" id="txtNVGiaoBinh" />
+                                <span asp-validation-for="CTPhieu.NVGiaoBinh" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-9">
+                                <label asp-for="CTPhieu.GhiChu" class="control-label"></label>
+                                <input asp-for="CTPhieu.GhiChu" class="form-control form-control-sm" id="txtGhiChu" />
+                                <span asp-validation-for="CTPhieu.GhiChu" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
+                    <a class="btn btn-success btn-sm" asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+@section Scripts{
+    @*<script>
+
+            $(function () {
+                $(".datepicker").datepicker({
+                    dateFormat: 'dd/mm/yy'
+                });
+            });
+        </script>*@
+
+    @*<script src="~/js/Admin/Home/createController.js"></script>*@
+
+    <!-- select2 and multi select2 (bootstrap4)-->
+    @*<script>
+            //$('#txtMaKH').select2()
+            $('.select2').select2({
+            })
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+            //$('.tuyenTQ').select2({
+            //    theme: 'bootstrap4'
+            //})
+        </script>*@
+
+    <!-- Validation -->
+    <script>
+
+        $('#frmHoSoBNCreate').validate({
+            //rules: {
+            //    email: {
+            //        required: true,
+            //        email: true,
+            //    },
+            //    NgayDen: {
+            //        required: true
+            //    },
+            //    chuDetour1: {
+            //        required: true
+            //    },
+            //},
+            //messages: {
+            //    email: {
+            //        required: "Please enter a email address",
+            //        email: "Please enter a vaild email address"
+            //    },
+            //    NgayDen: {
+            //        required: "Please provide a date"
+            //    },
+            //    chuDetour1: "Please enter value"
+            //},
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                // add error text
+
+                //error.addClass('invalid-feedback').removeClass('error');
+                //element.closest('.chuDeTourGroup').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+        //$('#txtChuDeTour').rules('add', {
+        //    required: true,
+        //    messages: {
+        //        //required: "Chủ đề không được để trống"
+        //    }
+        //});
+
+        //$('#txtNgayCT').rules('add', {
+        //    required: true,
+        //    dateFormat: true,
+        //    messages: {
+        //        // required: "Ngày đến không được để trống"
+        //    }
+        //});
+
+        //$('#txtNhap').hide();
+        $('#txtXuat').show();
+        $('#ddlLoaiPhieu').val("PX");
+        debugger
+        $('#ddlLoaiPhieu').change(function () {
+            var loaiPhieu = $('#ddlLoaiPhieu').val();
+            if (loaiPhieu === 'PN') { // nhap
+                $('#txtNhap').show(500);
+                $('#txtXuat').hide(500);
+            }
+            else { // xuat
+                $('#txtNhap').hide(500);
+                $('#txtXuat').show(500);
+            }
+        })
+    </script>
+
+}

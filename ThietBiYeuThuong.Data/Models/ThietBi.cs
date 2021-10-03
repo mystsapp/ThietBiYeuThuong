@@ -23,6 +23,9 @@ namespace ThietBiYeuThuong.Data.Models
         [DisplayName("Trạng thái")]
         public int TrangThaiId { get; set; }
 
+        [ForeignKey("TrangThaiId")]
+        public TrangThai TrangThai { get; set; }
+
         [DisplayName("Loại TB")]
         public int LoaiTBId { get; set; }
 

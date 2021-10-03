@@ -23,6 +23,8 @@ namespace ThietBiYeuThuong.Web.Services
         Task UpdateAsync(PhieuNhap phieuNhap);
 
         PhieuNhap GetByIdAsNoTracking(string id);
+
+        string GetSoPhieu(string param);
     }
 
     public class PhieuNhapService : IPhieuNhapService
@@ -53,6 +55,41 @@ namespace ThietBiYeuThuong.Web.Services
         public PhieuNhap GetByIdAsNoTracking(string id)
         {
             return _unitOfWork.phieuNhapRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
+        }
+
+        public string GetSoPhieu(string param)
+        {
+            var currentYear = DateTime.Now.Year; // ngay hien tai
+            var subfix = param + currentYear.ToString(); // QT2021? ?QC2021? ?NT2021? ?NC2021?
+            var phieuNhaps = _unitOfWork.phieuNhapRepository
+                                   .Find(x => x.SoPhieu.Trim()
+                                   .Contains(subfix)).ToList();// chi lay nhung SoPhieu cung param: N, X + năm
+            var phieuNhap = new PhieuNhap();
+            if (phieuNhaps.Count() > 0)
+            {
+                phieuNhap = phieuNhaps.OrderByDescending(x => x.SoPhieu).FirstOrDefault();
+            }
+
+            if (phieuNhap == null || string.IsNullOrEmpty(phieuNhap.SoPhieu))
+            {
+                return GetNextId.NextID_Phieu("", "") + subfix; // 000001PN2021
+            }
+            else
+            {
+                var oldYear = phieuNhap.SoPhieu.Substring(8, 4);
+
+                // cung nam
+                if (oldYear == currentYear.ToString())
+                {
+                    var oldSoCT = phieuNhap.SoPhieu.Substring(0, 6);
+                    return GetNextId.NextID_Phieu(oldSoCT, "") + subfix;
+                }
+                else
+                {
+                    // sang nam khac' chay lai tu dau
+                    return GetNextId.NextID_Phieu("", "") + subfix; // 000001PN2021
+                }
+            }
         }
 
         public async Task<IPagedList<PhieuNhap>> ListPhieuNhap(string searchString, string searchFromDate, string searchToDate, int? page)

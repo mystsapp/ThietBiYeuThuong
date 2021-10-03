@@ -10,7 +10,7 @@ using ThietBiYeuThuong.Web.Services;
 
 namespace ThietBiYeuThuong.Web.Controllers
 {
-    public class TinhTrangBNController : Controller
+    public class TinhTrangBNController : BaseController
     {
         private readonly ITinhTrangBNService _tinhTrangBNService;
         private readonly IBenhNhanService _benhNhanService;

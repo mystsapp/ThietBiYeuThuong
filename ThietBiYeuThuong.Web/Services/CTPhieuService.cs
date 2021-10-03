@@ -21,6 +21,12 @@ namespace ThietBiYeuThuong.Web.Services
         Task UpdateAsync(CTPhieu CTPhieu);
 
         CTPhieu GetByIdAsNoTracking(string id);
+
+        Task DeleteAsync(CTPhieu cTPhieu);
+
+        Task<IEnumerable<CTPhieu>> List_CTPhieu_By_PhieuNhapId(string phieuNhapId);
+
+        string GetSoPhieuCT(string param);
     }
 
     public class CTPhieuService : ICTPhieuService
@@ -38,6 +44,12 @@ namespace ThietBiYeuThuong.Web.Services
             await _unitOfWork.Complete();
         }
 
+        public async Task DeleteAsync(CTPhieu cTPhieu)
+        {
+            _unitOfWork.cTPhieuRepository.Delete(cTPhieu);
+            await _unitOfWork.Complete();
+        }
+
         public async Task<List<CTPhieu>> GetAll()
         {
             return await _unitOfWork.cTPhieuRepository.GetAll().ToListAsync();
@@ -51,6 +63,46 @@ namespace ThietBiYeuThuong.Web.Services
         public CTPhieu GetByIdAsNoTracking(string id)
         {
             return _unitOfWork.cTPhieuRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
+        }
+
+        public string GetSoPhieuCT(string param)
+        {
+            var currentYear = DateTime.Now.Year; // ngay hien tai
+            var subfix = param + currentYear.ToString(); // QT2021? ?QC2021? ?NT2021? ?NC2021?
+            var cTPhieus = _unitOfWork.cTPhieuRepository
+                                   .Find(x => x.SoPhieuCT.Trim()
+                                   .Contains(subfix)).ToList();// chi lay nhung SoPhieu cung param: N, X + năm
+            var cTPhieu = new CTPhieu();
+            if (cTPhieus.Count() > 0)
+            {
+                cTPhieu = cTPhieus.OrderByDescending(x => x.SoPhieuCT).FirstOrDefault();
+            }
+
+            if (cTPhieu == null || string.IsNullOrEmpty(cTPhieu.SoPhieuCT))
+            {
+                return GetNextId.NextID_Phieu("", "") + subfix; // 000001PN2021
+            }
+            else
+            {
+                var oldYear = cTPhieu.SoPhieuCT.Substring(8, 4);
+
+                // cung nam
+                if (oldYear == currentYear.ToString())
+                {
+                    var oldSoCT = cTPhieu.SoPhieuCT.Substring(0, 6);
+                    return GetNextId.NextID_Phieu(oldSoCT, "") + subfix;
+                }
+                else
+                {
+                    // sang nam khac' chay lai tu dau
+                    return GetNextId.NextID_Phieu("", "") + subfix; // 000001PN2021
+                }
+            }
+        }
+
+        public async Task<IEnumerable<CTPhieu>> List_CTPhieu_By_PhieuNhapId(string phieuNhapId)
+        {
+            return await _unitOfWork.cTPhieuRepository.FindIncludeOneAsync(tb => tb.ThietBi, x => x.SoPhieu == phieuNhapId);
         }
 
         public async Task UpdateAsync(CTPhieu CTPhieu)

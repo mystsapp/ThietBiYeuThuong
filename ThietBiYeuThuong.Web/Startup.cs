@@ -54,9 +54,11 @@ namespace ThietBiYeuThuong.Web
             services.AddTransient<ILoaiThietBiService, LoaiThietBiService>();
             services.AddTransient<IBenhNhanService, BenhNhanService>();
             services.AddTransient<ITinhTrangBNService, TinhTrangBNService>();
-            services.AddTransient<IPhieuNhapRepository, PhieuNhapRepository>();
-            services.AddTransient<IPhieuXuatRepository, PhieuXuatRepository>();
-            services.AddTransient<ICTPhieuRepository, CTPhieuRepository>();
+            services.AddTransient<IPhieuNhapService, PhieuNhapService>();
+            services.AddTransient<IPhieuXuatService, PhieuXuatService>();
+            services.AddTransient<ICTPhieuService, CTPhieuService>();
+            services.AddTransient<ITrangThaiService, TrangThaiService>();
+            services.AddTransient<IThietBiService, ThietBiService>();
 
             // FOR session
             services.AddSession(options =>
