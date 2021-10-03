@@ -102,6 +102,50 @@
                         </div>
                     </div>
 
+                    <fieldset class="groupbox-border ">
+                        <legend class="groupbox-border"><span style="font-size:14px">Tình trạng:</span></legend>
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label asp-for="TinhTrangBN.TinhTrang" class="control-label"></label>
+                                <input asp-for="TinhTrangBN.TinhTrang" class="form-control form-control-sm" id="txtTinhTrang" />
+                                <span asp-validation-for="TinhTrangBN.TinhTrang" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-8">
+                                <label asp-for="TinhTrangBN.BenhNenBN" class="control-label "></label>
+                                <input asp-for="TinhTrangBN.BenhNenBN" class="form-control form-control-sm" id="txtBenhNenBN" />
+                                <span asp-validation-for="TinhTrangBN.BenhNenBN" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label asp-for="TinhTrangBN.ChiSoSPO2" class="control-label"></label>
+                                <input asp-for="TinhTrangBN.ChiSoSPO2" class="form-control form-control-sm " id="txtChiSoSPO2" />
+                                <span asp-validation-for="TinhTrangBN.ChiSoSPO2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label asp-for="TinhTrangBN.TinhTrangBNSauO2" class="control-label "></label>
+                                <input asp-for="TinhTrangBN.TinhTrangBNSauO2" class="form-control form-control-sm" id="txtTinhTrangBNSauO2" />
+                                <span asp-validation-for="TinhTrangBN.TinhTrangBNSauO2" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label asp-for="TinhTrangBN.KetLuan" class="control-label "></label>
+                                <input asp-for="TinhTrangBN.KetLuan" class="form-control form-control-sm" id="txtKetLuan" />
+                                <span asp-validation-for="TinhTrangBN.KetLuan" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
                         <a class="btn btn-success btn-sm" asp-controller="PhieuNX" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
@@ -182,20 +226,20 @@
             }
         });
 
-                                //$('#txtChuDeTour').rules('add', {
-                                //    required: true,
-                                //    messages: {
-                                //        //required: "Chủ đề không được để trống"
-                                //    }
-                                //});
+                                                        //$('#txtChuDeTour').rules('add', {
+                                                        //    required: true,
+                                                        //    messages: {
+                                                        //        //required: "Chủ đề không được để trống"
+                                                        //    }
+                                                        //});
 
-                                //$('#txtNgayCT').rules('add', {
-                                //    required: true,
-                                //    dateFormat: true,
-                                //    messages: {
-                                //        // required: "Ngày đến không được để trống"
-                                //    }
-                                //});
+                                                        //$('#txtNgayCT').rules('add', {
+                                                        //    required: true,
+                                                        //    dateFormat: true,
+                                                        //    messages: {
+                                                        //        // required: "Ngày đến không được để trống"
+                                                        //    }
+                                                        //});
     </script>
 
 }

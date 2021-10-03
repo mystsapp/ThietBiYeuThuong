@@ -12,6 +12,7 @@ namespace ThietBiYeuThuong.Web.Models
     {
         public BenhNhan BenhNhan { get; set; }
         public IPagedList<BenhNhan> BenhNhans { get; set; }
+        public TinhTrangBN TinhTrangBN { get; set; }
         public string StrUrl { get; set; }
         public int Page { get; set; }
         public List<ListViewModel> ListGT { get; set; }

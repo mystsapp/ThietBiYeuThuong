@@ -1,0 +1,147 @@
+﻿@model TinhTrangBNViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@using ThietBiYeuThuong.Data.Models
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<User>("loginUser");
+}
+
+<div class="pr-2 pl-2" style="overflow-x:auto; overflow-y:auto">
+    <table class="table mytable text-nowrap text-sm" id="tinhTrangBNTbl">
+        <thead>
+            <tr class="table-info">
+
+                <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_TinhTrangBN" data-benhnhanid="@Model.BenhNhan.MaBN" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
+                <th>Ngày</th>
+                <th>@Html.DisplayNameFor(m => m.TinhTrangBNs.FirstOrDefault().TinhTrang)</th>
+                <th>@Html.DisplayNameFor(m => m.TinhTrangBNs.FirstOrDefault().BenhNenBN)</th>
+                <th>@Html.DisplayNameFor(m => m.TinhTrangBNs.FirstOrDefault().ChiSoSPO2)</th> <!--?-->
+                <th>@Html.DisplayNameFor(m => m.TinhTrangBNs.FirstOrDefault().TinhTrangBNSauO2)</th> <!--?-->
+                <th>@Html.DisplayNameFor(m => m.TinhTrangBNs.FirstOrDefault().KetLuan)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.TinhTrangBNs != null)
+            {
+                @foreach (var item in Model.TinhTrangBNs)
+                {
+
+                    <tr class="ctphieu-cursor-pointer ">
+
+                        <td>
+                            <div class="btn-group text-white" role="group">
+
+                                <a class="text-primary btnEditTinhTrangBN" title="Cập nhật" data-id="@item.Id"><i class="fas fa-edit"></i></a>
+                                @*<span class="text-dark"> | </span>*@
+
+                                <!--<a class="text-success" title="Chi tiết" asp-action="Details" asp-route-id="item.Id"><i class="fas fa-list"></i></a>-->
+
+                                <span class="text-dark"> | </span>
+                                <span id="confirmDeleteSpan_@item.Id" style="display: none">
+
+                                    <span class="text-dark ">Xoá?</span>
+                                    <button type="button" class="btn btn-danger btn-xs btnXoaDong" data-benhnhanid="@Model.BenhNhan.MaBN" data-id="@item.Id">Yes</button>
+                                    <button type="button" class="btn btn-primary btn-xs" onclick="confirmDelete('@item.Id', false)">No</button>
+                                </span>
+                                <span id="deleteSpan_@item.Id">
+
+                                    <button type="button" data-id="@item.Id" class="text-danger border-0 bg-transparent btnXoa" title="Xoá" onclick="confirmDelete('@item.Id', true)"><i class="fas fa-trash-alt"></i></button>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="CTBenhNhanes" data-id="@item.Id">@Html.DisplayFor(m => item.NgayTao)</td>
+                        <td class="CTBenhNhanes" data-id="@item.Id">@Html.DisplayFor(m => item.TinhTrang)</td>
+                        <td class="CTBenhNhanes" data-id="@item.Id">@Html.DisplayFor(m => item.BenhNenBN)</td>
+                        <td class="CTBenhNhanes" data-id="@item.Id">@Html.DisplayFor(m => item.ChiSoSPO2)</td>
+                        <td class="CTBenhNhanes" data-id="@item.Id">@Html.DisplayFor(m => item.TinhTrangBNSauO2)</td>
+                        <td class="CTBenhNhanes" data-id="@item.Id">@Html.DisplayFor(m => item.KetLuan)</td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/js/Admin/BenhNhan/bn_indexController.js"></script>
+
+<script>
+    function confirmDelete(uniqueId, isDeleteClicked) {
+
+        var deleteSpan = 'deleteSpan_' + uniqueId;
+        var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+        } else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
+    }
+
+    // btn_New_TinhTrangBN
+    $('#btn_New_TinhTrangBN').off('click').on('click', function () {
+
+        debugger
+        benhNhanId = '@Model.BenhNhan.MaBN';
+
+        $('#TinhTrangBN_Tbl').hide(500);
+        $('#TinhTrangBN_Edit_Partial').hide(500);
+
+        var url = '/TinhTrangBN/TinhTrangBN_Create_Partial';
+        $.get(url, { benhNhanId: benhNhanId }, function (response) {
+
+            $('#TinhTrangBN_Create_Partial').show(500);
+            $('#TinhTrangBN_Create_Partial').html(response);
+
+        });
+
+    });
+
+    // btnEditTinhTrangBN
+    $('.btnEditTinhTrangBN').off('click').on('click', function (e) {
+        e.preventDefault();
+
+        debugger
+        benhNhanId = '@Model.BenhNhan.MaBN';
+        id = $('.btnEditTinhTrangBN').data('id');
+        page = '@Model.Page';
+        strUrl = '@Model.StrUrl';
+
+        $('#TinhTrangBN_Tbl').hide(500);
+        $('#TinhTrangBN_Create_Partial').hide(500);
+
+        var url = '/TinhTrangBN/TinhTrangBN_Edit_Partial';
+        $.get(url, { benhNhanId: benhNhanId, id: id, strUrl: strUrl, page: page }, function (response) {
+
+            $('#TinhTrangBN_Edit_Partial').show(500);
+            $('#TinhTrangBN_Edit_Partial').html(response);
+
+        });
+
+    });
+
+    // btnXoaDong
+    $('.btnXoaDong').off('click').on('click',function () {
+
+        var page = @Model.Page;
+        benhNhanId = '@Model.BenhNhan.MaBN';
+        id = $(this).data('id'); // id: Id
+
+        var url = '/TinhTrangBN/Delete';
+        $.post(url, { id: id }, function (response) {
+            debugger
+            if (response) {
+                toastr.success('Xoá thành công', 'Xoá!');
+                bn_indexController.Load_TinhTrangBNPartial(benhNhanId, page);
+            }
+        });
+
+    });
+        // btnXoaDong
+</script>

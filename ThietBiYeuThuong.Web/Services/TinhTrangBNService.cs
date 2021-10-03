@@ -21,6 +21,10 @@ namespace ThietBiYeuThuong.Web.Services
         Task UpdateAsync(TinhTrangBN tinhTrangBN);
 
         TinhTrangBN GetByIdAsNoTracking(long id);
+
+        Task<IEnumerable<TinhTrangBN>> List_TinhTrang_By_BenhNhanId(string benhNhanId);
+
+        Task DeleteAsync(TinhTrangBN tinhTrangBN);
     }
 
     public class TinhTrangBNService : ITinhTrangBNService
@@ -38,6 +42,12 @@ namespace ThietBiYeuThuong.Web.Services
             await _unitOfWork.Complete();
         }
 
+        public async Task DeleteAsync(TinhTrangBN tinhTrangBN)
+        {
+            _unitOfWork.tinhTrangBNRepository.Delete(tinhTrangBN);
+            await _unitOfWork.Complete();
+        }
+
         public async Task<IEnumerable<TinhTrangBN>> GetAll()
         {
             return await _unitOfWork.tinhTrangBNRepository.GetAllIncludeOneAsync(x => x.BenhNhan);
@@ -51,6 +61,11 @@ namespace ThietBiYeuThuong.Web.Services
         public TinhTrangBN GetByIdAsNoTracking(long id)
         {
             return _unitOfWork.tinhTrangBNRepository.GetByIdAsNoTracking(x => x.Id == id);
+        }
+
+        public async Task<IEnumerable<TinhTrangBN>> List_TinhTrang_By_BenhNhanId(string benhNhanId)
+        {
+            return await _unitOfWork.tinhTrangBNRepository.FindIncludeOneAsync(x => x.BenhNhan, x => x.BenhNhanId == benhNhanId);
         }
 
         public async Task UpdateAsync(TinhTrangBN TinhTrangBN)

@@ -1,0 +1,192 @@
+﻿@model TinhTrangBNViewModel
+
+@using Microsoft.AspNetCore.Http
+@using ThietBiYeuThuong.Data.Utilities
+@using ThietBiYeuThuong.Data.Models
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    var user = HttpContextAccessor.HttpContext.Session.GetSingle<User>("loginUser");
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm tình trạng</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+
+        <form autocomplete="off" id="frmTinhTrangBNCreate">
+            <div class="pr-4 pl-4 text-sm">
+
+                <input type="hidden" asp-for="BenhNhan.MaBN" />
+                <input type="hidden" asp-for="TinhTrangBN.BenhNhanId" value="@Model.BenhNhan.MaBN" />
+                <input type="hidden" asp-for="Page" />
+
+                <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <label asp-for="TinhTrangBN.TinhTrang" class="control-label"></label>
+                        <input asp-for="TinhTrangBN.TinhTrang" class="form-control form-control-sm" id="txtTinhTrang" />
+                        <span asp-validation-for="TinhTrangBN.TinhTrang" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-md-8">
+                        <label asp-for="TinhTrangBN.BenhNenBN" class="control-label "></label>
+                        <input asp-for="TinhTrangBN.BenhNenBN" class="form-control form-control-sm" id="txtBenhNenBN" />
+                        <span asp-validation-for="TinhTrangBN.BenhNenBN" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="TinhTrangBN.ChiSoSPO2" class="control-label"></label>
+                        <input asp-for="TinhTrangBN.ChiSoSPO2" class="form-control form-control-sm " id="txtChiSoSPO2" />
+                        <span asp-validation-for="TinhTrangBN.ChiSoSPO2" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <label asp-for="TinhTrangBN.TinhTrangBNSauO2" class="control-label "></label>
+                        <input asp-for="TinhTrangBN.TinhTrangBNSauO2" class="form-control form-control-sm" id="txtTinhTrangBNSauO2" />
+                        <span asp-validation-for="TinhTrangBN.TinhTrangBNSauO2" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+
+                    <div class="col-md-12">
+                        <label asp-for="TinhTrangBN.KetLuan" class="control-label "></label>
+                        <input asp-for="TinhTrangBN.KetLuan" class="form-control form-control-sm" id="txtKetLuan" />
+                        <span asp-validation-for="TinhTrangBN.KetLuan" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-sm" id="btnSubmit_TinhTrangBN_Create"><i class="fas fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-success btn-sm" id="btnBack_TinhTrangBN_Create"><i class="fas fa-backward "></i> Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.card-body -->
+</div>
+<script src="~/js/Admin/BenhNhan/bn_indexController.js"></script>
+
+<script>
+    $(function () {
+        $(".maskInput").mask("99/99/9999");
+
+        $('#AlertBox').removeClass('hide');
+        $('#AlertBox').delay(2000).slideUp(2000);
+
+    });
+</script>
+
+<script>
+
+    $('#frmTinhTrangBNCreate').validate({
+        //rules: {
+        //    email: {
+        //        required: true,
+        //        email: true,
+        //    },
+        //    NgayDen: {
+        //        required: true
+        //    },
+        //    chuDetour1: {
+        //        required: true
+        //    },
+        //},
+        //messages: {
+        //    email: {
+        //        required: "Please enter a email address",
+        //        email: "Please enter a vaild email address"
+        //    },
+        //    NgayDen: {
+        //        required: "Please provide a date"
+        //    },
+        //    chuDetour1: "Please enter value"
+        //},
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            // add error text
+
+            //error.addClass('invalid-feedback').removeClass('error');
+            //element.closest('.chuDeTourGroup').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    //$('#txtChuDeTour').rules('add', {
+    //    required: true,
+    //    messages: {
+    //        //required: "Chủ đề không được để trống"
+    //    }
+    //});
+
+    //$('#txtNgayCT').rules('add', {
+    //    required: true,
+    //    dateFormat: true,
+    //    messages: {
+    //        // required: "Ngày đến không được để trống"
+    //    }
+    //});
+    // btnSubmit_TinhTrangBN_Create
+    $('#btnSubmit_TinhTrangBN_Create').off('click').on('click', function () {
+        debugger
+
+        if ($('#frmTinhTrangBNCreate').valid()) {
+            var TinhTrangBN = $('#frmTinhTrangBNCreate').serialize();
+            $.ajax({
+                type: "POST",
+                url: "/TinhTrangBN/TinhTrangBN_Create_Partial_Post",
+                data: TinhTrangBN,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status) {
+
+                        toastr.success('Thêm tình trạng thành công!'); // toastr in admin/tour/indexController.js
+
+                        $('#TinhTrangBN_Create_Partial').hide(500);
+                        debugger
+                        benhNhanId = '@Model.BenhNhan.MaBN';
+                        page = '@Model.Page';
+
+                        bn_indexController.Load_TinhTrangBNPartial(benhNhanId, page);
+                    }
+                    else {
+                        toastr.error(response.message);
+
+                    }
+                }
+            });
+        }
+
+    });
+
+    // btnBack_TinhTrangBN_Create
+    $('#btnBack_TinhTrangBN_Create').click(function () {
+        $('#TinhTrangBN_Create_Partial').hide(500);
+        $('#TinhTrangBN_Tbl').show(500);
+        $('#TinhTrangBN_Edit_Partial').hide(500);
+
+    })
+</script>

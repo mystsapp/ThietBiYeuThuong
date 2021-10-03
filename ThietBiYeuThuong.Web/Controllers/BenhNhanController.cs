@@ -16,19 +16,25 @@ namespace ThietBiYeuThuong.Web.Controllers
     {
         private readonly IPhieuNXService _phieuNXService;
         private readonly ICTPhieuNXService _cTPhieuNXService;
-        private readonly IBenhNhanService _BenhNhanService;
+        private readonly IBenhNhanService _benhNhanService;
+        private readonly ITinhTrangBNService _tinhTrangBNService;
 
         [BindProperty]
         public BenhNhanViewModel BenhNhanVM { get; set; }
 
-        public BenhNhanController(IPhieuNXService phieuNXService, ICTPhieuNXService cTPhieuNXService, IBenhNhanService BenhNhanService)
+        public BenhNhanController(IPhieuNXService phieuNXService,
+                                  ICTPhieuNXService cTPhieuNXService,
+                                  IBenhNhanService benhNhanService,
+                                  ITinhTrangBNService tinhTrangBNService)
         {
             _phieuNXService = phieuNXService;
             _cTPhieuNXService = cTPhieuNXService;
-            _BenhNhanService = BenhNhanService;
+            _benhNhanService = benhNhanService;
+            _tinhTrangBNService = tinhTrangBNService;
             BenhNhanVM = new BenhNhanViewModel()
             {
-                BenhNhan = new Data.Models.BenhNhan()
+                BenhNhan = new Data.Models.BenhNhan(),
+                TinhTrangBN = new TinhTrangBN()
             };
         }
 
@@ -48,14 +54,14 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             if (!string.IsNullOrEmpty(id)) // for redirect with id
             {
-                BenhNhanVM.BenhNhan = await _BenhNhanService.GetById(id);
+                BenhNhanVM.BenhNhan = await _benhNhanService.GetById(id);
                 ViewBag.id = BenhNhanVM.BenhNhan.MaBN;
             }
             else
             {
                 BenhNhanVM.BenhNhan = new Data.Models.BenhNhan();
             }
-            BenhNhanVM.BenhNhans = await _BenhNhanService.ListBenhNhan(searchString, searchFromDate, searchToDate, page);
+            BenhNhanVM.BenhNhans = await _benhNhanService.ListBenhNhan(searchString, searchFromDate, searchToDate, page);
             return View(BenhNhanVM);
         }
 
@@ -90,18 +96,23 @@ namespace ThietBiYeuThuong.Web.Controllers
             BenhNhanVM.BenhNhan.NgayTao = DateTime.Now;
             BenhNhanVM.BenhNhan.NguoiTao = user.Username;
 
-
             // next sophieu --> bat buoc phai co'
-            BenhNhanVM.BenhNhan.MaBN = _BenhNhanService.GetMaBN("BN");
+            BenhNhanVM.BenhNhan.MaBN = _benhNhanService.GetMaBN("BN");
             // next sophieu
-
 
             // ghi log
             BenhNhanVM.BenhNhan.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
+            // them tinh trang
+            BenhNhanVM.TinhTrangBN.BenhNhanId = BenhNhanVM.BenhNhan.MaBN;
+            BenhNhanVM.TinhTrangBN.NgayTao = DateTime.Now;
+            BenhNhanVM.TinhTrangBN.NguoiTao = user.Username;
+            BenhNhanVM.TinhTrangBN.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+
             try
             {
-                await _BenhNhanService.CreateAsync(BenhNhanVM.BenhNhan); // save
+                await _benhNhanService.CreateAsync(BenhNhanVM.BenhNhan); // save BN
+                await _tinhTrangBNService.CreateAsync(BenhNhanVM.TinhTrangBN); // save TinhTrangBN
 
                 SetAlert("Thêm mới thành công.", "success");
 
@@ -126,7 +137,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            BenhNhanVM.BenhNhan = await _BenhNhanService.GetById(id);
+            BenhNhanVM.BenhNhan = await _benhNhanService.GetById(id);
 
             if (BenhNhanVM.BenhNhan == null)
             {
@@ -164,7 +175,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 #region log file
 
                 //var t = _unitOfWork.tourRepository.GetById(id);
-                var t = _BenhNhanService.GetByIdAsNoTracking(id);
+                var t = _benhNhanService.GetByIdAsNoTracking(id);
 
                 if (t.HoTenTN != BenhNhanVM.BenhNhan.HoTenTN)
                 {
@@ -216,7 +227,7 @@ namespace ThietBiYeuThuong.Web.Controllers
 
                 try
                 {
-                    await _BenhNhanService.UpdateAsync(BenhNhanVM.BenhNhan);
+                    await _benhNhanService.UpdateAsync(BenhNhanVM.BenhNhan);
                     SetAlert("Cập nhật thành công", "success");
 
                     //return Redirect(strUrl);
