@@ -14,14 +14,21 @@ namespace ThietBiYeuThuong.Web.Controllers
     {
         private readonly IPhieuNhapService _phieuNhapService;
         private readonly ICTPhieuService _cTPhieuService;
+        private readonly ILoaiThietBiService _loaiThietBiService;
+        private readonly IThietBiService _thietBiService;
 
         [BindProperty]
         public CTPhieuViewModel CTPhieuVM { get; set; }
 
-        public CTPhieuController(IPhieuNhapService phieuNhapService, ICTPhieuService cTPhieuService)
+        public CTPhieuController(IPhieuNhapService phieuNhapService,
+                                 ICTPhieuService cTPhieuService,
+                                 ILoaiThietBiService loaiThietBiService,
+                                 IThietBiService thietBiService)
         {
             _phieuNhapService = phieuNhapService;
             _cTPhieuService = cTPhieuService;
+            _loaiThietBiService = loaiThietBiService;
+            _thietBiService = thietBiService;
             CTPhieuVM = new CTPhieuViewModel()
             {
                 CTPhieu = new Data.Models.CTPhieu(),
@@ -52,6 +59,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             }
 
             CTPhieuVM.PhieuNhap = await _phieuNhapService.GetById(phieuNhapId);
+            CTPhieuVM.LoaiThietBis = await _loaiThietBiService.GetAll();
 
             return PartialView(CTPhieuVM);
         }
@@ -71,9 +79,25 @@ namespace ThietBiYeuThuong.Web.Controllers
                 return View(CTPhieuVM);
             }
 
-            // CTPhieuVM.CTPhieuNX.PhieuNXId = CTPhieuVM.PhieuNX.SoPhieu;
+            // save TB
+            CTPhieuVM.ThietBi.MaTB = _thietBiService.GetMaTB("TB");
+            var thietBi = new ThietBi()
+            {
+                MaTB = _thietBiService.GetMaTB("TB"),
+                TenTB = CTPhieuVM.ThietBi.TenTB,
+                LoaiTBId = CTPhieuVM.ThietBi.LoaiTBId,
+                TrangThaiId = 1, // đầy
+                NgayTao = DateTime.Now,
+                NguoiTao = user.Username,
+                LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
+            };
+            await _thietBiService.CreateAsync(thietBi); // save thietbi
+
+            // save ctphieu
             CTPhieuVM.CTPhieu.LapPhieu = user.Username;
             CTPhieuVM.CTPhieu.NgayTao = DateTime.Now;
+            CTPhieuVM.CTPhieu.ThietBiId = thietBi.MaTB;
+            CTPhieuVM.CTPhieu.SoPhieuCT = _cTPhieuService.GetSoPhieuCT("CN");
 
             // ghi log
             CTPhieuVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
@@ -110,6 +134,8 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             CTPhieuVM.PhieuNhap = await _phieuNhapService.GetById(phieuNhapId);
             CTPhieuVM.CTPhieu = await _cTPhieuService.GetById(id);
+            CTPhieuVM.ThietBi = await _thietBiService.GetById(CTPhieuVM.CTPhieu.ThietBiId);
+            CTPhieuVM.LoaiThietBis = await _loaiThietBiService.GetAll();
 
             if (CTPhieuVM.PhieuNhap == null)
             {
@@ -127,7 +153,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
-            string temp = "", log = "";
+            string temp = "", log = "", temp1 = "", log1 = "";
 
             //if (id != CTPhieuVM.PhieuNX.SoPhieu)
             //{
@@ -137,6 +163,53 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             if (ModelState.IsValid)
             {
+                // sua thietbi
+                CTPhieuVM.ThietBi.NgaySua = DateTime.Now;
+                CTPhieuVM.ThietBi.NguoiSua = user.Username;
+                // log
+                var t1 = _thietBiService.GetByIdAsNoTracking(CTPhieuVM.ThietBi.MaTB);
+
+                if (t1.TenTB != CTPhieuVM.ThietBi.TenTB)
+                {
+                    temp1 += String.Format("- TenTB thay đổi: {0}->{1}", t1.TenTB, CTPhieuVM.ThietBi.TenTB);
+                }
+
+                if (t1.TrangThaiId != CTPhieuVM.ThietBi.TrangThaiId)
+                {
+                    temp1 += String.Format("- TrangThaiId thay đổi: {0}->{1}", t1.TrangThaiId, CTPhieuVM.ThietBi.TrangThaiId);
+                }
+
+                if (t1.TinhTrang != CTPhieuVM.ThietBi.TinhTrang)
+                {
+                    temp1 += String.Format("- TinhTrang thay đổi: {0}->{1}", t1.TinhTrang, CTPhieuVM.ThietBi.TinhTrang);
+                }
+
+                if (t1.LoaiTBId != CTPhieuVM.ThietBi.LoaiTBId)
+                {
+                    temp1 += String.Format("- LoaiTBId thay đổi: {0}->{1}", t1.LoaiTBId, CTPhieuVM.ThietBi.LoaiTBId);
+                }
+
+                // kiem tra thay doi
+                if (temp1.Length > 0)
+                {
+                    log1 = System.Environment.NewLine;
+                    log1 += "=============";
+                    log1 += System.Environment.NewLine;
+                    log1 += temp1 + " -User cập nhật tour: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // username
+                    t1.LogFile = t1.LogFile + log1;
+                    CTPhieuVM.ThietBi.LogFile = t1.LogFile;
+                }
+
+                try
+                {
+                    await _thietBiService.UpdateAsync(CTPhieuVM.ThietBi);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+                // save ctphieu
                 CTPhieuVM.PhieuNhap.NgaySua = DateTime.Now;
                 CTPhieuVM.PhieuNhap.NguoiSua = user.Username;
 
@@ -144,7 +217,6 @@ namespace ThietBiYeuThuong.Web.Controllers
 
                 #region log file
 
-                //var t = _unitOfWork.tourRepository.GetById(id);
                 var t = _cTPhieuService.GetByIdAsNoTracking(CTPhieuVM.CTPhieu.SoPhieuCT);
 
                 if (t.ThietBiId != CTPhieuVM.CTPhieu.ThietBiId)
@@ -213,11 +285,14 @@ namespace ThietBiYeuThuong.Web.Controllers
             }
 
             var cTPhieu = await _cTPhieuService.GetById(id);
-            if (cTPhieu == null)
+            var thietBi = await _thietBiService.GetById(cTPhieu.ThietBiId);
+
+            if (cTPhieu == null || thietBi == null)
                 return NotFound();
             try
             {
                 await _cTPhieuService.DeleteAsync(cTPhieu);
+                await _thietBiService.DeleteAsync(thietBi);
 
                 //SetAlert("Xóa thành công.", "success");
                 return Json(new

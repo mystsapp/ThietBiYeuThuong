@@ -72,22 +72,22 @@ namespace ThietBiYeuThuong.Web.Services
 
             if (phieuNX == null || string.IsNullOrEmpty(phieuNX.SoPhieu))
             {
-                return GetNextId.NextID("", "") + subfix; // 0001
+                return GetNextId.NextID_Phieu("", "") + subfix; // 000001BN2021
             }
             else
             {
-                var oldYear = phieuNX.SoPhieu.Substring(6, 4);
+                var oldYear = phieuNX.SoPhieu.Substring(8, 4);
 
                 // cung nam
                 if (oldYear == currentYear.ToString())
                 {
-                    var oldSoCT = phieuNX.SoPhieu.Substring(0, 4);
-                    return GetNextId.NextID(oldSoCT, "") + subfix;
+                    var oldSoCT = phieuNX.SoPhieu.Substring(0, 6);
+                    return GetNextId.NextID_Phieu(oldSoCT, "") + subfix;
                 }
                 else
                 {
                     // sang nam khac' chay lai tu dau
-                    return GetNextId.NextID("", "") + subfix; // 0001
+                    return GetNextId.NextID_Phieu("", "") + subfix; // 000001BN2021
                 }
             }
         }
@@ -101,17 +101,17 @@ namespace ThietBiYeuThuong.Web.Services
             // retrieve list from database/whereverand
 
             var list = new List<HoSoBNDto>();
-            var hoSoBNs = new List<HoSoBN>();
+            //var hoSoBNs = new List<HoSoBN>();
+            var hoSoBNs = await _unitOfWork.hoSoBNRepository.GetAllIncludeOneAsync(x => x.BenhNhan);
 
             // search for sgtcode in kvctptC
             if (!string.IsNullOrEmpty(searchString))
             {
-                var hoSoBNs1 = await _unitOfWork.hoSoBNRepository.FindIncludeOneAsync(bn => bn.BenhNhan, x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
-                                           (!string.IsNullOrEmpty(x.BenhNhan.HoTenBN) && x.BenhNhan.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.HoTenNVYTe) && x.HoTenNVYTe.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.SDT_NVYT) && x.SDT_NVYT.ToLower().Contains(searchString.ToLower())) ||
-                                           (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower())));
-                hoSoBNs = hoSoBNs1.ToList();
+                hoSoBNs = await hoSoBNs.Where(x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
+                                       (!string.IsNullOrEmpty(x.BenhNhan.HoTenBN) && x.BenhNhan.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
+                                       (!string.IsNullOrEmpty(x.HoTenNVYTe) && x.HoTenNVYTe.ToLower().Contains(searchString.ToLower())) ||
+                                       (!string.IsNullOrEmpty(x.SDT_NVYT) && x.SDT_NVYT.ToLower().Contains(searchString.ToLower())) ||
+                                       (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower()))).ToListAsync();
             }
             else
             {

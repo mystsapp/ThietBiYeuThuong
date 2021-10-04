@@ -4,7 +4,7 @@
     return parts.join(".");
 }
 
-var indexController = {
+var hs_indexController = {
     init: function () {
         toastr.options = { // toastr options
             "closeButton": false,
@@ -24,7 +24,7 @@ var indexController = {
             "hideMethod": "fadeOut"
         };
 
-        indexController.registerEvent();
+        hs_indexController.registerEvent();
     },
 
     registerEvent: function () {
@@ -38,17 +38,11 @@ var indexController = {
             });
         });
 
-        $('#btnTimPhieu').off('click').on('click', function () {
-            $('#timPhieuModal').modal('show');
-            $('#timPhieuModal').draggable();
-        })
-
         // phieu click --> load kvctpct
         $('tr .tdVal').click(function () {
-            id = $(this).data('id'); // PhieuNX id
-            loaiPhieu = $(this).data('loaiphieu');
+            id = $(this).data('id'); // HoSoBNid
 
-            indexController.TdVal_Click(id, loaiPhieu);
+            hs_indexController.TdVal_Click(id);
         });
         // phieu click --> load kvctpct
 
@@ -63,39 +57,6 @@ var indexController = {
         });
         // giu trang thai phieu click
 
-        // tdVal_KVCTPCT row click
-        $('tr .tdVal_KVCTPCT').click(function () {
-            kVCTPCTId = $(this).data('id');
-            $('#hidKVCTPCTId').val(kVCTPCTId); // for TT141 and 1411KhongTC
-
-            // for btnTamUng
-            var promise = indexController.CheckTamUng(kVCTPCTId);
-            promise.then(function (data) {
-                if (data) {
-                    $('#btnTamUng').attr('disabled', false);
-                    $('#hidTamUng').val(kVCTPCTId);
-                }
-                else {
-                    $('#btnTamUng').attr('disabled', true);
-                }
-            }, error => alert(error));
-
-            // for TT141
-            var promiseTT141 = indexController.CheckTT141(kVCTPCTId);
-            promiseTT141.then(function (data) {
-                if (data) {
-                    $('#btnTT141').attr('disabled', false);
-                }
-                else {
-                    $('#btnTT141').attr('disabled', true);
-                }
-            }, error => alert(error));
-
-            // for => copy dong cu cho dong moi
-            $('#hidIdCu').val(kVCTPCTId);
-        });
-        // tdVal_KVCTPCT row click
-
         // giu trang thai CT phieu click
         $('#cTPhieuTbl .ctphieu-cursor-pointer').off('click').on('click', function () {
             if ($(this).hasClass("hoverClass"))
@@ -106,20 +67,15 @@ var indexController = {
             }
         });
         // giu trang thai CT phieu click
-
-        // btnInPhieu
-        $('#btnInPhieu').off('click').on('click', function () {
-            $('#frmInPhieu').submit();
-        })
     },
-    Load_CTPhieuNXPartial: function (id, page) { // PhieuNX id
-        var url = '/CTPhieuNX/CTPhieuNXPartial';
+    Load_CTHoSoBNPartial: function (id, page) { // PhieuNX id
+        var url = '/CTHoSoBN/CTHoSoBNPartial';
         $.get(url, { PhieuNXId: id, page: page }, function (response) {
-            $('#CTPhieuNX_Tbl').html(response);
-            $('#CTPhieuNX_Tbl').show(500);
+            $('#CTHoSoBN_Tbl').html(response);
+            $('#CTHoSoBN_Tbl').show(500);
         });
     },
-    TdVal_Click: function (id, loaiPhieu) { // PhieuNX id
+    TdVal_Click: function (id) { // PhieuNX id
         // page
         var page = $('.active span').text();
         // $('#hidPage').val(page);
@@ -131,7 +87,7 @@ var indexController = {
         //$('#KVCTPCT_Create_Partial').hide(500);
         //$('#KVCTPCT_Edit_Partial').hide(500);
 
-        indexController.Load_CTPhieuNXPartial(id, page); // KVPTC id
+        hs_indexController.Load_CTHoSoBNPartial(id, page); // KVPTC id
     },
     KhachHang_By_Code: function (code, txtMaKh) {
         $.ajax({
@@ -191,4 +147,4 @@ var indexController = {
         })
     }
 };
-indexController.init();
+hs_indexController.init();

@@ -25,6 +25,10 @@ namespace ThietBiYeuThuong.Web.Services
         BenhNhan GetByIdAsNoTracking(string id);
 
         string GetMaBN(string param);
+
+        IEnumerable<BenhNhan> SearchBenhNhans_Code(string code);
+
+        BenhNhan GetBenhNhanByCode(string code);
     }
 
     public class BenhNhanService : IBenhNhanService
@@ -45,6 +49,22 @@ namespace ThietBiYeuThuong.Web.Services
         public async Task<List<BenhNhan>> GetAll()
         {
             return await _unitOfWork.benhNhanRepository.GetAll().ToListAsync();
+        }
+
+        public BenhNhan GetBenhNhanByCode(string code)
+        {
+            code ??= "";
+            return _unitOfWork.benhNhanRepository.GetById(code);
+        }
+
+        public IEnumerable<BenhNhan> SearchBenhNhans_Code(string code)
+        {
+            code ??= "";
+            var benhNhans = _unitOfWork.benhNhanRepository.Find(x => x.MaBN.Trim().ToLower().Contains(code.Trim().ToLower()) ||
+                                                                     (!string.IsNullOrEmpty(x.HoTenBN) && x.HoTenBN.Trim().ToLower().Contains(code.Trim().ToLower())) ||
+                                                                     (!string.IsNullOrEmpty(x.HoTenTN) && x.HoTenTN.Trim().ToLower().Contains(code.Trim().ToLower())) ||
+                                                                     (!string.IsNullOrEmpty(x.CMND_CCCD_BN.ToString()) && x.CMND_CCCD_BN.ToString().Trim().ToLower().Contains(code.Trim().ToLower()))).ToList();
+            return benhNhans;
         }
 
         public async Task<BenhNhan> GetById(string id)

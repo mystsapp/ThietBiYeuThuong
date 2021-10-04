@@ -19,7 +19,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-list-alt text-info"></i> Danh sách phiếu</h3>
+            <h3 class="card-title"><i class="fas fa-list-alt text-info"></i> Danh sách hồ sơ</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -91,7 +91,7 @@
                             @foreach (var item in Model.HoSoBNDtos)
                             {
 
-                                <tr class="cursor-pointer @item.SoPhieu" @*data-huy="@item.HuyTour"*@ onclick="CTPhieuNX_Tbl()">
+                                <tr class="cursor-pointer @item.SoPhieu" @*data-huy="@item.HuyTour"*@ onclick="CTHoSoBN_Tbl()">
 
                                     <td>
                                         <div class="btn-group text-white" role="group">
@@ -152,14 +152,14 @@
                         }, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "nameListContainer" }))
                 }
             </div>
-            <!-- CTPhieuNX-->
-            <div id="CTPhieuNX_Tbl">
+            <!-- CTHoSoBN-->
+            <div id="CTHoSoBN_Tbl">
             </div>
 
-            <div id="CTPhieuNX_Create_Partial">
+            <div id="CTHoSoBN_Create_Partial">
             </div>
 
-            <div id="CTPhieuNX_Edit_Partial">
+            <div id="CTHoSoBN_Edit_Partial">
             </div>
         </div>
         <!-- /.card-body -->
@@ -174,7 +174,7 @@
 
 @section Scripts{
 
-    <script src="~/js/Admin/PhieuNX/indexController.js"></script>
+    <script src="~/js/Admin/HoSoBN/hs_indexController.js"></script>
     <script>
 
         //var id_Redirect = 'Model.KVPTC.Id'; //Id sau khi redirect ve //////////////////////////////////////////////
@@ -193,7 +193,7 @@
                 id_Redirect_Class.addClass("hoverClass");
             }
 
-            indexController.TdVal_Click(id_Redirect);
+            hs_indexController.TdVal_Click(id_Redirect);
         }
 
         function confirmDelete(uniqueId, isDeleteClicked) {
@@ -209,8 +209,8 @@
             }
         }
 
-        function CTPhieuNX_Tbl() { // tab href
-            location.href = "#CTPhieuNX_Tbl";
+        function CTHoSoBN_Tbl() { // tab href
+            location.href = "#CTHoSoBN_Tbl";
         }
     </script>
 }

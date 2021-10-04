@@ -9,11 +9,11 @@ namespace ThietBiYeuThuong.Data.Models
 {
     public class BenhNhanThietBi
     {
-        public int BenhNhanId { get; set; }
+        public string BenhNhanId { get; set; }
 
         public BenhNhan BenhNhan { get; set; }
 
-        public int ThietBiId { get; set; }
+        public string ThietBiId { get; set; }
 
         public ThietBi ThietBi { get; set; }
     }

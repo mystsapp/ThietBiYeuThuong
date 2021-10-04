@@ -14,7 +14,9 @@ namespace ThietBiYeuThuong.Web.Models
         public HoSoBN HoSoBN { get; set; }
         public CTHoSoBN CTHoSoBN { get; set; }
         public IPagedList<HoSoBNDto> HoSoBNDtos { get; set; }
+        public IEnumerable<ListViewModel> TrangThais_ThietBi { get; set; }
         public string StrUrl { get; set; }
+        public int SoLuong { get; set; }
         public int Page { get; set; }
 
         //public List<ListViewModel> ListGT { get; set; }

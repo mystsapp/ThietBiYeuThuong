@@ -9,16 +9,16 @@ namespace ThietBiYeuThuong.Data.Models
     {
         [Key]
         [DisplayName("Số phiếu CT")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string SoPhieuCT { get; set; }
 
         [DisplayName("Số phiếu")]
         [Required(ErrorMessage = "Trường này không được để trống")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string SoPhieu { get; set; }
 
         [DisplayName("Tên TB")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string ThietBiId { get; set; }
 
         [ForeignKey("ThietBiId")]

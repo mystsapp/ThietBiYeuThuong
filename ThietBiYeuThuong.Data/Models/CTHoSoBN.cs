@@ -9,22 +9,26 @@ namespace ThietBiYeuThuong.Data.Models
     {
         [Key]
         [DisplayName("Số phiếu CT")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string SoPhieuCT { get; set; }
 
-        [DisplayName("Số hồ sơ")]
-        [Required(ErrorMessage = "Trường này không được để trống")]
+        [DisplayName("Số phiếu")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string HoSoBNId { get; set; }
 
         [ForeignKey("HoSoBNId")]
         public virtual HoSoBN HoSoBN { get; set; }
 
-        [DisplayName("Tên TB")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
-        public string ThietBiId { get; set; }
+        //[DisplayName("Tên TB")]
+        //[MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
+        //public string ThietBiId { get; set; }
 
-        [ForeignKey("ThietBiId")]
-        public ThietBi ThietBi { get; set; }
+        //[ForeignKey("ThietBiId")]
+        //public ThietBi ThietBi { get; set; }
+
+        [DisplayName("Thiết bị")]
+        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "nvarchar(50)")]
+        public string ThietBi { get; set; }
 
         [DisplayName("Người lập phiếu")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]

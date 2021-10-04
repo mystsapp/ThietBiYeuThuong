@@ -80,22 +80,22 @@ namespace ThietBiYeuThuong.Web.Services
 
             if (cTPhieuNX == null || string.IsNullOrEmpty(cTPhieuNX.SoPhieuCT))
             {
-                return GetNextId.NextID("", "") + subfix; // 0001
+                return GetNextId.NextID_Phieu("", "") + subfix; // 0001
             }
             else
             {
-                var oldYear = cTPhieuNX.SoPhieuCT.Substring(6, 4);
+                var oldYear = cTPhieuNX.SoPhieuCT.Substring(8, 4);
 
                 // cung nam
                 if (oldYear == currentYear.ToString())
                 {
-                    var oldSoCT = cTPhieuNX.SoPhieuCT.Substring(0, 4);
-                    return GetNextId.NextID(oldSoCT, "") + subfix;
+                    var oldSoCT = cTPhieuNX.SoPhieuCT.Substring(0, 6);
+                    return GetNextId.NextID_Phieu(oldSoCT, "") + subfix;
                 }
                 else
                 {
                     // sang nam khac' chay lai tu dau
-                    return GetNextId.NextID("", "") + subfix; // 0001
+                    return GetNextId.NextID_Phieu("", "") + subfix; // 0001
                 }
             }
         }

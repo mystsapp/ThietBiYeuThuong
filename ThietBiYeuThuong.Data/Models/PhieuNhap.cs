@@ -13,12 +13,15 @@ namespace ThietBiYeuThuong.Data.Models
     {
         [Key]
         [DisplayName("Số phiếu")]
-        [MaxLength(10, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(10)")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 10 ký tự"), Column(TypeName = "varchar(12)")]
         public string SoPhieu { get; set; }
 
         [DisplayName("Đơn vị")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
         public string DonVi { get; set; }
+
+        [DisplayName("Trạng thái TB")]
+        public int TrangThaiId { get; set; }
 
         [DisplayName("Người nhập")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]

@@ -6,6 +6,7 @@ using ThietBiYeuThuong.Data.Dtos;
 using ThietBiYeuThuong.Data.Models;
 using ThietBiYeuThuong.Data.Repositories;
 using ThietBiYeuThuong.Data.Utilities;
+using ThietBiYeuThuong.Data.ViewModels;
 using X.PagedList;
 
 namespace ThietBiYeuThuong.Web.Services
@@ -29,6 +30,8 @@ namespace ThietBiYeuThuong.Web.Services
         Task<IEnumerable<ThietBi>> List_ThietBi_By_LoaiThietBiId(int LoaiThietBiId);
 
         string GetMaTB(string param);
+
+        Task<IEnumerable<ListViewModel>> Get_Day_VuaBomVe();
     }
 
     public class ThietBiService : IThietBiService
@@ -106,6 +109,13 @@ namespace ThietBiYeuThuong.Web.Services
                     return GetNextId.NextID_Phieu("", "") + subfix; // 000001PN2021
                 }
             }
+        }
+
+        public async Task<IEnumerable<ListViewModel>> Get_Day_VuaBomVe()
+        {
+            var thietBis = await _unitOfWork.thietBiRepository
+                .FindIncludeOneAsync(tt => tt.TrangThai, x => !x.TinhTrang && (x.TrangThaiId == 1 || x.TrangThaiId == 3));
+            return thietBis.Select(x => x.TrangThai.Name).Distinct().Select(x => new ListViewModel() { Name = x });
         }
 
         public async Task<IEnumerable<ThietBi>> List_ThietBi_By_LoaiThietBiId(int LoaiThietBiId)

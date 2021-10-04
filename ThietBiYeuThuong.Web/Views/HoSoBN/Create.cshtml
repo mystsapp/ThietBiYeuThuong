@@ -15,13 +15,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thêm phiếu</h1>
+                <h1>Thêm hồ sơ</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu</a></li>
-                    <li class="breadcrumb-item active">Thêm phiếu</li>
+                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách hồ sơ</a></li>
+                    <li class="breadcrumb-item active">Thêm hồ sơ</li>
                 </ol>
             </div>
         </div>
@@ -34,7 +34,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm phiếu</h3>
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm hồ sơ</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -52,86 +52,115 @@
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
-                    @*<div class="form-group row">
+                    <div class="form-group row">
 
-                            <div class="col-md-2">
-                                <label asp-for="HoSoBN.LoaiPhieu" class="control-label"></label>
-                                <select asp-for="HoSoBN.LoaiPhieu" class="form-control form-control-sm "
-                                        asp-items="@(new SelectList(Model.ListLoaiPhieu, "Name", "Name"))" id="ddlLoaiPhieu">
-                                </select>
-                                <span asp-validation-for="HoSoBN.LoaiPhieu" class="text-danger"></span>
+                        <div class="col-md-2">
+                            <label asp-for="HoSoBN.BenhNhanId" class="control-label "></label>
+                            <div class="input-group">
+                                <input asp-for="HoSoBN.BenhNhanId" class="form-control form-control-sm text-uppercase" id="txtBenhNhanId_Create">
+                                <span class="input-group-btn">
+                                    <a href="javascript:;" class="btn btn-default btn-sm" id="btnBenhNhanSearch_Create" data-benhnhanid="BenhNhanId" title="Tìm thông tin bệnh nhân"><i class="fa fa-search"></i></a>
+                                </span>
                             </div>
-                        </div>*@
+                            <span asp-validation-for="HoSoBN.BenhNhanId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Họ tên.BN</label>
+                            <input type="text" class="form-control form-control-sm" id="txtHoTenBN" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Họ tên.BN</label>
+                            <input type="text" class="form-control form-control-sm" id="txtHoTenTN" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label ">Năm sinh</label>
+                            <input type="text" class="form-control form-control-sm" id="txtNamSinh" />
+                        </div>
+                    </div>
 
-                    <div id="txtXuat">
+                    <div class="form-group row">
 
-                        <div class="form-group row">
-
-                            <div class="form-group row">
-
-                                <div class="col-md-4">
-                                    <label asp-for="HoSoBN.HoTenNVYTe" class="control-label"></label>
-                                    <input asp-for="HoSoBN.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
-                                    <span asp-validation-for="HoSoBN.HoTenNVYTe" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label asp-for="HoSoBN.SDT_NVYT" class="control-label "></label>
-                                    <input asp-for="HoSoBN.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
-                                    <span asp-validation-for="HoSoBN.SDT_NVYT" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label asp-for="HoSoBN.DonVi" class="control-label"></label>
-                                    <input asp-for="HoSoBN.DonVi" class="form-control form-control-sm" id="txtDonVi" />
-                                    <span asp-validation-for="HoSoBN.DonVi" class="text-danger"></span>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-
-                                <div class="col-md-6">
-                                    <label asp-for="HoSoBN.STT" class="control-label "></label>
-                                    <input asp-for="HoSoBN.STT" class="form-control form-control-sm" id="txtSTT" />
-                                    <span asp-validation-for="HoSoBN.STT" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label asp-for="HoSoBN.NVTruc" class="control-label "></label>
-                                    <input asp-for="HoSoBN.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
-                                    <span asp-validation-for="HoSoBN.NVTruc" class="text-danger"></span>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            <label asp-for="HoSoBN.HoTenNVYTe" class="control-label"></label>
+                            <input asp-for="HoSoBN.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
+                            <span asp-validation-for="HoSoBN.HoTenNVYTe" class="text-danger"></span>
                         </div>
 
-                        <div id="txtNhap">
-                            <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="0" />
-                            <div class="form-group row">
-
-                                <div class="col-md-2">
-                                    <label asp-for="CTHoSoBN.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                                    <input asp-for="CTHoSoBN.ThietBi" class="form-control form-control-sm" id="txtThietBi" />
-                                    <span asp-validation-for="CTHoSoBN.ThietBi" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <label asp-for="CTHoSoBN.SoLuong" class="control-label"></label>
-                                    <input asp-for="CTHoSoBN.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
-                                    <span asp-validation-for="CTHoSoBN.SoLuong" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-8">
-                                    <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
-                                    <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
-                                    <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            <label asp-for="HoSoBN.SDT_NVYT" class="control-label "></label>
+                            <input asp-for="HoSoBN.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
+                            <span asp-validation-for="HoSoBN.SDT_NVYT" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
-                            <a class="btn btn-success btn-sm" asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
+                        <div class="col-md-4">
+                            <label asp-for="HoSoBN.DonVi" class="control-label"></label>
+                            <input asp-for="HoSoBN.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                            <span asp-validation-for="HoSoBN.DonVi" class="text-danger"></span>
                         </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-6">
+                            <label asp-for="HoSoBN.STT" class="control-label "></label>
+                            <input asp-for="HoSoBN.STT" class="form-control form-control-sm" id="txtSTT" />
+                            <span asp-validation-for="HoSoBN.STT" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="HoSoBN.NVTruc" class="control-label "></label>
+                            <input asp-for="HoSoBN.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
+                            <span asp-validation-for="HoSoBN.NVTruc" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="0" />
+                    <div class="form-group row">
+
+                        <div class="col-md-2">
+                            <label asp-for="CTHoSoBN.ThietBi" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                            <select asp-for="CTHoSoBN.ThietBi" class="form-control form-control-sm "
+                                    asp-items="@(new SelectList(Model.TrangThais_ThietBi, "Name", "Name"))" id="ddlThietBi">
+                            </select>
+                            <span asp-validation-for="CTHoSoBN.ThietBi" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="control-label">Số lượng</label>
+                            <input asp-for="SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="SoLuong" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
+                            <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                            <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <div class="col-md-2">
+                            <label asp-for="CTHoSoBN.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                            <input asp-for="CTHoSoBN.DongHoGiao" class="form-control form-control-sm " id="txtDongHoGiao" />
+                            <span asp-validation-for="CTHoSoBN.DongHoGiao" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label asp-for="CTHoSoBN.DongHoThu" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                            <input asp-for="CTHoSoBN.DongHoThu" class="form-control form-control-sm " id="txtDongHoThu" />
+                            <span asp-validation-for="CTHoSoBN.DongHoThu" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label asp-for="CTHoSoBN.NVGiaoBinh" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                            <input asp-for="CTHoSoBN.NVGiaoBinh" class="form-control form-control-sm " id="txtNVGiaoBinh" />
+                            <span asp-validation-for="CTHoSoBN.NVGiaoBinh" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit"><i class="fas fa-save"></i> Save</button>
+                        <a class="btn btn-success btn-sm" asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect"><i class="fas fa-backward "></i> Back</a>
                     </div>
                 </div>
             </form>
@@ -141,6 +170,8 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
+
+<partial name="~/Views/Shared/_BenhNhanPartial_ThemMoi.cshtml" />
 
 @section Scripts{
     @*<script>
@@ -224,21 +255,58 @@
         //    }
         //});
 
-        //$('#txtNhap').hide();
-        $('#txtXuat').show();
-        $('#ddlLoaiPhieu').val("PX");
-        debugger
-        $('#ddlLoaiPhieu').change(function () {
-            var loaiPhieu = $('#ddlLoaiPhieu').val();
-            if (loaiPhieu === 'PN') { // nhap
-                $('#txtNhap').show(500);
-                $('#txtXuat').hide(500);
+        // btnBenhNhanSearch_Create
+        $('#btnBenhNhanSearch_Create').click(function () {
+
+            var maBNtext = '';
+
+            if ($(this).data('name') === 'maKhNo') { // search of no
+                maBNtext = $('#txtMaKhNo_ThemMoi').val();
             }
-            else { // xuat
-                $('#txtNhap').hide(500);
-                $('#txtXuat').show(500);
+            if ($(this).data('name') === 'maKhCo') { // search of co
+                maBNtext = $('#txtMaKhCo_ThemMoi').val();
             }
+
+            BenhNhanSearch(maBNtext);
         })
+
+        $('#txtBenhNhanId_Create').blur(function () {
+
+            maKhtext = $(this).val();
+            BenhNhan_By_Code(maKhtext);
+        })
+
+        function BenhNhan_By_Code(code) {
+
+            $.ajax({
+                url: '/BanhNhan/GetBenhNhans_By_Code',
+                type: 'GET',
+                data: { code: code },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status) {
+                        var data = response.data;
+                        // console.log(data);
+
+                        $('#txtHoTenBN').val(data.taxsign);
+                        $('#txtHoTenTN').val(data.taxform);
+                        $('#txtNamSinh').val(data.taxcode);
+
+                    }
+
+                }
+            });
+
+        }
+
+        function BenhNhanSearch(code) {
+            $.get('/BenhNhan/SearchBenhNhans_Code', { code: code }, function (data) {
+
+                $('#benhNhanh_Modal_Create').modal('show');
+                $('.benhNhan_Modal_Body_Create').html(data);
+                $('#benhNhanh_Modal_Create').draggable();
+            });
+        }
     </script>
 
 }

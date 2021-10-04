@@ -62,7 +62,8 @@ namespace ThietBiYeuThuong.Web.Services
 
         public CTPhieu GetByIdAsNoTracking(string id)
         {
-            return _unitOfWork.cTPhieuRepository.GetByIdAsNoTracking(x => x.SoPhieu == id);
+            var abc = _unitOfWork.cTPhieuRepository.GetByIdAsNoTracking(x => x.SoPhieuCT == id);
+            return abc;
         }
 
         public string GetSoPhieuCT(string param)

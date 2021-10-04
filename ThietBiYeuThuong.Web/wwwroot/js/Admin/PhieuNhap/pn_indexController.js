@@ -75,7 +75,7 @@ var pn_indexController = {
     },
     Load_CTPhieuPartial: function (id, page) {
         var url = '/CTPhieu/CTPhieuPartial';
-        $.get(url, { id: id, page: page }, function (response) {
+        $.get(url, { phieuNhapId: id, page: page }, function (response) {
             $('#CTPhieu_Tbl').html(response);
             $('#CTPhieu_Tbl').show(500);
         });

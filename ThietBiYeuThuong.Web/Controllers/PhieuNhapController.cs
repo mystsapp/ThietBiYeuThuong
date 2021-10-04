@@ -68,6 +68,8 @@ namespace ThietBiYeuThuong.Web.Controllers
 
         public async Task<IActionResult> Create_Day(string strUrl, int page)
         {
+            //ViewBag.trangThaiId = 1;
+
             // from session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
@@ -99,6 +101,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             PhieuNhapVM.PhieuNhap.NgayNhap = DateTime.Now;
             PhieuNhapVM.PhieuNhap.NguoiNhap = user.Username;
             PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PN");
+            PhieuNhapVM.PhieuNhap.TrangThaiId = 1; // đầy
 
             // SL
             if (PhieuNhapVM.SoLuong == 0)
@@ -113,9 +116,10 @@ namespace ThietBiYeuThuong.Web.Controllers
                     MaTB = _thietBiService.GetMaTB("TB"),
                     TenTB = PhieuNhapVM.ThietBi.TenTB,
                     LoaiTBId = PhieuNhapVM.ThietBi.LoaiTBId,
-                    TrangThaiId = 3, // đầy
+                    TrangThaiId = 1, // đầy
                     NgayTao = DateTime.Now,
-                    NguoiTao = user.Username
+                    NguoiTao = user.Username,
+                    LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
                 };
                 await _thietBiService.CreateAsync(thietBi); // save thietbi
 
@@ -125,6 +129,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                 PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
                 PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
                 PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
+                PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+                await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
             }
             else
             {
@@ -135,7 +141,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         MaTB = _thietBiService.GetMaTB("TB"),
                         TenTB = PhieuNhapVM.ThietBi.TenTB,
                         LoaiTBId = PhieuNhapVM.ThietBi.LoaiTBId,
-                        TrangThaiId = 3 // đầy
+                        TrangThaiId = 1 // đầy
                     };
                     await _thietBiService.CreateAsync(thietBi); // save thietbi
 
@@ -145,6 +151,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
                     PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
                     PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
+                    await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
                 }
             }
             // ghi log

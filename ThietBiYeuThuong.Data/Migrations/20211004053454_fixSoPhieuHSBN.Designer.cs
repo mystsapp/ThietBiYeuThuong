@@ -10,8 +10,8 @@ using ThietBiYeuThuong.Data.Models;
 namespace ThietBiYeuThuong.Data.Migrations
 {
     [DbContext(typeof(ThietBiYeuThuongDbContext))]
-    [Migration("20211003074014_addNewTbl")]
-    partial class addNewTbl
+    [Migration("20211004053454_fixSoPhieuHSBN")]
+    partial class fixSoPhieuHSBN
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,24 +77,15 @@ namespace ThietBiYeuThuong.Data.Migrations
 
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.BenhNhanThietBi", b =>
                 {
-                    b.Property<int>("BenhNhanId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThietBiId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BenhNhanMaBN")
+                    b.Property<string>("BenhNhanId")
                         .HasColumnType("varchar(12)");
 
-                    b.Property<string>("ThietBiMaTB")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)");
+                    b.Property<string>("ThietBiId")
+                        .HasColumnType("varchar(12)");
 
                     b.HasKey("BenhNhanId", "ThietBiId");
 
-                    b.HasIndex("BenhNhanMaBN");
-
-                    b.HasIndex("ThietBiMaTB");
+                    b.HasIndex("ThietBiId");
 
                     b.ToTable("BenhNhanThietBis");
                 });
@@ -102,8 +93,8 @@ namespace ThietBiYeuThuong.Data.Migrations
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.CTHoSoBN", b =>
                 {
                     b.Property<string>("SoPhieuCT")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("DongHoGiao")
                         .HasMaxLength(50)
@@ -118,8 +109,8 @@ namespace ThietBiYeuThuong.Data.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("HoSoBNId")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("LapPhieu")
                         .HasMaxLength(50)
@@ -147,15 +138,13 @@ namespace ThietBiYeuThuong.Data.Migrations
                     b.Property<int>("SoLuongHienTai")
                         .HasColumnType("int");
 
-                    b.Property<string>("ThietBiId")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                    b.Property<string>("ThietBi")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("SoPhieuCT");
 
                     b.HasIndex("HoSoBNId");
-
-                    b.HasIndex("ThietBiId");
 
                     b.ToTable("CTHoSoBNs");
                 });
@@ -163,8 +152,8 @@ namespace ThietBiYeuThuong.Data.Migrations
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.CTPhieu", b =>
                 {
                     b.Property<string>("SoPhieuCT")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("DongHoGiao")
                         .HasMaxLength(50)
@@ -206,12 +195,12 @@ namespace ThietBiYeuThuong.Data.Migrations
 
                     b.Property<string>("SoPhieu")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("ThietBiId")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.HasKey("SoPhieuCT");
 
@@ -223,8 +212,8 @@ namespace ThietBiYeuThuong.Data.Migrations
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.HoSoBN", b =>
                 {
                     b.Property<string>("SoPhieu")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("BenhNhanId")
                         .HasMaxLength(12)
@@ -313,8 +302,8 @@ namespace ThietBiYeuThuong.Data.Migrations
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.PhieuNhap", b =>
                 {
                     b.Property<string>("SoPhieu")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("DonVi")
                         .HasMaxLength(50)
@@ -337,6 +326,9 @@ namespace ThietBiYeuThuong.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<int>("TrangThaiId")
+                        .HasColumnType("int");
+
                     b.HasKey("SoPhieu");
 
                     b.ToTable("PhieuNhaps");
@@ -345,8 +337,8 @@ namespace ThietBiYeuThuong.Data.Migrations
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.PhieuXuat", b =>
                 {
                     b.Property<string>("SoPhieu")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("BenhNhanId")
                         .HasMaxLength(12)
@@ -397,8 +389,8 @@ namespace ThietBiYeuThuong.Data.Migrations
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.ThietBi", b =>
                 {
                     b.Property<string>("MaTB")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<int>("LoaiTBId")
                         .HasColumnType("int");
@@ -433,6 +425,8 @@ namespace ThietBiYeuThuong.Data.Migrations
                     b.HasKey("MaTB");
 
                     b.HasIndex("LoaiTBId");
+
+                    b.HasIndex("TrangThaiId");
 
                     b.ToTable("ThietBis");
                 });
@@ -632,11 +626,13 @@ namespace ThietBiYeuThuong.Data.Migrations
                 {
                     b.HasOne("ThietBiYeuThuong.Data.Models.BenhNhan", "BenhNhan")
                         .WithMany()
-                        .HasForeignKey("BenhNhanMaBN");
+                        .HasForeignKey("BenhNhanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThietBiYeuThuong.Data.Models.ThietBi", "ThietBi")
                         .WithMany()
-                        .HasForeignKey("ThietBiMaTB")
+                        .HasForeignKey("ThietBiId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -649,17 +645,9 @@ namespace ThietBiYeuThuong.Data.Migrations
                 {
                     b.HasOne("ThietBiYeuThuong.Data.Models.HoSoBN", "HoSoBN")
                         .WithMany()
-                        .HasForeignKey("HoSoBNId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ThietBiYeuThuong.Data.Models.ThietBi", "ThietBi")
-                        .WithMany()
-                        .HasForeignKey("ThietBiId");
+                        .HasForeignKey("HoSoBNId");
 
                     b.Navigation("HoSoBN");
-
-                    b.Navigation("ThietBi");
                 });
 
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.CTPhieu", b =>
@@ -697,7 +685,15 @@ namespace ThietBiYeuThuong.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ThietBiYeuThuong.Data.Models.TrangThai", "TrangThai")
+                        .WithMany()
+                        .HasForeignKey("TrangThaiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("LoaiThietBi");
+
+                    b.Navigation("TrangThai");
                 });
 
             modelBuilder.Entity("ThietBiYeuThuong.Data.Models.TinhTrangBN", b =>

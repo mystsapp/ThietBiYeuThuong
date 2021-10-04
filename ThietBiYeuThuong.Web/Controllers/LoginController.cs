@@ -78,7 +78,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         //HttpContext.Session.SetString("chinhanh", user.Macn);
                         HttpContext.Session.SetString("userId", user.Username);
 
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "HoSoBN");
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace ThietBiYeuThuong.Web.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "HoSoBN");
         }
 
         public IActionResult ChangePass(string strUrl)
