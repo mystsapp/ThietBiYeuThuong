@@ -2,33 +2,33 @@
 
 namespace ThietBiYeuThuong.Data.Migrations
 {
-    public partial class fixNVarchar : Migration
+    public partial class initFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "ThietBi",
-                table: "CTHoSoBNs",
-                type: "nvarchar(50)",
-                maxLength: 50,
+                name: "TenTB",
+                table: "ThietBis",
+                type: "nvarchar(100)",
+                maxLength: 100,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "varchar(50)",
-                oldMaxLength: 50,
+                oldType: "varchar(100)",
+                oldMaxLength: 100,
                 oldNullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "ThietBi",
-                table: "CTHoSoBNs",
-                type: "varchar(50)",
-                maxLength: 50,
+                name: "TenTB",
+                table: "ThietBis",
+                type: "varchar(100)",
+                maxLength: 100,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50,
+                oldType: "nvarchar(100)",
+                oldMaxLength: 100,
                 oldNullable: true);
         }
     }

@@ -44,11 +44,11 @@ namespace ThietBiYeuThuong.Data.Models
         [Column(TypeName = "datetime")]
         public DateTime? NgayXuat { get; set; }
 
-        [DisplayName("Đ.hồ")]
+        [DisplayName("Đ.hồ giao")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
         public string DongHoGiao { get; set; }
 
-        [DisplayName("Đ.hồ")]
+        [DisplayName("Đ.hồ thu")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
         public string DongHoThu { get; set; }
 

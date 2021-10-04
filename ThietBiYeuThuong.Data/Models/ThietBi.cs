@@ -17,7 +17,7 @@ namespace ThietBiYeuThuong.Data.Models
         public string MaTB { get; set; }
 
         [DisplayName("Tên TB")]
-        [MaxLength(100, ErrorMessage = "Chiều dài tối đa 100 ký tự"), Column(TypeName = "varchar(100)")]
+        [MaxLength(100, ErrorMessage = "Chiều dài tối đa 100 ký tự"), Column(TypeName = "nvarchar(100)")]
         public string TenTB { get; set; }
 
         [DisplayName("Trạng thái")]

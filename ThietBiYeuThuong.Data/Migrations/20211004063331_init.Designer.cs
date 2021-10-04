@@ -10,8 +10,8 @@ using ThietBiYeuThuong.Data.Models;
 namespace ThietBiYeuThuong.Data.Migrations
 {
     [DbContext(typeof(ThietBiYeuThuongDbContext))]
-    [Migration("20211004053454_fixSoPhieuHSBN")]
-    partial class fixSoPhieuHSBN
+    [Migration("20211004063331_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,7 +140,7 @@ namespace ThietBiYeuThuong.Data.Migrations
 
                     b.Property<string>("ThietBi")
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("SoPhieuCT");
 

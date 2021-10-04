@@ -412,7 +412,7 @@ namespace ThietBiYeuThuong.Data.Migrations
 
                     b.Property<string>("TenTB")
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("TinhTrang")
                         .HasColumnType("bit");
