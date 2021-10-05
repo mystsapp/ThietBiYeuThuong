@@ -130,7 +130,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         {
                             HoSoBNId = HoSoBNVM.HoSoBN.SoPhieu,
                             SoPhieuCT = soPhieuCT,
-                            ThietBi = HoSoBNVM.CTHoSoBN.ThietBi,
+                            ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId,
                             DongHoGiao = HoSoBNVM.CTHoSoBN.DongHoGiao,
                             DongHoThu = HoSoBNVM.CTHoSoBN.DongHoThu,
                             NVGiaoBinh = HoSoBNVM.CTHoSoBN.NVGiaoBinh,

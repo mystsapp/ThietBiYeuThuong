@@ -19,16 +19,12 @@ namespace ThietBiYeuThuong.Data.Models
         [ForeignKey("HoSoBNId")]
         public virtual HoSoBN HoSoBN { get; set; }
 
-        //[DisplayName("Tên TB")]
-        //[MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
-        //public string ThietBiId { get; set; }
+        [DisplayName("Tên TB")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
+        public string ThietBiId { get; set; }
 
-        //[ForeignKey("ThietBiId")]
-        //public ThietBi ThietBi { get; set; }
-
-        [DisplayName("Thiết bị")]
-        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "nvarchar(50)")]
-        public string ThietBi { get; set; }
+        [ForeignKey("ThietBiId")]
+        public ThietBi ThietBi { get; set; }
 
         [DisplayName("Người lập phiếu")]
         [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]

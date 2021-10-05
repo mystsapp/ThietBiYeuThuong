@@ -201,34 +201,34 @@ namespace ThietBiYeuThuong.Web.Controllers
                 //var t = _unitOfWork.tourRepository.GetById(id);
                 var t = _cTHoSoBNService.GetByIdAsNoTracking(CTHoSoBNVM.CTHoSoBN.SoPhieuCT);
 
-                if (t.ThietBi != CTHoSoBNVM.CTHoSoBN.ThietBi)
+                if (t.ThietBiId != CTHoSoBNVM.CTHoSoBN.ThietBiId)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.ThietBi, CTHoSoBNVM.CTHoSoBN.ThietBi);
+                    temp += String.Format("- ThietBiId thay đổi: {0}->{1}", t.ThietBiId, CTHoSoBNVM.CTHoSoBN.ThietBiId);
                 }
 
                 if (t.DongHoGiao != CTHoSoBNVM.CTHoSoBN.DongHoGiao)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.DongHoGiao, CTHoSoBNVM.CTHoSoBN.DongHoGiao);
+                    temp += String.Format("- DongHoGiao thay đổi: {0}->{1}", t.DongHoGiao, CTHoSoBNVM.CTHoSoBN.DongHoGiao);
                 }
 
                 if (t.DongHoThu != CTHoSoBNVM.CTHoSoBN.DongHoThu)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.DongHoThu, CTHoSoBNVM.CTHoSoBN.DongHoThu);
+                    temp += String.Format("- DongHoThu thay đổi: {0}->{1}", t.DongHoThu, CTHoSoBNVM.CTHoSoBN.DongHoThu);
                 }
 
                 if (t.SoLuong != CTHoSoBNVM.CTHoSoBN.SoLuong)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.SoLuong, CTHoSoBNVM.CTHoSoBN.SoLuong);
+                    temp += String.Format("- SoLuong thay đổi: {0}->{1}", t.SoLuong, CTHoSoBNVM.CTHoSoBN.SoLuong);
                 }
 
                 if (t.NVGiaoBinh != CTHoSoBNVM.CTHoSoBN.NVGiaoBinh)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.NVGiaoBinh, CTHoSoBNVM.CTHoSoBN.NVGiaoBinh);
+                    temp += String.Format("- NVGiaoBinh thay đổi: {0}->{1}", t.NVGiaoBinh, CTHoSoBNVM.CTHoSoBN.NVGiaoBinh);
                 }
 
                 if (t.GhiChu != CTHoSoBNVM.CTHoSoBN.GhiChu)
                 {
-                    temp += String.Format("- ThietBi thay đổi: {0}->{1}", t.GhiChu, CTHoSoBNVM.CTHoSoBN.GhiChu);
+                    temp += String.Format("- GhiChu thay đổi: {0}->{1}", t.GhiChu, CTHoSoBNVM.CTHoSoBN.GhiChu);
                 }
 
                 #endregion log file
