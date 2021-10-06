@@ -16,6 +16,7 @@ namespace ThietBiYeuThuong.Web.Controllers
         private readonly IHoSoBNService _hoSoBNService;
         private readonly ITinhTonService _tinhTonService;
         private readonly IThietBiService _thietBiService;
+        private readonly IBenhNhanThietBiService _benhNhanThietBiService;
 
         [BindProperty]
         public CTHoSoBNViewModel CTHoSoBNVM { get; set; }
@@ -23,12 +24,14 @@ namespace ThietBiYeuThuong.Web.Controllers
         public CTHoSoBNController(ICTHoSoBNService cTHoSoBNService,
                                   IHoSoBNService hoSoBNService,
                                   ITinhTonService tinhTonService,
-                                  IThietBiService thietBiService)
+                                  IThietBiService thietBiService,
+                                  IBenhNhanThietBiService benhNhanThietBiService)
         {
             _cTHoSoBNService = cTHoSoBNService;
             _hoSoBNService = hoSoBNService;
             _tinhTonService = tinhTonService;
             _thietBiService = thietBiService;
+            _benhNhanThietBiService = benhNhanThietBiService;
             CTHoSoBNVM = new CTHoSoBNViewModel()
             {
                 CTHoSoBN = new Data.Models.CTHoSoBN(),
@@ -73,11 +76,12 @@ namespace ThietBiYeuThuong.Web.Controllers
             // from login session
             var user = HttpContext.Session.GetSingle<User>("loginUser");
 
+            CTHoSoBNVM.HoSoBN = await _hoSoBNService.GetById(CTHoSoBNVM.HoSoBN.SoPhieu);
+
             if (!ModelState.IsValid)
             {
                 // not valid
 
-                CTHoSoBNVM.HoSoBN = await _hoSoBNService.GetById(CTHoSoBNVM.HoSoBN.SoPhieu);
                 CTHoSoBNVM.Page = CTHoSoBNVM.Page;
 
                 return View(CTHoSoBNVM);
@@ -86,6 +90,8 @@ namespace ThietBiYeuThuong.Web.Controllers
             // CTHoSoBNVM.CTPhieuNX.PhieuNXId = CTHoSoBNVM.PhieuNX.SoPhieu;
             CTHoSoBNVM.CTHoSoBN.LapPhieu = user.Username;
             CTHoSoBNVM.CTHoSoBN.NgayTao = DateTime.Now;
+            CTHoSoBNVM.CTHoSoBN.NgayXuat = DateTime.Now;
+            CTHoSoBNVM.CTHoSoBN.SoPhieuCT = _cTHoSoBNService.GetSoPhieuCT("CH");
 
             //int tongNhap = 0, tongXuat = 0, ton = 0;
             //// next sophieuct --> bat buoc phai co'
@@ -136,6 +142,23 @@ namespace ThietBiYeuThuong.Web.Controllers
             {
                 await _cTHoSoBNService.Create(CTHoSoBNVM.CTHoSoBN);
 
+                // update thietbi -> tinhtrang == false
+                ThietBi thietBi = await _thietBiService.GetById(CTHoSoBNVM.CTHoSoBN.ThietBiId);
+                thietBi.TinhTrang = false;
+                thietBi.LogFile += " -User xuất: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString()
+                                                   + ", " + "BN: " + CTHoSoBNVM.HoSoBN.BenhNhanId; // username
+                await _thietBiService.UpdateAsync(thietBi);
+
+                // save BenhNhanThietBi
+                BenhNhanThietBi benhNhanThietBi = new BenhNhanThietBi()
+                {
+                    BenhNhanId = CTHoSoBNVM.HoSoBN.BenhNhanId,
+                    ThietBiId = CTHoSoBNVM.CTHoSoBN.ThietBiId,
+                    NgayTao = DateTime.Now,
+                    NguoiTao = user.Username
+                };
+                await _benhNhanThietBiService.CreateAsync(benhNhanThietBi);
+
                 return Json(new
                 {
                     status = true
@@ -146,7 +169,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 return Json(new
                 {
                     status = false,
-                    message = "Lỗi thêm CT phiếu" + ex.Message
+                    message = "Lỗi thêm CT hồ sơ" + ex.Message
                 });
             }
         }
@@ -244,7 +267,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     log = System.Environment.NewLine;
                     log += "=============";
                     log += System.Environment.NewLine;
-                    log += temp + " -User cập nhật tour: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // username
+                    log += temp + " -User cập nhật: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // username
                     t.LogFile = t.LogFile + log;
                     CTHoSoBNVM.CTHoSoBN.LogFile = t.LogFile;
                 }
@@ -284,6 +307,9 @@ namespace ThietBiYeuThuong.Web.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            // from login session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
             if (string.IsNullOrEmpty(id))
                 return NotFound();
 
@@ -297,7 +323,19 @@ namespace ThietBiYeuThuong.Web.Controllers
                 // capnhat tinhtrang thietbi = true -> con hàng
                 var thietBi = await _thietBiService.GetById(ctHoSoBN.ThietBiId);
                 thietBi.TinhTrang = true;
+                thietBi.LogFile += " -User xoá CT: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString()
+                                                   + ", " + "BN: " + CTHoSoBNVM.HoSoBN.BenhNhanId; // username
                 await _thietBiService.UpdateAsync(thietBi);
+
+                // save BenhNhanThietBi
+                BenhNhanThietBi benhNhanThietBi = new BenhNhanThietBi()
+                {
+                    BenhNhanId = CTHoSoBNVM.HoSoBN.BenhNhanId,
+                    ThietBiId = CTHoSoBNVM.CTHoSoBN.ThietBiId,
+                    NgayTao = DateTime.Now,
+                    NguoiTao = user.Username
+                };
+                await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
 
                 //SetAlert("Xóa thành công.", "success");
                 return Json(new

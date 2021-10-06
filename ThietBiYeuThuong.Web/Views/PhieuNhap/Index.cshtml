@@ -77,15 +77,16 @@
                         <tr class="table-info">
 
                             <th>#</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNhaps.FirstOrDefault().SoPhieu)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNhaps.FirstOrDefault().NgayNhap)</th>
-                            <th>@Html.DisplayNameFor(m => m.PhieuNhaps.FirstOrDefault().DonVi)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNhapDtos.FirstOrDefault().SoPhieu)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNhapDtos.FirstOrDefault().NgayNhap)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNhapDtos.FirstOrDefault().DonVi)</th>
+                            <th>@Html.DisplayNameFor(m => m.PhieuNhapDtos.FirstOrDefault().TrangThai)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.PhieuNhaps != null)
+                        @if (Model.PhieuNhapDtos != null)
                         {
-                            @foreach (var item in Model.PhieuNhaps)
+                            @foreach (var item in Model.PhieuNhapDtos)
                             {
 
                                 <tr class="cursor-pointer @item.SoPhieu" @*data-huy="@item.HuyTour"*@ onclick="Thietbi_Tbl()">
@@ -111,6 +112,7 @@
                                     <td class="tdVal" data-id="@item.SoPhieu">@Html.DisplayFor(m => item.SoPhieu)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu">@Html.DisplayFor(m => item.NgayNhap)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu">@Html.DisplayFor(m => item.DonVi)</td>
+                                    <td class="tdVal" data-id="@item.SoPhieu">@Html.DisplayFor(m => item.TrangThai)</td>
                                 </tr>
 
                             }
@@ -122,9 +124,9 @@
                 <!--hiden field for status click-->
             </div>
             <div class="p-2" style="background-color: aliceblue;">
-                @if (Model.PhieuNhaps != null)
+                @if (Model.PhieuNhapDtos != null)
                 {
-                    @Html.PagedListPager((IPagedList)Model.PhieuNhaps, page => Url.Action("Index", new
+                    @Html.PagedListPager((IPagedList)Model.PhieuNhapDtos, page => Url.Action("Index", new
                {
                    page = page,
                    option = Context.Request.Query["option"],

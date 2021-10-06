@@ -1,18 +1,18 @@
 ﻿<!-- khachhang themmoi modal-->
-<div class="modal fade" id="thietBi_Modal_Create" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="thietBi_Modal_Create_CTHSBN" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-xl">
 
         <div class="modal-content ">
             <div class="modal-header bg-secondary">
                 <h6 class="modal-title"><i class="fas fa-file text-info"></i> Chọn thiết bị</h6>
-                <button type="button" class="close pr-4 pt-3" @*data-dismiss="modal"*@ id="btnCloseTBModel_Dismiss_Create" aria-label="Close">
+                <button type="button" class="close pr-4 pt-3" @*data-dismiss="modal"*@ id="btnCloseTBModel_Dismiss_Create_CTHSBN" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body thietBi_Modal_Body_Create ">
+            <div class="modal-body thietBi_Modal_Body_Create_CTHSBN ">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark " @*data-dismiss="modal"*@ id="btnModalTB_Create_Dismiss" title="Thoát"><i class="fas fa-power-off fa-2x"></i></button>
+                <button type="button" class="btn btn-outline-dark " @*data-dismiss="modal"*@ id="btnModalTB_Create_Dismiss_CTHSBN" title="Thoát"><i class="fas fa-power-off fa-2x"></i></button>
                 @*<button type="submit" class="btn btn-outline-primary"><i class="fas fa-save"></i></button>*@
             </div>
         </div>
@@ -24,12 +24,12 @@
 <script src="~/lib/AdminLTE-3.1.0/plugins/jquery/jquery.js"></script>
 
 <script>
-    $('#btnModalTB_Create_Dismiss').click(function () {
-        $('#thietBi_Modal_Create').modal('hide');
+    $('#btnModalTB_Create_Dismiss_CTHSBN').click(function () {
+        $('#thietBi_Modal_Create_CTHSBN').modal('hide');
 
     })
-    $('#btnCloseTBModel_Dismiss_Create').click(function () {
-        $('#thietBi_Modal_Create').modal('hide');
+    $('#btnCloseTBModel_Dismiss_Create_CTHSBN').click(function () {
+        $('#thietBi_Modal_Create_CTHSBN').modal('hide');
 
     })
 </script>

@@ -18,11 +18,13 @@ namespace ThietBiYeuThuong.Web.Services
 
         //Task<IPagedList<BenhNhanThietBi>> ListBenhNhanThietBi(string searchString, string searchFromDate, string searchToDate, int? page);
 
-        Task CreateAsync(BenhNhanThietBi benhNhanThietBi);
+        Task DeleteAsync(BenhNhanThietBi benhNhanThietBi);
 
         Task UpdateAsync(BenhNhanThietBi benhNhanThietBi);
 
         BenhNhanThietBi GetByIdAsNoTracking(string maBN, string maTB);
+
+        Task CreateAsync(BenhNhanThietBi benhNhanThietBi);
     }
 
     public class BenhNhanThietBiService : IBenhNhanThietBiService
@@ -34,9 +36,15 @@ namespace ThietBiYeuThuong.Web.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateAsync(BenhNhanThietBi BenhNhanThietBi)
+        public async Task CreateAsync(BenhNhanThietBi benhNhanThietBi)
         {
-            _unitOfWork.benhNhanThietBiRepository.Create(BenhNhanThietBi);
+            _unitOfWork.benhNhanThietBiRepository.Create(benhNhanThietBi);
+            await _unitOfWork.Complete();
+        }
+
+        public async Task DeleteAsync(BenhNhanThietBi BenhNhanThietBi)
+        {
+            _unitOfWork.benhNhanThietBiRepository.Delete(BenhNhanThietBi);
             await _unitOfWork.Complete();
         }
 

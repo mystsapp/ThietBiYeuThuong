@@ -3,9 +3,9 @@
 <div class="row form-group">
     <div class="col-xs-12 col-md-6">
         <div class="input-group">
-            <input type="text" value="@Model.MaTBText" class="form-control form-control-sm txtThietBi_ThemMoi text-uppercase" id="txtTimTB_ThemMoi" placeholder="Nhập mã TB, tên TB">
+            <input type="text" value="@Model.MaTBText" class="form-control form-control-sm txtThietBi_ThuHoi text-uppercase" id="txtThietBi_ThuHoi" placeholder="Nhập mã TB, tên TB">
             <span class="input-group-btn">
-                <button type="button" class="btn btn-default btn-sm " id="btSearchTB_ThemMoi"><i class="fa fa-search"></i></button>
+                <button type="button" class="btn btn-default btn-sm " id="btSearchTB_ThuHoi"><i class="fa fa-search"></i></button>
             </span>
         </div>
     </div>
@@ -18,24 +18,24 @@
 
                 <th>Mã TB</th>
                 <th>Tên TB</th>
-                <th>Ngày nhập</th>
-                <th>Trạng thái</th>
-                <th>Loại TB</th>
+                <th>Mã BN</th>
+                <th>Tên BN</th>
+                <th>Ngày xuất</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model.IEnumThietBi != null)
+            @if (Model.IEnumThietBi_ThuHoi != null)
             {
-                @foreach (var item in Model.IEnumThietBi)
+                @foreach (var item in Model.IEnumThietBi_ThuHoi)
                 {
 
                     <tr class="thietbis-cursor-pointer ">
 
-                        <td class="tdVal_TB" data-id="@item.MaTB">@Html.DisplayFor(m => item.MaTB)</td>
-                        <td class="tdVal_TB" data-id="@item.MaTB">@Html.DisplayFor(m => item.TenTB)</td>
-                        <td class="tdVal_TB" data-id="@item.MaTB">@Html.DisplayFor(m => item.NgayTao)</td>
-                        <td class="tdVal_TB" data-id="@item.MaTB">@Html.DisplayFor(m => item.TrangThai.Name)</td>
-                        <td class="tdVal_TB" data-id="@item.MaTB">@Html.DisplayFor(m => item.LoaiThietBi.Name)</td>
+                        <td class="tdVal_TB" data-id="@item.ThietBiId">@Html.DisplayFor(m => item.ThietBiId)</td>
+                        <td class="tdVal_TB" data-id="@item.ThietBiId">@Html.DisplayFor(m => item.ThietBi.TenTB)</td>
+                        <td class="tdVal_TB" data-id="@item.ThietBiId">@Html.DisplayFor(m => item.BenhNhanId)</td>
+                        <td class="tdVal_TB" data-id="@item.ThietBiId">@Html.DisplayFor(m => item.BenhNhan.HoTenBN)</td>
+                        <td class="tdVal_TB" data-id="@item.ThietBiId">@Html.DisplayFor(m => item.NgayTao)</td>
                     </tr>
 
                 }
@@ -50,11 +50,11 @@
 </div>-->
 
 <script>
-    $('.btSearchTB_ThemMoi').off('click').on('click', function () {
+    $('.btSearchTB_ThuHoi').off('click').on('click', function () {
 
-        var maTBText = $('.txtTimTB_ThemMoi').val();
+        var maTBText = $('.txtThietBi_ThuHoi').val();
 
-        ThietBiSearch(maTBText); // ben Create
+        ThietBiSearch_ThuHoi(maTBText); // ben Create_ThuHoi
     })
     $('.thietbis-cursor-pointer').click(function () {
 
@@ -68,12 +68,14 @@
 
         var maTB = $(this).children().eq(0).html();
         var tenTB = $(this).children().eq(1).html();
-        var ngayTao = $(this).children().eq(2).html();
-        var trangThai = $(this).children().eq(3).html();
-        var loaiTB = $(this).children().eq(4).html();
+        var maBN = $(this).children().eq(2).html();
+        var tenBN = $(this).children().eq(3).html();
+        var ngayXuat = $(this).children().eq(4).html();
 
-        $('#txtThietBi_Create').val(maTB);
-        $('#txtTenTB_Create').val(tenTB);
+        $('#txtThietBi_ThuHoi').val(maTB);
+        $('#txtTenTB_ThuHoi').val(tenTB);
+        $('#hidMaBN').val(maBN);
+        $('#txtDonVi_ThuHoi').val(tenBN);
 
         //var code = $(this).find("td").eq(0).html();
         //var name = $(this).find("td").eq(1).html();

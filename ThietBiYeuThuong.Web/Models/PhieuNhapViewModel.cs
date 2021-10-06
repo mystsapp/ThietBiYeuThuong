@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using ThietBiYeuThuong.Data.Dtos;
 using ThietBiYeuThuong.Data.Models;
 using X.PagedList;
 
@@ -16,9 +17,10 @@ namespace ThietBiYeuThuong.Web.Models
         public List<LoaiThietBi> LoaiThietBis { get; set; }
         public List<ThietBi> ThietBis { get; set; }
         public List<TrangThai> TrangThais { get; set; }
-        public IPagedList<PhieuNhap> PhieuNhaps { get; set; }
+        public IPagedList<PhieuNhapDto> PhieuNhapDtos { get; set; }
         public string StrUrl { get; set; }
         public int Page { get; set; }
+        public string MaBN { get; set; }
 
         [DisplayName("Số lượng")]
         public int SoLuong { get; set; }

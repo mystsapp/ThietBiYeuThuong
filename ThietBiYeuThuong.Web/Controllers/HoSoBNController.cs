@@ -135,9 +135,11 @@ namespace ThietBiYeuThuong.Web.Controllers
                     BenhNhanThietBi benhNhanThietBi = new BenhNhanThietBi()
                     {
                         BenhNhanId = HoSoBNVM.HoSoBN.BenhNhanId,
-                        ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId
+                        ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId,
+                        NgayTao = DateTime.Now,
+                        NguoiTao = user.Username
                     };
-                    await _benhNhanThietBiService.CreateAsync(benhNhanThietBi);
+                    await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
                 }
                 //else
                 //{

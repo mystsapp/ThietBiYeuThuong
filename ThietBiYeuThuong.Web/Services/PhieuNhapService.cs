@@ -16,7 +16,7 @@ namespace ThietBiYeuThuong.Web.Services
 
         Task<PhieuNhap> GetById(string id);
 
-        Task<IPagedList<PhieuNhap>> ListPhieuNhap(string searchString, string searchFromDate, string searchToDate, int? page);
+        Task<IPagedList<PhieuNhapDto>> ListPhieuNhap(string searchString, string searchFromDate, string searchToDate, int? page);
 
         Task CreateAsync(PhieuNhap phieuNhap);
 
@@ -92,7 +92,7 @@ namespace ThietBiYeuThuong.Web.Services
             }
         }
 
-        public async Task<IPagedList<PhieuNhap>> ListPhieuNhap(string searchString, string searchFromDate, string searchToDate, int? page)
+        public async Task<IPagedList<PhieuNhapDto>> ListPhieuNhap(string searchString, string searchFromDate, string searchToDate, int? page)
         {
             // return a 404 if user browses to before the first page
             if (page.HasValue && page < 1)
@@ -100,27 +100,20 @@ namespace ThietBiYeuThuong.Web.Services
 
             // retrieve list from database/whereverand
 
-            var list = new List<PhieuNhap>();
+            var phieuNhaps = new List<PhieuNhap>();
+            List<PhieuNhapDto> list = new List<PhieuNhapDto>();
 
             // search for sgtcode in kvctptC
             if (!string.IsNullOrEmpty(searchString))
             {
-                list = _unitOfWork.phieuNhapRepository.Find(x => !string.IsNullOrEmpty(x.SoPhieu) && x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
+                phieuNhaps = _unitOfWork.phieuNhapRepository.Find(x => !string.IsNullOrEmpty(x.SoPhieu) && x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
                                            (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower())) ||
                                            (!string.IsNullOrEmpty(x.NguoiNhap) && x.NguoiNhap.ToLower().Contains(searchString.ToLower()))).ToList();
             }
             else
             {
-                list = await GetAll();
-
-                if (list == null)
-                {
-                    return null;
-                }
+                phieuNhaps = await GetAll();
             }
-
-            list = list.OrderByDescending(x => x.NgayNhap).ToList();
-            var count = list.Count();
 
             // search date
             DateTime fromDate, toDate;
@@ -136,7 +129,7 @@ namespace ThietBiYeuThuong.Web.Services
                         return null; //
                     }
 
-                    list = list.Where(x => x.NgayNhap >= fromDate &&
+                    phieuNhaps = phieuNhaps.Where(x => x.NgayNhap >= fromDate &&
                                        x.NgayNhap < toDate.AddDays(1)).ToList();
                 }
                 catch (Exception)
@@ -151,7 +144,7 @@ namespace ThietBiYeuThuong.Web.Services
                     try
                     {
                         fromDate = DateTime.Parse(searchFromDate);
-                        list = list.Where(x => x.NgayNhap >= fromDate).ToList();
+                        phieuNhaps = phieuNhaps.Where(x => x.NgayNhap >= fromDate).ToList();
                     }
                     catch (Exception)
                     {
@@ -163,7 +156,7 @@ namespace ThietBiYeuThuong.Web.Services
                     try
                     {
                         toDate = DateTime.Parse(searchToDate);
-                        list = list.Where(x => x.NgayNhap < toDate.AddDays(1)).ToList();
+                        phieuNhaps = phieuNhaps.Where(x => x.NgayNhap < toDate.AddDays(1)).ToList();
                     }
                     catch (Exception)
                     {
@@ -172,6 +165,26 @@ namespace ThietBiYeuThuong.Web.Services
                 }
             }
             // search date
+
+            foreach (var item in phieuNhaps)
+            {
+                var trangThai = await _unitOfWork.trangThaiRepository.GetByIdAsync(item.TrangThaiId);
+                var phieuNhapDto = new PhieuNhapDto()
+                {
+                    DonVi = item.DonVi,
+                    LogFile = item.LogFile,
+                    NgayNhap = item.NgayNhap,
+                    NgaySua = item.NgaySua,
+                    NguoiNhap = item.NguoiNhap,
+                    NguoiSua = item.NguoiSua,
+                    SoPhieu = item.SoPhieu,
+                    TrangThai = trangThai.Name
+                };
+                list.Add(phieuNhapDto);
+            }
+
+            list = list.OrderByDescending(x => x.NgayNhap).ToList();
+            var count = list.Count();
 
             //// List<string> listRoleChiNhanh --> chi lay nhung tour thuộc phanKhuCN cua minh
             //if (listRoleChiNhanh.Count > 0)

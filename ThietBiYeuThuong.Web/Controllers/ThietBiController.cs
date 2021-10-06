@@ -31,6 +31,14 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> SearchThietBis_ThuHoi(string code)
+        {
+            code ??= "";
+            ThietBiVM.IEnumThietBi_ThuHoi = await _thietBiService.SearchThietBis_ThuHoi(code);
+            ThietBiVM.MaTBText = code;
+            return PartialView(ThietBiVM);
+        }
+
         public async Task<IActionResult> SearchThietBis_Code(string code)
         {
             code ??= "";

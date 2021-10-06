@@ -80,7 +80,7 @@ namespace ThietBiYeuThuong.Web.Services
 
             if (cTPhieuNX == null || string.IsNullOrEmpty(cTPhieuNX.SoPhieuCT))
             {
-                return GetNextId.NextID_Phieu("", "") + subfix; // 0001
+                return GetNextId.NextID_Phieu("", "") + subfix; // 000001
             }
             else
             {

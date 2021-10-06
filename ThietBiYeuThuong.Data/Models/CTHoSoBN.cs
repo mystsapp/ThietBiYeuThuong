@@ -19,7 +19,7 @@ namespace ThietBiYeuThuong.Data.Models
         [ForeignKey("HoSoBNId")]
         public virtual HoSoBN HoSoBN { get; set; }
 
-        [DisplayName("Tên TB")]
+        [DisplayName("Mã TB")]
         [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
         public string ThietBiId { get; set; }
 

@@ -18,6 +18,7 @@ namespace ThietBiYeuThuong.Web.Controllers
         private readonly ITrangThaiService _trangThaiService;
         private readonly IThietBiService _thietBiService;
         private readonly ICTPhieuService _cTPhieuService;
+        private readonly IBenhNhanThietBiService _benhNhanThietBiService;
 
         [BindProperty]
         public PhieuNhapViewModel PhieuNhapVM { get; set; }
@@ -26,7 +27,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                                    ILoaiThietBiService loaiThietBiService,
                                    ITrangThaiService trangThaiService,
                                    IThietBiService thietBiService,
-                                   ICTPhieuService cTPhieuService)
+                                   ICTPhieuService cTPhieuService,
+                                   IBenhNhanThietBiService benhNhanThietBiService)
         {
             PhieuNhapVM = new PhieuNhapViewModel()
             {
@@ -37,6 +39,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             _trangThaiService = trangThaiService;
             _thietBiService = thietBiService;
             _cTPhieuService = cTPhieuService;
+            _benhNhanThietBiService = benhNhanThietBiService;
         }
 
         public async Task<IActionResult> Index(string searchString, string searchFromDate, string searchToDate, string id, int page = 1)
@@ -62,9 +65,11 @@ namespace ThietBiYeuThuong.Web.Controllers
             {
                 PhieuNhapVM.PhieuNhap = new Data.Models.PhieuNhap();
             }
-            PhieuNhapVM.PhieuNhaps = await _phieuNhapService.ListPhieuNhap(searchString, searchFromDate, searchToDate, page);
+            PhieuNhapVM.PhieuNhapDtos = await _phieuNhapService.ListPhieuNhap(searchString, searchFromDate, searchToDate, page);
             return View(PhieuNhapVM);
         }
+
+        #region Create_Day
 
         public async Task<IActionResult> Create_Day(string strUrl, int page)
         {
@@ -130,6 +135,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
                 PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
                 PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
+                PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
                 PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
                 await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
             }
@@ -177,6 +183,84 @@ namespace ThietBiYeuThuong.Web.Controllers
                 return View(PhieuNhapVM);
             }
         }
+
+        #endregion Create_Day
+
+        #region Create_ThuHoi
+
+        public async Task<IActionResult> Create_ThuHoi(string strUrl, int page)
+        {
+            //ViewBag.trangThaiId = 1;
+
+            // from session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            PhieuNhapVM.StrUrl = strUrl;
+            PhieuNhapVM.Page = page;
+
+            return View(PhieuNhapVM);
+        }
+
+        [HttpPost, ActionName("Create_ThuHoi")]
+        public async Task<IActionResult> Create_ThuHoi_Post(string strUrl, int page)
+        {
+            // from login session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            if (!ModelState.IsValid)
+            {
+                PhieuNhapVM = new PhieuNhapViewModel()
+                {
+                    PhieuNhap = new PhieuNhap(),
+                    StrUrl = strUrl
+                };
+
+                return View(PhieuNhapVM);
+            }
+
+            PhieuNhapVM.PhieuNhap.NgayNhap = DateTime.Now;
+            PhieuNhapVM.PhieuNhap.NguoiNhap = user.Username;
+            PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PN");
+            PhieuNhapVM.PhieuNhap.TrangThaiId = 2; // thu hồi
+
+            // capnhat thietbi trangthai thu hồi
+            var thietBi = await _thietBiService.GetById(PhieuNhapVM.CTPhieu.ThietBiId);
+            thietBi.TrangThaiId = 2;
+            thietBi.LogFile += "-User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            await _thietBiService.UpdateAsync(thietBi);
+
+            // save CTPhieu
+            PhieuNhapVM.CTPhieu.SoPhieu = PhieuNhapVM.PhieuNhap.SoPhieu;
+            PhieuNhapVM.CTPhieu.SoPhieuCT = _cTPhieuService.GetSoPhieuCT("CN");
+            PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
+            PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
+            PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
+            PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
+
+            // xoá BenhNhanThietBi
+            BenhNhanThietBi benhNhanThietBi = await _benhNhanThietBiService.GetById(PhieuNhapVM.MaBN, thietBi.MaTB);
+            await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
+
+            // ghi log
+            PhieuNhapVM.PhieuNhap.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+
+            try
+            {
+                await _phieuNhapService.CreateAsync(PhieuNhapVM.PhieuNhap); // save
+
+                SetAlert("Thêm mới thành công.", "success");
+
+                return RedirectToAction(nameof(Index), new { id = PhieuNhapVM.PhieuNhap.SoPhieu, page = page });
+            }
+            catch (Exception ex)
+            {
+                SetAlert(ex.Message, "error");
+                return View(PhieuNhapVM);
+            }
+        }
+
+        #endregion Create_ThuHoi
 
         public async Task<IActionResult> Edit(string id, string strUrl)
         {

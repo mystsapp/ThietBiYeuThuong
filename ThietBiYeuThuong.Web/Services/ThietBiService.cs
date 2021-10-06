@@ -36,6 +36,8 @@ namespace ThietBiYeuThuong.Web.Services
         Task<IEnumerable<ThietBi>> SearchThietBis_Code(string code);
 
         ThietBi GetThietBiByCode(string code);
+
+        Task<IEnumerable<BenhNhanThietBi>> SearchThietBis_ThuHoi(string code);
     }
 
     public class ThietBiService : IThietBiService
@@ -141,6 +143,14 @@ namespace ThietBiYeuThuong.Web.Services
                                      (!string.IsNullOrEmpty(x.TenTB) && x.TenTB.Trim().ToLower().Contains(code.Trim().ToLower()))).ToList();
             thietBis = thietBis.Where(x => x.TrangThaiId == 1 || x.TrangThaiId == 3).Where(x => x.TinhTrang != false); // đầy || vừa bơm về va tinhtrang true
             return thietBis;
+        }
+
+        public async Task<IEnumerable<BenhNhanThietBi>> SearchThietBis_ThuHoi(string code)
+        {
+            code ??= "";
+            var benhNhanThietBis = await _unitOfWork.benhNhanThietBiRepository.GetAllIncludeAsync(tb => tb.ThietBi, bn => bn.BenhNhan);
+            return benhNhanThietBis.Where(x => x.ThietBiId.ToLower().Contains(code.Trim().ToLower()) ||
+                                               x.ThietBi.TenTB.Trim().ToLower().Contains(code.Trim().ToLower()));
         }
 
         public async Task UpdateAsync(ThietBi ThietBi)

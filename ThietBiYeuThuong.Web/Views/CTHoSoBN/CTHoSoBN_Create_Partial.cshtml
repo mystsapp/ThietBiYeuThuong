@@ -31,54 +31,59 @@
                 <input type="hidden" asp-for="HoSoBN.SoPhieu" />
                 <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="@Model.HoSoBN.SoPhieu" />
                 <input type="hidden" asp-for="Page" />
+
                 <div class="form-group row">
 
-                    <div class="col-md-2">
-                        <label asp-for="CTHoSoBN.ThietBiId" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                        <input asp-for="CTHoSoBN.ThietBiId" class="form-control form-control-sm" id="txtThietBi" />
-                        <span asp-validation-for="CTHoSoBN.ThietBiId" class="text-danger"></span>
-                    </div>
-
                     <!--<div class="col-md-2">
-                    <label asp-for="CTHoSoBN.NgayXuat" class="control-label"></label>-->
+                    <label asp-for="CTHoSoBN.ThietBi" class="control-label"></label>-->
                     @*(<strong class="text-red">*</strong>)*@ <!--<!---->@*asp-format="{0:dd/MM/yyyy}"*@
-                    <!--<input type="text" value="" asp-for="CTHoSoBN.NgayXuat" class="form-control form-control-sm maskInput" asp-format="{0:dd/MM/yyyy}" id="txtNgayXuat" />
-                        <span asp-validation-for="CTHoSoBN.NgayXuat" class="text-danger"></span>
+                    <!--<select asp-for="CTHoSoBN.ThietBi" class="form-control form-control-sm "
+                                asp-items="(new SelectList(Model.TrangThais_ThietBi, "Name", "Name"))" id="ddlThietBi">
+                        </select>
+                        <span asp-validation-for="CTHoSoBN.ThietBi" class="text-danger"></span>
                     </div>-->
 
                     <div class="col-md-2">
-                        <label asp-for="CTHoSoBN.SoLuong" class="control-label"></label>
-                        <input asp-for="CTHoSoBN.SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
-                        <span asp-validation-for="CTHoSoBN.SoLuong" class="text-danger"></span>
+                        <label asp-for="CTHoSoBN.ThietBiId" class="control-label "></label>
+                        <div class="input-group">
+                            <input asp-for="CTHoSoBN.ThietBiId" class="form-control form-control-sm text-uppercase" id="txtThietBi_Create">
+                            <span class="input-group-btn">
+                                <a href="javascript:;" class="btn btn-default btn-sm" id="btnThietBiSearch_Create_CTHSBN" title="Tìm thông tin thiết bị"><i class="fa fa-search"></i></a>
+                            </span>
+                        </div>
+                        <span asp-validation-for="CTHoSoBN.ThietBiId" class="text-danger"></span>
                     </div>
 
-                    <div class="col-md-8">
+                    @*<div class="col-md-2">
+                            <label class="control-label">Số lượng</label>
+                            <input asp-for="SoLuong" class="form-control form-control-sm" id="txtSoLuong" />
+                            <span asp-validation-for="SoLuong" class="text-danger"></span>
+                        </div>*@
+
+                    <div class="col-md-10">
                         <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
                         <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
                         <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="form-group row">
 
-                <div id="ctXuat">
-                    <div class="form-group row">
+                    <div class="col-md-2">
+                        <label asp-for="CTHoSoBN.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                        <input asp-for="CTHoSoBN.DongHoGiao" class="form-control form-control-sm " id="txtDongHoGiao" />
+                        <span asp-validation-for="CTHoSoBN.DongHoGiao" class="text-danger"></span>
+                    </div>
 
-                        <div class="col-md-2">
-                            <label asp-for="CTHoSoBN.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                            <input asp-for="CTHoSoBN.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
-                            <span asp-validation-for="CTHoSoBN.DongHoGiao" class="text-danger"></span>
-                        </div>
+                    <div class="col-md-2">
+                        <label asp-for="CTHoSoBN.DongHoThu" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                        <input asp-for="CTHoSoBN.DongHoThu" class="form-control form-control-sm " id="txtDongHoThu" />
+                        <span asp-validation-for="CTHoSoBN.DongHoThu" class="text-danger"></span>
+                    </div>
 
-                        <div class="col-md-2">
-                            <label asp-for="CTHoSoBN.DongHoThu" class="control-label"></label>
-                            <input asp-for="CTHoSoBN.DongHoThu" class="form-control form-control-sm" id="txtSoLuong" />
-                            <span asp-validation-for="CTHoSoBN.DongHoThu" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-md-2">
-                            <label asp-for="CTHoSoBN.NVGiaoBinh" class="control-label"></label>
-                            <input asp-for="CTHoSoBN.NVGiaoBinh" class="form-control form-control-sm" id="txtSoLuong" />
-                            <span asp-validation-for="CTHoSoBN.NVGiaoBinh" class="text-danger"></span>
-                        </div>
+                    <div class="col-md-8">
+                        <label asp-for="CTHoSoBN.NVGiaoBinh" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
+                        <input asp-for="CTHoSoBN.NVGiaoBinh" class="form-control form-control-sm " id="txtNVGiaoBinh" />
+                        <span asp-validation-for="CTHoSoBN.NVGiaoBinh" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -91,8 +96,13 @@
     </div>
     <!-- /.card-body -->
 </div>
-<script src="~/js/Admin/HoSoBN/indexController.js"></script>
+<partial name="~/Views/Shared/_ThietBiPartial_ThemMoi_CTHSBN.cshtml" />
 
+<script src="~/js/Admin/HoSoBN/hs_indexController.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery.maskedinput/jquery.maskedinput.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script>
     $(function () {
         $(".maskInput").mask("99/99/9999");
@@ -168,6 +178,22 @@
         }
     }*@
 
+    // btnThietBiSearch_Create_CTHSBN
+    $('#btnThietBiSearch_Create_CTHSBN').click(function () {
+
+        var maTBtext = $('#txtThietBi_Create').val();
+
+        ThietBiSearch_CTHSBN(maTBtext);
+    })
+    function ThietBiSearch_CTHSBN(code) {
+        $.get('/ThietBi/SearchThietBis_Code', { code: code }, function (data) {
+
+            $('#thietBi_Modal_Create_CTHSBN').modal('show');
+            $('.thietBi_Modal_Body_Create_CTHSBN').html(data);
+            $('#thietBi_Modal_Create_CTHSBN').draggable();
+        });
+    }
+
     $('#btnSubmit_CTHoSoBN_Create').off('click').on('click', function () {
         debugger
 
@@ -188,7 +214,7 @@
                         HoSoBNId = '@Model.HoSoBN.SoPhieu';
                         page = '@Model.Page';
 
-                        indexController.Load_CTHoSoBNPartial(HoSoBNId, page);
+                        hs_indexController.Load_CTHoSoBNPartial(HoSoBNId, page);
                     }
                     else {
                         toastr.error(response.message);

@@ -1,5 +1,5 @@
 ﻿<!-- khachhang themmoi modal-->
-<div class="modal fade" id="thietBi_Modal_Create" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="thietBi_Modal_ThuHoi" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-xl">
 
         <div class="modal-content ">
@@ -9,10 +9,10 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body thietBi_Modal_Body_Create ">
+            <div class="modal-body thietBi_Modal_Body_ThuHoi ">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark " @*data-dismiss="modal"*@ id="btnModalTB_Create_Dismiss" title="Thoát"><i class="fas fa-power-off fa-2x"></i></button>
+                <button type="button" class="btn btn-outline-dark " @*data-dismiss="modal"*@ id="btnModalTB_ThuHoi_Dismiss" title="Thoát"><i class="fas fa-power-off fa-2x"></i></button>
                 @*<button type="submit" class="btn btn-outline-primary"><i class="fas fa-save"></i></button>*@
             </div>
         </div>
@@ -24,12 +24,12 @@
 <script src="~/lib/AdminLTE-3.1.0/plugins/jquery/jquery.js"></script>
 
 <script>
-    $('#btnModalTB_Create_Dismiss').click(function () {
-        $('#thietBi_Modal_Create').modal('hide');
+    $('#btnModalTB_ThuHoi_Dismiss').click(function () {
+        $('#thietBi_Modal_ThuHoi').modal('hide');
 
     })
     $('#btnCloseTBModel_Dismiss_Create').click(function () {
-        $('#thietBi_Modal_Create').modal('hide');
+        $('#thietBi_Modal_ThuHoi').modal('hide');
 
     })
 </script>

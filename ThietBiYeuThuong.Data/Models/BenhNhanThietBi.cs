@@ -16,5 +16,7 @@ namespace ThietBiYeuThuong.Data.Models
         public string ThietBiId { get; set; }
 
         public ThietBi ThietBi { get; set; }
+        public DateTime NgayTao { get; set; }
+        public string NguoiTao { get; set; }
     }
 }
