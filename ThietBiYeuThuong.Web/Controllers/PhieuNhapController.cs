@@ -119,6 +119,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     TrangThaiId = 1, // đầy
                     NgayTao = DateTime.Now,
                     NguoiTao = user.Username,
+                    TinhTrang = true, // chưa giao
                     LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
                 };
                 await _thietBiService.CreateAsync(thietBi); // save thietbi
@@ -143,6 +144,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         LoaiTBId = PhieuNhapVM.ThietBi.LoaiTBId,
                         TrangThaiId = 1, // đầy
                         NgayTao = DateTime.Now,
+                        TinhTrang = true, // chưa giao
                         NguoiTao = user.Username,
                         LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
                     };

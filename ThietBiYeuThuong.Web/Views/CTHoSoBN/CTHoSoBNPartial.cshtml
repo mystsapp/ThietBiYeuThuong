@@ -15,7 +15,7 @@
         <thead>
             <tr class="table-info">
 
-                <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_CTPhieuNX" data-hosobnid="@Model.HoSoBN.SoPhieu" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
+                <th> <button type="button" class="btn btn-outline-info btn-sm text-bold btn-block" id="btn_New_CTHoSoBN" data-hosobnid="@Model.HoSoBN.SoPhieu" data-page="@Model.Page" title="Thêm chi tiết"><i class="fas fa-plus"></i></button></th>
                 <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().SoPhieuCT)</th>
                 <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().ThietBiId)</th>
                 <th>@Html.DisplayNameFor(m => m.CTHoSoBNs.FirstOrDefault().NgayXuat)</th> <!--?-->
@@ -36,7 +36,7 @@
                         <td>
                             <div class="btn-group text-white" role="group">
 
-                                <a class="text-primary btnEditCTPhieuNX" title="Cập nhật" data-ctphieuid="@item.SoPhieuCT"><i class="fas fa-edit"></i></a>
+                                <a class="text-primary btnEditCTHoSoBN" title="Cập nhật" data-ctphieuid="@item.SoPhieuCT"><i class="fas fa-edit"></i></a>
                                 @*<span class="text-dark"> | </span>*@
 
                                 <!--<a class="text-success" title="Chi tiết" asp-action="Details" asp-route-id="item.Id"><i class="fas fa-list"></i></a>-->
@@ -70,7 +70,7 @@
     </table>
 </div>
 
-<script src="~/js/Admin/HoSoBN/indexController.js"></script>
+<script src="~/js/Admin/HoSoBN/hs_indexController.js"></script>
 <script>
     function confirmDelete(uniqueId, isDeleteClicked) {
 
@@ -86,44 +86,29 @@
         }
     }
 
-    // create new ctphieunx
-    $('#btn_New_CTPhieuNX').off('click').on('click', function () {
+    // btn_New_CTHoSoBN
+    $('#btn_New_CTHoSoBN').off('click').on('click', function () {
+        hoSoBNId = '@Model.HoSoBN.SoPhieu';
 
-        var tuNgay = '@DateTime.Now.ToShortDateString()';
+                $('#CTHoSoBN_Tbl').hide(500);
+                $('#CTHoSoBN_Edit_Partial').hide(500);
 
-        $.post('/CTPhieuNX/CheckTonDau', { tuNgay: tuNgay }, function (response) {
+                var url = '/CTHoSoBN/CTHoSoBN_Create_Partial';
+                $.get(url, { hoSoBNId: hoSoBNId }, function (response) {
 
-            if (!response.status) {
-                toastr.warning(response.message, "Thông báo!");
-            }
-            else {
-                debugger
-                //phieunxid = $(this).data('phieunxid');
-                phieunxid = '@Model.HoSoBN.SoPhieu';
-
-                $('#CTPhieuNX_Tbl').hide(500);
-                $('#CTPhieuNX_Edit_Partial').hide(500);
-
-                var url = '/CTPhieuNX/CTPhieuNX_Create_Partial';
-                $.get(url, { phieunxid: phieunxid }, function (response) {
-
-                    $('#CTPhieuNX_Create_Partial').show(500);
-                    $('#CTPhieuNX_Create_Partial').html(response);
+                    $('#CTHoSoBN_Create_Partial').show(500);
+                    $('#CTHoSoBN_Create_Partial').html(response);
 
                 });
-            }
-        })
-
     });
-        // create new ctphieunx
 
-    // edit ctphieunx
-    $('.btnEditCTPhieuNX').off('click').on('click', function (e) {
+    // edit CTHoSoBN
+    $('.btnEditCTHoSoBN').off('click').on('click', function (e) {
         e.preventDefault();
 
         var tuNgay = '@DateTime.Now.ToShortDateString()';
 
-        $.post('/CTPhieuNX/CheckTonDau', { tuNgay: tuNgay }, function (response) {
+        $.post('/CTHoSoBN/CheckTonDau', { tuNgay: tuNgay }, function (response) {
 
             if (!response.status) {
                 toastr.warning(response.message, "Thông báo!");
@@ -132,40 +117,40 @@
                 debugger
                 //phieunxid = $(this).data('phieunxid');
                 phieunxid = '@Model.HoSoBN.SoPhieu';
-                id = $('.btnEditCTPhieuNX').data('ctphieuid');
+                id = $('.btnEditCTHoSoBN').data('ctphieuid');
                 page = '@Model.Page';
                 strUrl = '@Model.StrUrl';
 
-                $('#CTPhieuNX_Tbl').hide(500);
-                $('#CTPhieuNX_Edit_Partial').hide(500);
+                $('#CTHoSoBN_Tbl').hide(500);
+                $('#CTHoSoBN_Edit_Partial').hide(500);
 
-                var url = '/CTPhieuNX/CTPhieuNX_Edit_Partial';
+                var url = '/CTHoSoBN/CTHoSoBN_Edit_Partial';
                 $.get(url, { phieunxid: phieunxid, id: id, strUrl: strUrl, page: page }, function (response) {
 
-                    $('#CTPhieuNX_Create_Partial').show(500);
-                    $('#CTPhieuNX_Create_Partial').html(response);
+                    $('#CTHoSoBN_Create_Partial').show(500);
+                    $('#CTHoSoBN_Create_Partial').html(response);
 
                 });
             }
         })
 
     });
-        // edit ctphieunx
+        // edit CTHoSoBN
 
     // btnXoaDong
     $('.btnXoaDong').off('click').on('click',function () {
 
         var page = @Model.Page;
-        var phieuNXId = '@Model.HoSoBN.SoPhieu';
+        var hoSoBNId = '@Model.HoSoBN.SoPhieu';
 
         id = $(this).data('id'); // id: SoPhieuCT
 
-        var url = '/CTPhieuNX/Delete';
+        var url = '/CTHoSoBN/Delete';
         $.post(url, { id: id }, function (response) {
             debugger
             if (response) {
                 toastr.success('Xoá thành công', 'Xoá!');
-                indexController.Load_CTPhieuNXPartial(phieuNXId, page);
+                hs_indexController.Load_CTHoSoBNPartial(hoSoBNId, page);
             }
         });
 

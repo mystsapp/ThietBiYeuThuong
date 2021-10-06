@@ -139,7 +139,8 @@ namespace ThietBiYeuThuong.Web.Services
             var thietBis = await _unitOfWork.thietBiRepository.GetAllIncludeAsync(ltb => ltb.LoaiThietBi, tt => tt.TrangThai);
             thietBis = thietBis.Where(x => x.MaTB.Trim().ToLower().Contains(code.Trim().ToLower()) ||
                                      (!string.IsNullOrEmpty(x.TenTB) && x.TenTB.Trim().ToLower().Contains(code.Trim().ToLower()))).ToList();
-            return thietBis.Where(x => x.TrangThaiId == 1 || x.TrangThaiId == 3); // đầy || vừa bơm về
+            thietBis = thietBis.Where(x => x.TrangThaiId == 1 || x.TrangThaiId == 3).Where(x => x.TinhTrang != false); // đầy || vừa bơm về va tinhtrang true
+            return thietBis;
         }
 
         public async Task UpdateAsync(ThietBi ThietBi)

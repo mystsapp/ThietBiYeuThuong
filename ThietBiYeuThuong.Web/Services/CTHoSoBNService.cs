@@ -10,7 +10,7 @@ namespace ThietBiYeuThuong.Web.Services
 {
     public interface ICTHoSoBNService
     {
-        Task<IEnumerable<CTHoSoBN>> List_CTPhieuNX_By_PhieuNXId(string phieuNXId);
+        Task<IEnumerable<CTHoSoBN>> List_CTHoSoBN_By_HoSoBNId(string hoSoBNId);
 
         Task Create(CTHoSoBN cTPhieuNX);
 
@@ -100,7 +100,7 @@ namespace ThietBiYeuThuong.Web.Services
             }
         }
 
-        public async Task<IEnumerable<CTHoSoBN>> List_CTPhieuNX_By_PhieuNXId(string hoSoBNId)
+        public async Task<IEnumerable<CTHoSoBN>> List_CTHoSoBN_By_HoSoBNId(string hoSoBNId)
         {
             return await _unitOfWork.cTHoSoBNRepository.FindIncludeOneAsync(x => x.HoSoBN, x => x.HoSoBNId == hoSoBNId);
         }

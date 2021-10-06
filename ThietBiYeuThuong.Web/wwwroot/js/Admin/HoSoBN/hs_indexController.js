@@ -70,7 +70,7 @@ var hs_indexController = {
     },
     Load_CTHoSoBNPartial: function (id, page) { // PhieuNX id
         var url = '/CTHoSoBN/CTHoSoBNPartial';
-        $.get(url, { PhieuNXId: id, page: page }, function (response) {
+        $.get(url, { hoSoBNId: id, page: page }, function (response) {
             $('#CTHoSoBN_Tbl').html(response);
             $('#CTHoSoBN_Tbl').show(500);
         });

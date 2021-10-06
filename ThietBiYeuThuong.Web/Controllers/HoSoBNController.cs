@@ -17,15 +17,20 @@ namespace ThietBiYeuThuong.Web.Controllers
         private readonly IHoSoBNService _hoSoBNService;
         private readonly ICTHoSoBNService _cTHoSoBNService;
         private readonly IThietBiService _thietBiService;
+        private readonly IBenhNhanThietBiService _benhNhanThietBiService;
 
         [BindProperty]
         public HoSoBNViewModel HoSoBNVM { get; set; }
 
-        public HoSoBNController(IHoSoBNService hoSoBNService, ICTHoSoBNService cTHoSoBNService, IThietBiService thietBiService)
+        public HoSoBNController(IHoSoBNService hoSoBNService,
+                                ICTHoSoBNService cTHoSoBNService,
+                                IThietBiService thietBiService,
+                                IBenhNhanThietBiService benhNhanThietBiService)
         {
             _hoSoBNService = hoSoBNService;
             _cTHoSoBNService = cTHoSoBNService;
             _thietBiService = thietBiService;
+            _benhNhanThietBiService = benhNhanThietBiService;
             HoSoBNVM = new HoSoBNViewModel()
             {
                 HoSoBN = new Data.Models.HoSoBN(),
@@ -120,29 +125,47 @@ namespace ThietBiYeuThuong.Web.Controllers
                     HoSoBNVM.CTHoSoBN.NgayTao = DateTime.Now;
                     HoSoBNVM.CTHoSoBN.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
                     await _cTHoSoBNService.Create(HoSoBNVM.CTHoSoBN); // save CTHoSoBN
-                }
-                else
-                {
-                    for (int i = 1; i <= HoSoBNVM.SoLuong; i++)
+
+                    // update thietbi -> tinhtrang == false
+                    ThietBi thietBi = await _thietBiService.GetById(HoSoBNVM.CTHoSoBN.ThietBiId);
+                    thietBi.TinhTrang = false;
+                    await _thietBiService.UpdateAsync(thietBi);
+
+                    // save BenhNhanThietBi
+                    BenhNhanThietBi benhNhanThietBi = new BenhNhanThietBi()
                     {
-                        var soPhieuCT = _cTHoSoBNService.GetSoPhieuCT("CH");
-                        var cTHoSoBN = new CTHoSoBN()
-                        {
-                            HoSoBNId = HoSoBNVM.HoSoBN.SoPhieu,
-                            SoPhieuCT = soPhieuCT,
-                            ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId,
-                            DongHoGiao = HoSoBNVM.CTHoSoBN.DongHoGiao,
-                            DongHoThu = HoSoBNVM.CTHoSoBN.DongHoThu,
-                            NVGiaoBinh = HoSoBNVM.CTHoSoBN.NVGiaoBinh,
-                            GhiChu = HoSoBNVM.CTHoSoBN.GhiChu,
-                            LapPhieu = user.Username,
-                            NgayXuat = DateTime.Now,
-                            NgayTao = DateTime.Now,
-                            LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
-                        };
-                        await _cTHoSoBNService.Create(cTHoSoBN); // save thietbi
-                    }
+                        BenhNhanId = HoSoBNVM.HoSoBN.BenhNhanId,
+                        ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId
+                    };
+                    await _benhNhanThietBiService.CreateAsync(benhNhanThietBi);
                 }
+                //else
+                //{
+                //    for (int i = 1; i <= HoSoBNVM.SoLuong; i++)
+                //    {
+                //        var soPhieuCT = _cTHoSoBNService.GetSoPhieuCT("CH");
+                //        var cTHoSoBN = new CTHoSoBN()
+                //        {
+                //            HoSoBNId = HoSoBNVM.HoSoBN.SoPhieu,
+                //            SoPhieuCT = soPhieuCT,
+                //            ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId,
+                //            DongHoGiao = HoSoBNVM.CTHoSoBN.DongHoGiao,
+                //            DongHoThu = HoSoBNVM.CTHoSoBN.DongHoThu,
+                //            NVGiaoBinh = HoSoBNVM.CTHoSoBN.NVGiaoBinh,
+                //            GhiChu = HoSoBNVM.CTHoSoBN.GhiChu,
+                //            LapPhieu = user.Username,
+                //            NgayXuat = DateTime.Now,
+                //            NgayTao = DateTime.Now,
+                //            LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
+                //        };
+                //        await _cTHoSoBNService.Create(cTHoSoBN); // save CTHoSoBN
+
+                //        // update thietbi -> tinhtrang == false
+                //        ThietBi thietBi = await _thietBiService.GetById(HoSoBNVM.CTHoSoBN.ThietBiId);
+                //        thietBi.TinhTrang = false;
+                //        await _thietBiService.UpdateAsync(thietBi);
+                //    }
+                //}
 
                 SetAlert("Thêm mới thành công.", "success");
 

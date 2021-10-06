@@ -15,15 +15,20 @@ namespace ThietBiYeuThuong.Web.Controllers
         private readonly ICTHoSoBNService _cTHoSoBNService;
         private readonly IHoSoBNService _hoSoBNService;
         private readonly ITinhTonService _tinhTonService;
+        private readonly IThietBiService _thietBiService;
 
         [BindProperty]
         public CTHoSoBNViewModel CTHoSoBNVM { get; set; }
 
-        public CTHoSoBNController(ICTHoSoBNService cTHoSoBNService, IHoSoBNService hoSoBNService, ITinhTonService tinhTonService)
+        public CTHoSoBNController(ICTHoSoBNService cTHoSoBNService,
+                                  IHoSoBNService hoSoBNService,
+                                  ITinhTonService tinhTonService,
+                                  IThietBiService thietBiService)
         {
             _cTHoSoBNService = cTHoSoBNService;
             _hoSoBNService = hoSoBNService;
             _tinhTonService = tinhTonService;
+            _thietBiService = thietBiService;
             CTHoSoBNVM = new CTHoSoBNViewModel()
             {
                 CTHoSoBN = new Data.Models.CTHoSoBN(),
@@ -31,24 +36,24 @@ namespace ThietBiYeuThuong.Web.Controllers
             };
         }
 
-        public async Task<IActionResult> CTHoSoBNPartial(string PhieuNXId, int page)
+        public async Task<IActionResult> CTHoSoBNPartial(string hoSoBNId, int page)
         {
             // CTHoSoBNVM
             CTHoSoBNVM.Page = page;
-            CTHoSoBNVM.CTHoSoBNs = await _cTHoSoBNService.List_CTPhieuNX_By_PhieuNXId(PhieuNXId);
-            CTHoSoBNVM.HoSoBN = await _hoSoBNService.GetById(PhieuNXId);
+            CTHoSoBNVM.CTHoSoBNs = await _cTHoSoBNService.List_CTHoSoBN_By_HoSoBNId(hoSoBNId);
+            CTHoSoBNVM.HoSoBN = await _hoSoBNService.GetById(hoSoBNId);
 
             return PartialView(CTHoSoBNVM);
         }
 
-        public async Task<IActionResult> CTHoSoBN_Create_Partial(string PhieuNXId, string strUrl, int page, long id_Dong_Da_Click)
+        public async Task<IActionResult> CTHoSoBN_Create_Partial(string hoSoBNId, string strUrl, int page, long id_Dong_Da_Click)
         {
             if (!ModelState.IsValid) // check id_Dong_Da_Click valid (da gang' = 0 trong home/index)
             {
                 return View();
             }
 
-            CTHoSoBNVM.HoSoBN = await _hoSoBNService.GetById(PhieuNXId);
+            CTHoSoBNVM.HoSoBN = await _hoSoBNService.GetById(hoSoBNId);
 
             CTHoSoBNVM.StrUrl = strUrl;
             CTHoSoBNVM.Page = page; // page for redirect
@@ -282,12 +287,17 @@ namespace ThietBiYeuThuong.Web.Controllers
             if (string.IsNullOrEmpty(id))
                 return NotFound();
 
-            var kVCTPCT = await _cTHoSoBNService.GetById(id);
-            if (kVCTPCT == null)
+            var ctHoSoBN = await _cTHoSoBNService.GetById(id);
+            if (ctHoSoBN == null)
                 return NotFound();
             try
             {
-                await _cTHoSoBNService.DeleteAsync(kVCTPCT);
+                await _cTHoSoBNService.DeleteAsync(ctHoSoBN);
+
+                // capnhat tinhtrang thietbi = true -> con hàng
+                var thietBi = await _thietBiService.GetById(ctHoSoBN.ThietBiId);
+                thietBi.TinhTrang = true;
+                await _thietBiService.UpdateAsync(thietBi);
 
                 //SetAlert("Xóa thành công.", "success");
                 return Json(new
