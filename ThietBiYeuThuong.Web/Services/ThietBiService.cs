@@ -38,6 +38,8 @@ namespace ThietBiYeuThuong.Web.Services
         ThietBi GetThietBiByCode(string code);
 
         Task<IEnumerable<BenhNhanThietBi>> SearchThietBis_ThuHoi(string code);
+
+        Task<IEnumerable<ThietBi>> SearchThietBis_VuaBomVe(string code);
     }
 
     public class ThietBiService : IThietBiService
@@ -151,6 +153,16 @@ namespace ThietBiYeuThuong.Web.Services
             var benhNhanThietBis = await _unitOfWork.benhNhanThietBiRepository.GetAllIncludeAsync(tb => tb.ThietBi, bn => bn.BenhNhan);
             return benhNhanThietBis.Where(x => x.ThietBiId.ToLower().Contains(code.Trim().ToLower()) ||
                                                x.ThietBi.TenTB.Trim().ToLower().Contains(code.Trim().ToLower()));
+        }
+
+        public async Task<IEnumerable<ThietBi>> SearchThietBis_VuaBomVe(string code)
+        {
+            code ??= "";
+            var thietBis = await _unitOfWork.thietBiRepository.GetAllIncludeAsync(ltb => ltb.LoaiThietBi, tt => tt.TrangThai);
+            thietBis = thietBis.Where(x => x.MaTB.Trim().ToLower().Contains(code.Trim().ToLower()) ||
+                                     (!string.IsNullOrEmpty(x.TenTB) && x.TenTB.Trim().ToLower().Contains(code.Trim().ToLower()))).ToList();
+            thietBis = thietBis.Where(x => x.TrangThaiId == 1 || x.TrangThaiId == 3).Where(x => x.TinhTrang != false); // đầy || vừa bơm về va tinhtrang true
+            return thietBis;
         }
 
         public async Task UpdateAsync(ThietBi ThietBi)

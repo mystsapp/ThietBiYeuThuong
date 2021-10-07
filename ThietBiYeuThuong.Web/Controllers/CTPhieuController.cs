@@ -209,9 +209,9 @@ namespace ThietBiYeuThuong.Web.Controllers
                     throw;
                 }
 
-                // save ctphieu
-                CTPhieuVM.PhieuNhap.NgaySua = DateTime.Now;
-                CTPhieuVM.PhieuNhap.NguoiSua = user.Username;
+                //// save ctphieu
+                //CTPhieuVM.PhieuNhap.NgaySua = DateTime.Now;
+                //CTPhieuVM.PhieuNhap.NguoiSua = user.Username;
 
                 // kiem tra thay doi : trong getbyid() va ngoai view
 

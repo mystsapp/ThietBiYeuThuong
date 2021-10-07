@@ -53,7 +53,7 @@ namespace ThietBiYeuThuong.Web.Services
 
         public async Task<TrangThai> GetById(int id)
         {
-            return await _unitOfWork.trangThaiRepository.GetByLongIdAsync(id);
+            return await _unitOfWork.trangThaiRepository.GetByIdAsync(id);
         }
 
         public TrangThai GetByIdAsNoTracking(int id)

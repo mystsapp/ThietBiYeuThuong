@@ -145,7 +145,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 // update thietbi -> tinhtrang == false
                 ThietBi thietBi = await _thietBiService.GetById(CTHoSoBNVM.CTHoSoBN.ThietBiId);
                 thietBi.TinhTrang = false;
-                thietBi.LogFile += " -User xuất: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString()
+                thietBi.LogFile += "\n" + " -User xuất: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString()
                                                    + ", " + "BN: " + CTHoSoBNVM.HoSoBN.BenhNhanId; // username
                 await _thietBiService.UpdateAsync(thietBi);
 
@@ -323,7 +323,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 // capnhat tinhtrang thietbi = true -> con hàng
                 var thietBi = await _thietBiService.GetById(ctHoSoBN.ThietBiId);
                 thietBi.TinhTrang = true;
-                thietBi.LogFile += " -User xoá CT: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString()
+                thietBi.LogFile += "\n" + " -User xoá CT: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString()
                                                    + ", " + "BN: " + CTHoSoBNVM.HoSoBN.BenhNhanId; // username
                 await _thietBiService.UpdateAsync(thietBi);
 

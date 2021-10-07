@@ -17,7 +17,7 @@ namespace ThietBiYeuThuong.Data.Models
         public string SoPhieu { get; set; }
 
         [DisplayName("Đơn vị")]
-        [MaxLength(50, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "varchar(50)")]
+        [MaxLength(150, ErrorMessage = "Chiều dài tối đa 50 ký tự"), Column(TypeName = "nvarchar(150)")]
         public string DonVi { get; set; }
 
         [DisplayName("Trạng thái TB")]

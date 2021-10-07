@@ -226,7 +226,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             // capnhat thietbi trangthai thu hồi
             var thietBi = await _thietBiService.GetById(PhieuNhapVM.CTPhieu.ThietBiId);
             thietBi.TrangThaiId = 2;
-            thietBi.LogFile += "-User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            thietBi.LogFile += "\n" + "-User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
             await _thietBiService.UpdateAsync(thietBi);
 
             // save CTPhieu
@@ -262,6 +262,80 @@ namespace ThietBiYeuThuong.Web.Controllers
 
         #endregion Create_ThuHoi
 
+        #region Create_VuaBomVe
+
+        public async Task<IActionResult> Create_VuaBomVe(string strUrl, int page)
+        {
+            // from session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            PhieuNhapVM.StrUrl = strUrl;
+            PhieuNhapVM.Page = page;
+
+            return View(PhieuNhapVM);
+        }
+
+        [HttpPost, ActionName("Create_ThuHoi")]
+        public async Task<IActionResult> Create_VuaBomVe_Post(string strUrl, int page)
+        {
+            // from login session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            if (!ModelState.IsValid)
+            {
+                PhieuNhapVM = new PhieuNhapViewModel()
+                {
+                    PhieuNhap = new PhieuNhap(),
+                    StrUrl = strUrl
+                };
+
+                return View(PhieuNhapVM);
+            }
+
+            PhieuNhapVM.PhieuNhap.NgayNhap = DateTime.Now;
+            PhieuNhapVM.PhieuNhap.NguoiNhap = user.Username;
+            PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PN");
+            PhieuNhapVM.PhieuNhap.TrangThaiId = 2; // thu hồi
+
+            // capnhat thietbi trangthai thu hồi
+            var thietBi = await _thietBiService.GetById(PhieuNhapVM.CTPhieu.ThietBiId);
+            thietBi.TrangThaiId = 2;
+            thietBi.LogFile += "\n" + "-User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            await _thietBiService.UpdateAsync(thietBi);
+
+            // save CTPhieu
+            PhieuNhapVM.CTPhieu.SoPhieu = PhieuNhapVM.PhieuNhap.SoPhieu;
+            PhieuNhapVM.CTPhieu.SoPhieuCT = _cTPhieuService.GetSoPhieuCT("CN");
+            PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
+            PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
+            PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
+            PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
+
+            // xoá BenhNhanThietBi
+            BenhNhanThietBi benhNhanThietBi = await _benhNhanThietBiService.GetById(PhieuNhapVM.MaBN, thietBi.MaTB);
+            await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
+
+            // ghi log
+            PhieuNhapVM.PhieuNhap.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+
+            try
+            {
+                await _phieuNhapService.CreateAsync(PhieuNhapVM.PhieuNhap); // save
+
+                SetAlert("Thêm mới thành công.", "success");
+
+                return RedirectToAction(nameof(Index), new { id = PhieuNhapVM.PhieuNhap.SoPhieu, page = page });
+            }
+            catch (Exception ex)
+            {
+                SetAlert(ex.Message, "error");
+                return View(PhieuNhapVM);
+            }
+        }
+
+        #endregion Create_VuaBomVe
+
         public async Task<IActionResult> Edit(string id, string strUrl)
         {
             // from session
@@ -281,6 +355,9 @@ namespace ThietBiYeuThuong.Web.Controllers
                 ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
                 return View("~/Views/Shared/NotFound.cshtml");
             }
+
+            var trangThai = await _trangThaiService.GetById(PhieuNhapVM.PhieuNhap.TrangThaiId);
+            ViewBag.tenTrangThai = trangThai.Name;
 
             return View(PhieuNhapVM);
         }
@@ -315,6 +392,11 @@ namespace ThietBiYeuThuong.Web.Controllers
                 if (t.DonVi != PhieuNhapVM.PhieuNhap.DonVi)
                 {
                     temp += String.Format("- DonVi thay đổi: {0}->{1}", t.DonVi, PhieuNhapVM.PhieuNhap.DonVi);
+                }
+
+                if (t.TrangThaiId != PhieuNhapVM.PhieuNhap.TrangThaiId)
+                {
+                    temp += String.Format("- TrangThaiId thay đổi: {0}->{1}", t.TrangThaiId, PhieuNhapVM.PhieuNhap.TrangThaiId);
                 }
 
                 #endregion log file
