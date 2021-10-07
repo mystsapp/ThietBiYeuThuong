@@ -15,6 +15,7 @@ namespace ThietBiYeuThuong.Web.Models
         public IEnumerable<ThietBi> IEnumThietBi { get; set; }
         public IEnumerable<BenhNhanThietBi> IEnumThietBi_ThuHoi { get; set; }
         public IEnumerable<ThietBi> IEnumThietBi_VuaBomVe { get; set; }
+        public IEnumerable<ThietBi> IEnumThietBi_GoiBom { get; set; }
         public TrangThai TrangThai { get; set; }
         public string StrUrl { get; set; }
         public string MaTBText { get; set; }

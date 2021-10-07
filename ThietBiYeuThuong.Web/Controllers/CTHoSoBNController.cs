@@ -155,7 +155,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                     BenhNhanId = CTHoSoBNVM.HoSoBN.BenhNhanId,
                     ThietBiId = CTHoSoBNVM.CTHoSoBN.ThietBiId,
                     NgayTao = DateTime.Now,
-                    NguoiTao = user.Username
+                    NguoiTao = user.Username,
+                    CTHoSoBNId = CTHoSoBNVM.CTHoSoBN.SoPhieuCT
                 };
                 await _benhNhanThietBiService.CreateAsync(benhNhanThietBi);
 

@@ -20,7 +20,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu nhập</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách phiếu </a></li>
                     <li class="breadcrumb-item active">Vừa bơm về</li>
                 </ol>
             </div>
@@ -56,14 +56,14 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label asp-for="PhieuNhap.DonVi" class="control-label"></label>
                             <input asp-for="PhieuNhap.DonVi" class="form-control form-control-sm" value="Vừa bơm về" id="txtDonVi_VuaBomVe" readonly />
                             <span asp-validation-for="PhieuNhap.DonVi" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-2">
-                            <label asp-for="CTPhieu.ThietBiId" class="control-label "></label>
+                            <label class="control-label ">Mã TB</label>
                             <div class="input-group">
                                 <input asp-for="CTPhieu.ThietBiId" class="form-control form-control-sm text-uppercase" id="txtThietBiId_VuaBomVe">
                                 <span class="input-group-btn">
@@ -73,32 +73,32 @@
                             <span asp-validation-for="CTPhieu.ThietBiId" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label class="control-label">Tên TB</label>
                             <input class="form-control form-control-sm" id="txtTenTB_VuaBomVe" readonly />
                         </div>
 
-                        <div class="col-md-2">
-                            <label asp-for="CTPhieu.DongHoGiao" class="control-label"></label>
-                            <input asp-for="CTPhieu.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
-                            <span asp-validation-for="CTPhieu.DongHoGiao" class="text-danger"></span>
-                        </div>
+                        @*<div class="col-md-2">
+                                <label asp-for="CTPhieu.DongHoGiao" class="control-label"></label>
+                                <input asp-for="CTPhieu.DongHoGiao" class="form-control form-control-sm" id="txtDongHoGiao" />
+                                <span asp-validation-for="CTPhieu.DongHoGiao" class="text-danger"></span>
+                            </div>
 
-                        <div class="col-md-2">
-                            <label asp-for="CTPhieu.DongHoThu" class="control-label"></label>
-                            <input asp-for="CTPhieu.DongHoThu" class="form-control form-control-sm" id="txtDongHoThu" />
-                            <span asp-validation-for="CTPhieu.DongHoThu" class="text-danger"></span>
-                        </div>
+                            <div class="col-md-2">
+                                <label asp-for="CTPhieu.DongHoThu" class="control-label"></label>
+                                <input asp-for="CTPhieu.DongHoThu" class="form-control form-control-sm" id="txtDongHoThu" />
+                                <span asp-validation-for="CTPhieu.DongHoThu" class="text-danger"></span>
+                            </div>*@
                     </div>
                     <div class="form-group row">
 
-                        <div class="col-md-3">
-                            <label asp-for="CTPhieu.NVGiaoBinh" class="control-label"></label>
-                            <input asp-for="CTPhieu.NVGiaoBinh" class="form-control form-control-sm" id="txtNVGiaoBinh" />
-                            <span asp-validation-for="CTPhieu.NVGiaoBinh" class="text-danger"></span>
-                        </div>
+                        @*<div class="col-md-3">
+                                <label asp-for="CTPhieu.NVGiaoBinh" class="control-label"></label>
+                                <input asp-for="CTPhieu.NVGiaoBinh" class="form-control form-control-sm" id="txtNVGiaoBinh" />
+                                <span asp-validation-for="CTPhieu.NVGiaoBinh" class="text-danger"></span>
+                            </div>*@
 
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             <label asp-for="CTPhieu.GhiChu" class="control-label"></label>
                             <input asp-for="CTPhieu.GhiChu" class="form-control form-control-sm" id="txtGhiChu" />
                             <span asp-validation-for="CTPhieu.GhiChu" class="text-danger"></span>

@@ -38,13 +38,13 @@ var tb_indexController = {
             });
         });
 
-        // phieu click --> load kvctpct
-        $('tr .tdVal').click(function () {
-            id = $(this).data('id');
+        //// phieu click --> load kvctpct
+        //$('tr .tdVal').click(function () {
+        //    id = $(this).data('id');
 
-            tb_indexController.TdVal_LoaiThietBi_Click(id);
-        });
-        // phieu click --> load kvctpct
+        //    tb_indexController.TdVal_LoaiThietBi_Click(id);
+        //});
+        //// phieu click --> load kvctpct
 
         // giu trang thai phieu click
         $('#loaiThietBiTbl .cursor-pointer').off('click').on('click', function () {

@@ -137,7 +137,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                         BenhNhanId = HoSoBNVM.HoSoBN.BenhNhanId,
                         ThietBiId = HoSoBNVM.CTHoSoBN.ThietBiId,
                         NgayTao = DateTime.Now,
-                        NguoiTao = user.Username
+                        NguoiTao = user.Username,
+                        CTHoSoBNId = HoSoBNVM.CTHoSoBN.SoPhieuCT
                     };
                     await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
                 }

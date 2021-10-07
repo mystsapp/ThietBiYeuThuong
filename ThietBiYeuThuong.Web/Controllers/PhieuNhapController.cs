@@ -19,6 +19,7 @@ namespace ThietBiYeuThuong.Web.Controllers
         private readonly IThietBiService _thietBiService;
         private readonly ICTPhieuService _cTPhieuService;
         private readonly IBenhNhanThietBiService _benhNhanThietBiService;
+        private readonly ICTHoSoBNService _cTHoSoBNService;
 
         [BindProperty]
         public PhieuNhapViewModel PhieuNhapVM { get; set; }
@@ -28,7 +29,8 @@ namespace ThietBiYeuThuong.Web.Controllers
                                    ITrangThaiService trangThaiService,
                                    IThietBiService thietBiService,
                                    ICTPhieuService cTPhieuService,
-                                   IBenhNhanThietBiService benhNhanThietBiService)
+                                   IBenhNhanThietBiService benhNhanThietBiService,
+                                   ICTHoSoBNService cTHoSoBNService)
         {
             PhieuNhapVM = new PhieuNhapViewModel()
             {
@@ -40,6 +42,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             _thietBiService = thietBiService;
             _cTPhieuService = cTPhieuService;
             _benhNhanThietBiService = benhNhanThietBiService;
+            _cTHoSoBNService = cTHoSoBNService;
         }
 
         public async Task<IActionResult> Index(string searchString, string searchFromDate, string searchToDate, string id, int page = 1)
@@ -187,7 +190,7 @@ namespace ThietBiYeuThuong.Web.Controllers
 
         #endregion Create_Day
 
-        #region Create_Day
+        #region Create_GoiBom : xuat
 
         public async Task<IActionResult> Create_GoiBom(string strUrl, int page)
         {
@@ -200,7 +203,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View(PhieuNhapVM);
         }
 
-        [HttpPost, ActionName("Create_Day")]
+        [HttpPost, ActionName("Create_GoiBom")]
         public async Task<IActionResult> Create_GoiBom_Post(string strUrl, int page)
         {
             // from login session
@@ -233,8 +236,8 @@ namespace ThietBiYeuThuong.Web.Controllers
             PhieuNhapVM.CTPhieu.SoPhieuCT = _cTPhieuService.GetSoPhieuCT("CN");
             PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
             PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
+            PhieuNhapVM.CTPhieu.NgayXuat = DateTime.Now;
             PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
-            PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
             PhieuNhapVM.CTPhieu.LogFile = "-User xuất gởi bơm: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
             await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
 
@@ -256,7 +259,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             }
         }
 
-        #endregion Create_Day
+        #endregion Create_GoiBom : xuat
 
         #region Create_ThuHoi
 
@@ -298,21 +301,30 @@ namespace ThietBiYeuThuong.Web.Controllers
             // capnhat thietbi trangthai thu hồi
             var thietBi = await _thietBiService.GetById(PhieuNhapVM.CTPhieu.ThietBiId);
             thietBi.TrangThaiId = 2;
+            thietBi.TinhTrang = true;
             thietBi.LogFile += "\n" + "-User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
             await _thietBiService.UpdateAsync(thietBi);
+
+            // xoá BenhNhanThietBi
+            BenhNhanThietBi benhNhanThietBi = await _benhNhanThietBiService.GetById(PhieuNhapVM.MaBN, thietBi.MaTB);
+            // capnhat CTHoSoBN(Đ.Hồ thu)
+            CTHoSoBN cTHoSoBN = await _cTHoSoBNService.GetById(benhNhanThietBi.CTHoSoBNId);
+            cTHoSoBN.DongHoThu = PhieuNhapVM.CTPhieu.DongHoThu;
+            cTHoSoBN.LogFile += "\n" + " -User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString();
+            await _cTHoSoBNService.UpdateAsync(cTHoSoBN);
+            await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
 
             // save CTPhieu
             PhieuNhapVM.CTPhieu.SoPhieu = PhieuNhapVM.PhieuNhap.SoPhieu;
             PhieuNhapVM.CTPhieu.SoPhieuCT = _cTPhieuService.GetSoPhieuCT("CN");
             PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
             PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
+            PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
             PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
+            PhieuNhapVM.CTPhieu.DongHoGiao = cTHoSoBN.DongHoGiao;
+            PhieuNhapVM.CTPhieu.NVGiaoBinh = cTHoSoBN.NVGiaoBinh;
             PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
             await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
-
-            // xoá BenhNhanThietBi
-            BenhNhanThietBi benhNhanThietBi = await _benhNhanThietBiService.GetById(PhieuNhapVM.MaBN, thietBi.MaTB);
-            await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
 
             // ghi log
             PhieuNhapVM.PhieuNhap.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
@@ -347,7 +359,7 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View(PhieuNhapVM);
         }
 
-        [HttpPost, ActionName("Create_ThuHoi")]
+        [HttpPost, ActionName("Create_VuaBomVe")]
         public async Task<IActionResult> Create_VuaBomVe_Post(string strUrl, int page)
         {
             // from login session

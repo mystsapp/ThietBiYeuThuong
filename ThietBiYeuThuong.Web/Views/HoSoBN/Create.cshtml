@@ -118,7 +118,7 @@
                             <span asp-validation-for="CTHoSoBN.ThietBi" class="text-danger"></span>
                         </div>-->
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label asp-for="CTHoSoBN.ThietBiId" class="control-label "></label>
                             <div class="input-group">
                                 <input asp-for="CTHoSoBN.ThietBiId" class="form-control form-control-sm text-uppercase" id="txtThietBi_Create">
@@ -129,35 +129,28 @@
                             <span asp-validation-for="CTHoSoBN.ThietBiId" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="control-label">Tên TB</label>
                             <input class="form-control form-control-sm" id="txtTenTB_Create" readonly />
                         </div>
 
-                        <div class="col-md-10">
-                            <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
-                            <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
-                            <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label asp-for="CTHoSoBN.DongHoGiao" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
                             <input asp-for="CTHoSoBN.DongHoGiao" class="form-control form-control-sm " id="txtDongHoGiao" />
                             <span asp-validation-for="CTHoSoBN.DongHoGiao" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-2">
-                            <label asp-for="CTHoSoBN.DongHoThu" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                            <input asp-for="CTHoSoBN.DongHoThu" class="form-control form-control-sm " id="txtDongHoThu" />
-                            <span asp-validation-for="CTHoSoBN.DongHoThu" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-md-8">
+                        <div class="col-md-3">
                             <label asp-for="CTHoSoBN.NVGiaoBinh" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
                             <input asp-for="CTHoSoBN.NVGiaoBinh" class="form-control form-control-sm " id="txtNVGiaoBinh" />
                             <span asp-validation-for="CTHoSoBN.NVGiaoBinh" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
+                            <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
+                            <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
                         </div>
                     </div>
 
