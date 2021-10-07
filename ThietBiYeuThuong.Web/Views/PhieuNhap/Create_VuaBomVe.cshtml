@@ -58,14 +58,14 @@
 
                         <div class="col-md-3">
                             <label asp-for="PhieuNhap.DonVi" class="control-label"></label>
-                            <input asp-for="PhieuNhap.DonVi" class="form-control form-control-sm" id="txtDonVi_VuaBomVe" readonly />
+                            <input asp-for="PhieuNhap.DonVi" class="form-control form-control-sm" value="Vừa bơm về" id="txtDonVi_VuaBomVe" readonly />
                             <span asp-validation-for="PhieuNhap.DonVi" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-2">
                             <label asp-for="CTPhieu.ThietBiId" class="control-label "></label>
                             <div class="input-group">
-                                <input asp-for="CTPhieu.ThietBiId" class="form-control form-control-sm text-uppercase" id="txtThietBi_VuaBomVe">
+                                <input asp-for="CTPhieu.ThietBiId" class="form-control form-control-sm text-uppercase" id="txtThietBiId_VuaBomVe">
                                 <span class="input-group-btn">
                                     <a href="javascript:;" class="btn btn-default btn-sm" id="btnThietBiSearch_VuaBomVe" title="Tìm thông tin thiết bị"><i class="fa fa-search"></i></a>
                                 </span>
@@ -117,7 +117,7 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
-<partial name="~/Views/Shared/_ThietBiPartial_ThuHoi.cshtml" />
+<partial name="~/Views/Shared/_ThietBiPartial_VuaBomVe.cshtml" />
 
 @section Scripts{
     @*<script>
@@ -186,12 +186,12 @@
             }
         });
 
-        //$('#txtChuDeTour').rules('add', {
-        //    required: true,
-        //    messages: {
-        //        //required: "Chủ đề không được để trống"
-        //    }
-        //});
+        $('#txtThietBiId_VuaBomVe').rules('add', {
+            required: true,
+            messages: {
+                //required: "Chủ đề không được để trống"
+            }
+        });
 
         //$('#txtNgayCT').rules('add', {
         //    required: true,

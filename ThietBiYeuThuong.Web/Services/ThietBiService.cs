@@ -159,9 +159,13 @@ namespace ThietBiYeuThuong.Web.Services
         {
             code ??= "";
             var thietBis = await _unitOfWork.thietBiRepository.GetAllIncludeAsync(ltb => ltb.LoaiThietBi, tt => tt.TrangThai);
-            thietBis = thietBis.Where(x => x.MaTB.Trim().ToLower().Contains(code.Trim().ToLower()) ||
+            thietBis = thietBis.Where(x => x.TrangThaiId == 4).Where(x => x.TinhTrang != false); // gửi bơm va tinhtrang true
+            if (!string.IsNullOrEmpty(code))
+            {
+                thietBis = thietBis.Where(x => x.MaTB.Trim().ToLower().Contains(code.Trim().ToLower()) ||
                                      (!string.IsNullOrEmpty(x.TenTB) && x.TenTB.Trim().ToLower().Contains(code.Trim().ToLower()))).ToList();
-            thietBis = thietBis.Where(x => x.TrangThaiId == 1 || x.TrangThaiId == 3).Where(x => x.TinhTrang != false); // đầy || vừa bơm về va tinhtrang true
+            }
+
             return thietBis;
         }
 

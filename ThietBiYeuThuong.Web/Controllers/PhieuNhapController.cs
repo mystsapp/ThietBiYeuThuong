@@ -125,7 +125,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     NgayTao = DateTime.Now,
                     NguoiTao = user.Username,
                     TinhTrang = true, // chưa giao
-                    LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
+                    LogFile = "-User tạo(nhập đầy): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
                 };
                 await _thietBiService.CreateAsync(thietBi); // save thietbi
 
@@ -136,7 +136,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                 PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
                 PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
                 PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
-                PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+                PhieuNhapVM.CTPhieu.LogFile = "-User tạo(nhập đầy): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
                 await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
             }
             else
@@ -152,7 +152,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         NgayTao = DateTime.Now,
                         TinhTrang = true, // chưa giao
                         NguoiTao = user.Username,
-                        LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
+                        LogFile = "-User tạo(nhập đầy): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() // user.Username
                     };
                     await _thietBiService.CreateAsync(thietBi); // save thietbi
 
@@ -163,11 +163,83 @@ namespace ThietBiYeuThuong.Web.Controllers
                     PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
                     PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
                     PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
+                    PhieuNhapVM.CTPhieu.LogFile = "-User tạo(nhập đầy): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
                     await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
                 }
             }
             // ghi log
-            PhieuNhapVM.PhieuNhap.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            PhieuNhapVM.PhieuNhap.LogFile = "-User tạo(nhập đầy): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+
+            try
+            {
+                await _phieuNhapService.CreateAsync(PhieuNhapVM.PhieuNhap); // save
+
+                SetAlert("Thêm mới thành công.", "success");
+
+                return RedirectToAction(nameof(Index), new { id = PhieuNhapVM.PhieuNhap.SoPhieu, page = page });
+            }
+            catch (Exception ex)
+            {
+                SetAlert(ex.Message, "error");
+                return View(PhieuNhapVM);
+            }
+        }
+
+        #endregion Create_Day
+
+        #region Create_Day
+
+        public async Task<IActionResult> Create_GoiBom(string strUrl, int page)
+        {
+            // from session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            PhieuNhapVM.StrUrl = strUrl;
+            PhieuNhapVM.Page = page;
+
+            return View(PhieuNhapVM);
+        }
+
+        [HttpPost, ActionName("Create_Day")]
+        public async Task<IActionResult> Create_GoiBom_Post(string strUrl, int page)
+        {
+            // from login session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            if (!ModelState.IsValid)
+            {
+                PhieuNhapVM = new PhieuNhapViewModel()
+                {
+                    PhieuNhap = new PhieuNhap(),
+                    StrUrl = strUrl
+                };
+
+                return View(PhieuNhapVM);
+            }
+
+            PhieuNhapVM.PhieuNhap.NgayNhap = DateTime.Now;
+            PhieuNhapVM.PhieuNhap.NguoiNhap = user.Username;
+            PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PN");
+            PhieuNhapVM.PhieuNhap.TrangThaiId = 4; // Gởi bơm
+
+            // capnhat thietbi trangthai Vừa bơm về
+            var thietBi = await _thietBiService.GetById(PhieuNhapVM.CTPhieu.ThietBiId);
+            thietBi.TrangThaiId = 4; // Gởi bơm
+            thietBi.LogFile += "\n" + "-User xuất gởi bơm: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            await _thietBiService.UpdateAsync(thietBi);
+
+            // save CTPhieu
+            PhieuNhapVM.CTPhieu.SoPhieu = PhieuNhapVM.PhieuNhap.SoPhieu;
+            PhieuNhapVM.CTPhieu.SoPhieuCT = _cTPhieuService.GetSoPhieuCT("CN");
+            PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
+            PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
+            PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
+            PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
+            PhieuNhapVM.CTPhieu.LogFile = "-User xuất gởi bơm: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
+
+            // ghi log
+            PhieuNhapVM.PhieuNhap.LogFile = "-User xuất gởi bơm: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
             try
             {
@@ -295,12 +367,12 @@ namespace ThietBiYeuThuong.Web.Controllers
             PhieuNhapVM.PhieuNhap.NgayNhap = DateTime.Now;
             PhieuNhapVM.PhieuNhap.NguoiNhap = user.Username;
             PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PN");
-            PhieuNhapVM.PhieuNhap.TrangThaiId = 2; // thu hồi
+            PhieuNhapVM.PhieuNhap.TrangThaiId = 3; // Vừa bơm về
 
-            // capnhat thietbi trangthai thu hồi
+            // capnhat thietbi trangthai Vừa bơm về
             var thietBi = await _thietBiService.GetById(PhieuNhapVM.CTPhieu.ThietBiId);
-            thietBi.TrangThaiId = 2;
-            thietBi.LogFile += "\n" + "-User thu hồi: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            thietBi.TrangThaiId = 3; // Vừa bơm về
+            thietBi.LogFile += "\n" + "-User nhập vừa bơm về: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
             await _thietBiService.UpdateAsync(thietBi);
 
             // save CTPhieu
@@ -309,15 +381,12 @@ namespace ThietBiYeuThuong.Web.Controllers
             PhieuNhapVM.CTPhieu.ThietBiId = thietBi.MaTB;
             PhieuNhapVM.CTPhieu.LapPhieu = user.Username;
             PhieuNhapVM.CTPhieu.NgayTao = DateTime.Now;
-            PhieuNhapVM.CTPhieu.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            PhieuNhapVM.CTPhieu.NgayNhap = DateTime.Now;
+            PhieuNhapVM.CTPhieu.LogFile = "-User tạo(Vừa bơm về): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
             await _cTPhieuService.CreateAsync(PhieuNhapVM.CTPhieu); // save ctphieu
 
-            // xoá BenhNhanThietBi
-            BenhNhanThietBi benhNhanThietBi = await _benhNhanThietBiService.GetById(PhieuNhapVM.MaBN, thietBi.MaTB);
-            await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
-
             // ghi log
-            PhieuNhapVM.PhieuNhap.LogFile = "-User tạo: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
+            PhieuNhapVM.PhieuNhap.LogFile = "-User tạo(Vừa bơm về): " + user.Username + " vào lúc: " + System.DateTime.Now.ToString(); // user.Username
 
             try
             {
