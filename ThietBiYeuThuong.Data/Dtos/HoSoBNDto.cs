@@ -21,6 +21,9 @@ namespace ThietBiYeuThuong.Data.Dtos
         [DisplayName("Bệnh nhân")]
         public string TenBN { get; set; }
 
+        [DisplayName("Nhân viên y tế")]
+        public string NVYT { get; set; }
+
         [DisplayName("Ngày lập")]
         public DateTime? NgayLap { get; set; }
 
@@ -36,15 +39,6 @@ namespace ThietBiYeuThuong.Data.Dtos
         /// ////////////////////
         /// </summary>
         ///
-
-        [DisplayName("Họ tên NV Y Tế")]
-        public string HoTenNVYTe { get; set; }
-
-        [DisplayName("SĐT")]
-        public string SDT_NVYT { get; set; }
-
-        [DisplayName("Đơn vị")]
-        public string DonVi { get; set; }
 
         public int STT { get; set; }
 

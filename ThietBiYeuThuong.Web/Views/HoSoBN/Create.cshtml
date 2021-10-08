@@ -81,22 +81,28 @@
 
                     <div class="form-group row">
 
-                        <div class="col-md-3">
-                            <label asp-for="HoSoBN.HoTenNVYTe" class="control-label"></label>
-                            <input asp-for="HoSoBN.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
-                            <span asp-validation-for="HoSoBN.HoTenNVYTe" class="text-danger"></span>
+                        <div class="col-md-2">
+                            <label asp-for="HoSoBN.MaNVYT" class="control-label "></label>
+                            <div class="input-group">
+                                <input asp-for="HoSoBN.MaNVYT" class="form-control form-control-sm text-uppercase" id="txtNVYT_Create">
+                                <span class="input-group-btn">
+                                    <a href="javascript:;" class="btn btn-default btn-sm" id="btnNVYTSearch_Create" data-nvytid="NVYTId" title="Tìm thông tin bệnh nhân"><i class="fa fa-search"></i></a>
+                                </span>
+                            </div>
+                            <span asp-validation-for="HoSoBN.MaNVYT" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-3">
-                            <label asp-for="HoSoBN.SDT_NVYT" class="control-label "></label>
-                            <input asp-for="HoSoBN.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
-                            <span asp-validation-for="HoSoBN.SDT_NVYT" class="text-danger"></span>
+                        <div class="col-md-4">
+                            <label class="control-label ">Họ tên NV Y Tế</label>
+                            <input type="text" class="form-control form-control-sm" id="txtHoTenNVYT" readonly />
                         </div>
-
-                        <div class="col-md-3">
-                            <label asp-for="HoSoBN.DonVi" class="control-label"></label>
-                            <input asp-for="HoSoBN.DonVi" class="form-control form-control-sm" id="txtDonVi" />
-                            <span asp-validation-for="HoSoBN.DonVi" class="text-danger"></span>
+                        <div class="col-md-4">
+                            <label class="control-label ">SĐT</label>
+                            <input type="text" class="form-control form-control-sm" id="txtSĐT" readonly />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Đơn vị</label>
+                            <input type="text" class="form-control form-control-sm" id="txtDonVi" readonly />
                         </div>
 
                         <div class="col-md-3">
@@ -169,6 +175,7 @@
 
 <partial name="~/Views/Shared/_BenhNhanPartial_ThemMoi.cshtml" />
 <partial name="~/Views/Shared/_ThietBiPartial_ThemMoi.cshtml" />
+<partial name="~/Views/Shared/_NVYTPartial_ThemMoi.cshtml" />
 
 @section Scripts{
     @*<script>
@@ -252,6 +259,14 @@
         //    }
         //});
 
+        // btnNVYTSearch_Create
+        $('#btnNVYTSearch_Create').click(function () {
+
+            var maNVYTtext = $('#txtNVYT_Create').val();
+
+            NVYTSearch(maNVYTtext);
+        })
+
         // btnThietBiSearch_Create
         $('#btnThietBiSearch_Create').click(function () {
 
@@ -311,6 +326,14 @@
                 $('#thietBi_Modal_Create').modal('show');
                 $('.thietBi_Modal_Body_Create').html(data);
                 $('#thietBi_Modal_Create').draggable();
+            });
+        }
+        function NVYTSearch(code) {
+            $.get('/NVYTSearch/SearchNVYTs_Code', { code: code }, function (data) {
+
+                $('#nVYTSearch_Modal_Create').modal('show');
+                $('.nVYTSearch_Modal_Body_Create').html(data);
+                $('#nVYTSearch_Modal_Create').draggable();
             });
         }
     </script>

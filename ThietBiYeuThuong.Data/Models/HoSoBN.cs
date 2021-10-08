@@ -47,17 +47,24 @@ namespace ThietBiYeuThuong.Data.Models
         /// </summary>
         ///
 
-        [DisplayName("Họ tên NV Y Tế")]
-        [MaxLength(250, ErrorMessage = "Chiều dài tối đa 250 ký tự"), Column(TypeName = "nvarchar(250)")]
-        public string HoTenNVYTe { get; set; }
+        //[DisplayName("Họ tên NV Y Tế")]
+        //[MaxLength(250, ErrorMessage = "Chiều dài tối đa 250 ký tự"), Column(TypeName = "nvarchar(250)")]
+        //public string HoTenNVYTe { get; set; }
 
-        [DisplayName("SĐT")]
-        [MaxLength(20, ErrorMessage = "Chiều dài tối đa 20 ký tự"), Column(TypeName = "varchar(20)")]
-        public string SDT_NVYT { get; set; }
+        //[DisplayName("SĐT")]
+        //[MaxLength(20, ErrorMessage = "Chiều dài tối đa 20 ký tự"), Column(TypeName = "varchar(20)")]
+        //public string SDT_NVYT { get; set; }
 
-        [DisplayName("Đơn vị")]
-        [MaxLength(150, ErrorMessage = "Chiều dài tối đa 150 ký tự"), Column(TypeName = "nvarchar(150)")]
-        public string DonVi { get; set; }
+        //[DisplayName("Đơn vị")]
+        //[MaxLength(150, ErrorMessage = "Chiều dài tối đa 150 ký tự"), Column(TypeName = "nvarchar(150)")]
+        //public string DonVi { get; set; }
+
+        [DisplayName("Mã NVYT")]
+        [MaxLength(12, ErrorMessage = "Chiều dài tối đa 12 ký tự"), Column(TypeName = "varchar(12)")]
+        public string MaNVYT { get; set; }
+
+        [ForeignKey("MaNVYT")]
+        public NhanVienYTe NhanVienYTe { get; set; }
 
         public int STT { get; set; }
 

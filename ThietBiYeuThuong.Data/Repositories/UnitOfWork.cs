@@ -23,6 +23,7 @@ namespace ThietBiYeuThuong.Data.Repositories
         IPhieuNhapRepository phieuNhapRepository { get; }
         IPhieuXuatRepository phieuXuatRepository { get; }
         ICTPhieuRepository cTPhieuRepository { get; }
+        INVYTRepository nVYTRepository { get; }
 
         Task<int> Complete();
     }
@@ -49,6 +50,7 @@ namespace ThietBiYeuThuong.Data.Repositories
             phieuNhapRepository = new PhieuNhapRepository(_context);
             phieuXuatRepository = new PhieuXuatRepository(_context);
             cTPhieuRepository = new CTPhieuRepository(_context);
+            nVYTRepository = new NVYTRepository(_context);
         }
 
         public IUserRepository userRepository { get; }
@@ -76,6 +78,8 @@ namespace ThietBiYeuThuong.Data.Repositories
 
         public IPhieuXuatRepository phieuXuatRepository { get; }
         public ICTPhieuRepository cTPhieuRepository { get; }
+
+        public INVYTRepository nVYTRepository { get; }
 
         public async Task<int> Complete()
         {

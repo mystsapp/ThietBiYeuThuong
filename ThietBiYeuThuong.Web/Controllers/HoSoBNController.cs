@@ -239,19 +239,9 @@ namespace ThietBiYeuThuong.Web.Controllers
                     temp += String.Format("- BenhNhanId thay đổi: {0}->{1}", t.BenhNhanId, HoSoBNVM.HoSoBN.BenhNhanId);
                 }
 
-                if (t.HoTenNVYTe != HoSoBNVM.HoSoBN.HoTenNVYTe)
+                if (t.MaNVYT != HoSoBNVM.HoSoBN.MaNVYT)
                 {
-                    temp += String.Format("- HoTenNVYTe thay đổi: {0}->{1}", t.HoTenNVYTe, HoSoBNVM.HoSoBN.HoTenNVYTe);
-                }
-
-                if (t.SDT_NVYT != HoSoBNVM.HoSoBN.SDT_NVYT)
-                {
-                    temp += String.Format("- SDT_NVYT thay đổi: {0}->{1}", t.SDT_NVYT, HoSoBNVM.HoSoBN.SDT_NVYT);
-                }
-
-                if (t.DonVi != HoSoBNVM.HoSoBN.DonVi)
-                {
-                    temp += String.Format("- DonVi thay đổi: {0}->{1}", t.DonVi, HoSoBNVM.HoSoBN.DonVi);
+                    temp += String.Format("- MaNVYT thay đổi: {0}->{1}", t.MaNVYT, HoSoBNVM.HoSoBN.MaNVYT);
                 }
 
                 #endregion log file

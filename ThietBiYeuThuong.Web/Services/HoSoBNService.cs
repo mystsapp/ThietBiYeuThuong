@@ -102,16 +102,14 @@ namespace ThietBiYeuThuong.Web.Services
 
             var list = new List<HoSoBNDto>();
             //var hoSoBNs = new List<HoSoBN>();
-            var hoSoBNs = await _unitOfWork.hoSoBNRepository.GetAllIncludeOneAsync(x => x.BenhNhan);
+            var hoSoBNs = await _unitOfWork.hoSoBNRepository.GetAllIncludeAsync(x => x.BenhNhan, y => y.NhanVienYTe);
 
             // search for sgtcode in kvctptC
             if (!string.IsNullOrEmpty(searchString))
             {
                 hoSoBNs = await hoSoBNs.Where(x => x.SoPhieu.ToLower().Contains(searchString.Trim().ToLower()) ||
                                        (!string.IsNullOrEmpty(x.BenhNhan.HoTenBN) && x.BenhNhan.HoTenBN.ToLower().Contains(searchString.ToLower())) ||
-                                       (!string.IsNullOrEmpty(x.HoTenNVYTe) && x.HoTenNVYTe.ToLower().Contains(searchString.ToLower())) ||
-                                       (!string.IsNullOrEmpty(x.SDT_NVYT) && x.SDT_NVYT.ToLower().Contains(searchString.ToLower())) ||
-                                       (!string.IsNullOrEmpty(x.DonVi) && x.DonVi.ToLower().Contains(searchString.ToLower()))).ToListAsync();
+                                       (!string.IsNullOrEmpty(x.NhanVienYTe.HoTenNVYTe) && x.NhanVienYTe.HoTenNVYTe.ToLower().Contains(searchString.ToLower()))).ToListAsync();
             }
             else
             {
@@ -128,15 +126,13 @@ namespace ThietBiYeuThuong.Web.Services
                 var hoSoBNDto = new HoSoBNDto();
 
                 hoSoBNDto.SoPhieu = item.SoPhieu;
-                hoSoBNDto.DonVi = item.DonVi;
-                hoSoBNDto.HoTenNVYTe = item.HoTenNVYTe;
                 hoSoBNDto.NgayLap = item.NgayLap;
                 hoSoBNDto.NgaySua = item.NgaySua;
                 hoSoBNDto.NguoiSua = item.NguoiSua;
                 hoSoBNDto.NVTruc = item.NVTruc;
-                hoSoBNDto.SDT_NVYT = item.SDT_NVYT;
                 hoSoBNDto.STT = item.STT;
                 hoSoBNDto.TenBN = item.BenhNhan.HoTenBN;
+                hoSoBNDto.NVTruc = item.NhanVienYTe.HoTenNVYTe;
 
                 list.Add(hoSoBNDto);
             }

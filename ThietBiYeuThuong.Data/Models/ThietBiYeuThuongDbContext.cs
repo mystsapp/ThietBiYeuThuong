@@ -27,6 +27,7 @@ namespace ThietBiYeuThuong.Data.Models
         public DbSet<PhieuNhap> PhieuNhaps { get; set; }
         public DbSet<PhieuXuat> PhieuXuats { get; set; }
         public DbSet<CTPhieu> CTPhieus { get; set; }
+        public DbSet<NhanVienYTe> NhanVienYTes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

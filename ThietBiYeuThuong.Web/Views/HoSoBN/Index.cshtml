@@ -77,9 +77,7 @@
                             <th>#</th>
                             <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().SoPhieu)</th>
                             <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().TenBN)</th>
-                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().HoTenNVYTe)</th>
-                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().SDT_NVYT)</th>
-                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().DonVi)</th>
+                            <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().NVYT)</th>
                             <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().STT)</th>
                             <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().NVTruc)</th>
                             <th>@Html.DisplayNameFor(m => m.HoSoBNDtos.FirstOrDefault().NgayLap)</th>
@@ -113,9 +111,7 @@
 
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SoPhieu)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.TenBN)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.HoTenNVYTe)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.SDT_NVYT)</td>
-                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.DonVi)</td>
+                                    <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.NVYT)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.STT)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.DisplayFor(m => item.NVTruc)</td>
                                     <td class="tdVal" data-id="@item.SoPhieu" data-loaiphieu="@item.LoaiPhieu">@Html.Raw(item.NgayLap.Value)</td>
