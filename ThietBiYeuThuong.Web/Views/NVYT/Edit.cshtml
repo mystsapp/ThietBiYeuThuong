@@ -1,11 +1,11 @@
-﻿@model BenhNhanViewModel
+﻿@model NVYTViewModel
 
 @using Microsoft.AspNetCore.Http
 @using ThietBiYeuThuong.Data.Utilities
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Sửa Loại";
+    ViewData["Title"] = "Sửa NV Y Tế";
     var user = HttpContextAccessor.HttpContext.Session.GetSingle<ThietBiYeuThuong.Data.Models.User>("loginUser");
 
 }
@@ -15,13 +15,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Sửa loại</h1>
+                <h1>Sửa NV Y Tế</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách loại</a></li>
-                    <li class="breadcrumb-item active">Sửa loại</li>
+                    <li class="breadcrumb-item active">Sửa NV Y Tế</li>
                 </ol>
             </div>
         </div>
@@ -34,7 +34,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-file text-info"></i> Sửa loại</h3>
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Sửa NV Y Tế</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -47,63 +47,34 @@
         </div>
         <div class="card-body p-0">
 
-            <form method="post" autocomplete="off" id="frmPhieuNXEdit">
+            <form method="post" autocomplete="off" id="frmNhanVienYTeEdit">
                 <div class="pr-4 pl-4 text-sm">
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <input asp-for="BenhNhan.MaBN" type="hidden" />
-                    <input asp-for="BenhNhan.NguoiTao" type="hidden" />
-                    <input asp-for="BenhNhan.NgayTao" type="hidden" />
-                    <input asp-for="BenhNhan.LogFile" type="hidden" />
+                    <input asp-for="NhanVienYTe.MaNVYT" type="hidden" />
+                    <input asp-for="NhanVienYTe.NguoiTao" type="hidden" />
+                    <input asp-for="NhanVienYTe.NgayTao" type="hidden" />
+                    <input asp-for="NhanVienYTe.LogFile" type="hidden" />
 
                     <div class="form-group row">
 
-                        <div class="col-md-3">
-                            <label asp-for="BenhNhan.HoTenTN" class="control-label"></label>
-                            <input asp-for="BenhNhan.HoTenTN" class="form-control form-control-sm" id="txtHoTenTN" />
-                            <span asp-validation-for="BenhNhan.HoTenTN" class="text-danger"></span>
+                        <div class="col-md-4">
+                            <label asp-for="NhanVienYTe.HoTenNVYTe" class="control-label"></label>
+                            <input asp-for="NhanVienYTe.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
+                            <span asp-validation-for="NhanVienYTe.HoTenNVYTe" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-3">
-                            <label asp-for="BenhNhan.SDT_TN" class="control-label "></label>
-                            <input asp-for="BenhNhan.SDT_TN" class="form-control form-control-sm" id="txtSDT_TN" />
-                            <span asp-validation-for="BenhNhan.SDT_TN" class="text-danger"></span>
+                        <div class="col-md-4">
+                            <label asp-for="NhanVienYTe.SDT_NVYT" class="control-label "></label>
+                            <input asp-for="NhanVienYTe.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
+                            <span asp-validation-for="NhanVienYTe.SDT_NVYT" class="text-danger"></span>
                         </div>
 
-                        <div class="col-md-3">
-                            <label asp-for="BenhNhan.GT_TN" class="control-label"></label>
-                            <select asp-for="BenhNhan.GT_TN" class="form-control form-control-sm "
-                                    asp-items="@(new SelectList(Model.ListGT, "Name", "Name"))" id="ddlGT_TN">
-                            </select>
-                            <span asp-validation-for="BenhNhan.GT_TN" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label asp-for="BenhNhan.HoTenBN" class="control-label "></label>
-                            <input asp-for="BenhNhan.HoTenBN" class="form-control form-control-sm" id="txtHoTenBN" />
-                            <span asp-validation-for="BenhNhan.HoTenBN" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-
-                        <div class="col-md-1">
-                            <label asp-for="BenhNhan.NamSinh" class="control-label"></label>
-                            <input asp-for="BenhNhan.NamSinh" class="form-control form-control-sm" id="txtNamSinh" />
-                            <span asp-validation-for="BenhNhan.NamSinh" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-md-2">
-                            <label asp-for="BenhNhan.CMND_CCCD_BN" class="control-label "></label>
-                            <input asp-for="BenhNhan.CMND_CCCD_BN" class="form-control form-control-sm" id="txtCMND_CCCD_BN" />
-                            <span asp-validation-for="BenhNhan.CMND_CCCD_BN" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-md-9">
-                            <label asp-for="BenhNhan.DiaChi" class="control-label"></label>
-                            <input asp-for="BenhNhan.DiaChi" class="form-control form-control-sm " id="txtDiaChi" />
-                            <span asp-validation-for="BenhNhan.GT_TN" class="text-danger"></span>
+                        <div class="col-md-4">
+                            <label asp-for="NhanVienYTe.DonVi" class="control-label "></label>
+                            <input asp-for="NhanVienYTe.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                            <span asp-validation-for="NhanVienYTe.DonVi" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -149,7 +120,7 @@
     <!-- Validation -->
     <script>
 
-        $('#frmPhieuNXCreate').validate({
+        $('#frmNhanVienYTeEdit').validate({
             //rules: {
             //    email: {
             //        required: true,
@@ -187,20 +158,20 @@
             }
         });
 
-                            //$('#txtChuDeTour').rules('add', {
-                            //    required: true,
-                            //    messages: {
-                            //        //required: "Chủ đề không được để trống"
-                            //    }
-                            //});
+                                    //$('#txtChuDeTour').rules('add', {
+                                    //    required: true,
+                                    //    messages: {
+                                    //        //required: "Chủ đề không được để trống"
+                                    //    }
+                                    //});
 
-                            //$('#txtNgayCT').rules('add', {
-                            //    required: true,
-                            //    dateFormat: true,
-                            //    messages: {
-                            //        // required: "Ngày đến không được để trống"
-                            //    }
-                            //});
+                                    //$('#txtNgayCT').rules('add', {
+                                    //    required: true,
+                                    //    dateFormat: true,
+                                    //    messages: {
+                                    //        // required: "Ngày đến không được để trống"
+                                    //    }
+                                    //});
     </script>
 
 }

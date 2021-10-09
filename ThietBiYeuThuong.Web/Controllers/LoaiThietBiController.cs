@@ -140,7 +140,7 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             if (id != LoaiVM.LoaiThietBi.Id)
             {
-                ViewBag.ErrorMessage = "Phiếu này không tồn tại.";
+                ViewBag.ErrorMessage = "Loại này không tồn tại.";
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 

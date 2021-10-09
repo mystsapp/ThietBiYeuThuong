@@ -1,11 +1,11 @@
-﻿@model LoaiThietBiViewModel
+﻿@model NVYTViewModel
 
 @using Microsoft.AspNetCore.Http
 @using ThietBiYeuThuong.Data.Utilities
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Sửa Loại";
+    ViewData["Title"] = "Create";
     var user = HttpContextAccessor.HttpContext.Session.GetSingle<ThietBiYeuThuong.Data.Models.User>("loginUser");
 
 }
@@ -15,13 +15,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Sửa loại</h1>
+                <h1>Thêm NV Y Tế</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách loại</a></li>
-                    <li class="breadcrumb-item active">Sửa loại</li>
+                    <li class="breadcrumb-item"><a asp-controller="HoSoBN" asp-route-strUrl="@Model.StrUrl" asp-action="DetailsRedirect">Danh sách NV Y Tế</a></li>
+                    <li class="breadcrumb-item active">Thêm NV Y Tế</li>
                 </ol>
             </div>
         </div>
@@ -34,7 +34,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-file text-info"></i> Sửa loại</h3>
+            <h3 class="card-title"><i class="fas fa-file text-info"></i> Thêm NV Y Tế</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -47,28 +47,29 @@
         </div>
         <div class="card-body p-0">
 
-            <form method="post" autocomplete="off" id="frmLoaiThietBiEdit">
+            <form method="post" autocomplete="off" id="frmNhanVienYTeCreate">
                 <div class="pr-4 pl-4 text-sm">
 
                     <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <input asp-for="LoaiThietBi.Id" type="hidden" />
-                    <input asp-for="LoaiThietBi.NguoiTao" type="hidden" />
-                    <input asp-for="LoaiThietBi.NgayTao" type="hidden" />
-                    <input asp-for="LoaiThietBi.LogFile" type="hidden" />
-
                     <div class="form-group row">
 
                         <div class="col-md-4">
-                            <label asp-for="LoaiThietBi.Name" class="control-label"></label>
-                            <input asp-for="LoaiThietBi.Name" class="form-control form-control-sm" id="txtName" />
-                            <span asp-validation-for="LoaiThietBi.Name" class="text-danger"></span>
+                            <label asp-for="NhanVienYTe.HoTenNVYTe" class="control-label"></label>
+                            <input asp-for="NhanVienYTe.HoTenNVYTe" class="form-control form-control-sm" id="txtHoTenNVYTe" />
+                            <span asp-validation-for="NhanVienYTe.HoTenNVYTe" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-4">
-                            <label asp-for="LoaiThietBi.Descripttion" class="control-label "></label>
-                            <input asp-for="LoaiThietBi.Descripttion" class="form-control form-control-sm" id="txtDescripttion" />
-                            <span asp-validation-for="LoaiThietBi.Descripttion" class="text-danger"></span>
+                            <label asp-for="NhanVienYTe.SDT_NVYT" class="control-label "></label>
+                            <input asp-for="NhanVienYTe.SDT_NVYT" class="form-control form-control-sm" id="txtSDT_NVYT" />
+                            <span asp-validation-for="NhanVienYTe.SDT_NVYT" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="NhanVienYTe.DonVi" class="control-label "></label>
+                            <input asp-for="NhanVienYTe.DonVi" class="form-control form-control-sm" id="txtDonVi" />
+                            <span asp-validation-for="NhanVienYTe.DonVi" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -114,7 +115,7 @@
     <!-- Validation -->
     <script>
 
-        $('#frmLoaiThietBiEdit').validate({
+        $('#frmNhanVienYTeCreate').validate({
             //rules: {
             //    email: {
             //        required: true,
@@ -152,20 +153,20 @@
             }
         });
 
-                                //$('#txtChuDeTour').rules('add', {
-                                //    required: true,
-                                //    messages: {
-                                //        //required: "Chủ đề không được để trống"
-                                //    }
-                                //});
+                                    //$('#txtChuDeTour').rules('add', {
+                                    //    required: true,
+                                    //    messages: {
+                                    //        //required: "Chủ đề không được để trống"
+                                    //    }
+                                    //});
 
-                                //$('#txtNgayCT').rules('add', {
-                                //    required: true,
-                                //    dateFormat: true,
-                                //    messages: {
-                                //        // required: "Ngày đến không được để trống"
-                                //    }
-                                //});
+                                    //$('#txtNgayCT').rules('add', {
+                                    //    required: true,
+                                    //    dateFormat: true,
+                                    //    messages: {
+                                    //        // required: "Ngày đến không được để trống"
+                                    //    }
+                                    //});
     </script>
 
 }
