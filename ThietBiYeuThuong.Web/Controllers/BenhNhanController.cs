@@ -245,6 +245,18 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View(BenhNhanVM);
         }
 
+        public IActionResult SearchBenhNhans_Code_Edit(string code)
+        {
+            // from login session
+            var user = HttpContext.Session.GetSingle<User>("loginUser");
+
+            code ??= "";
+            //TT621VM.KhachHangs_HDVATOB = _kVCTPTCService.GetAll_KhachHangs_HDVATOB().Where(x => x.Code.ToLower().Contains(code.ToLower()));
+            BenhNhanVM.IEnumBenhNhan = _benhNhanService.SearchBenhNhans_Code(code);
+            BenhNhanVM.MaBNText = code;
+            return PartialView(BenhNhanVM);
+        }
+
         public IActionResult SearchBenhNhans_Code(string code)
         {
             // from login session

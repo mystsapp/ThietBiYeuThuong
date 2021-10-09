@@ -222,7 +222,7 @@ namespace ThietBiYeuThuong.Web.Controllers
 
             PhieuNhapVM.PhieuNhap.NgayNhap = DateTime.Now;
             PhieuNhapVM.PhieuNhap.NguoiNhap = user.Username;
-            PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PN");
+            PhieuNhapVM.PhieuNhap.SoPhieu = _phieuNhapService.GetSoPhieu("PX"); // xuất gởi bơm
             PhieuNhapVM.PhieuNhap.TrangThaiId = 4; // Gởi bơm
 
             // capnhat thietbi trangthai Vừa bơm về

@@ -129,6 +129,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                     // update thietbi -> tinhtrang == false
                     ThietBi thietBi = await _thietBiService.GetById(HoSoBNVM.CTHoSoBN.ThietBiId);
                     thietBi.TinhTrang = false;
+                    thietBi.LogFile += "-User xuất: " + user.Username + " vào lúc: " + System.DateTime.Now.ToString() + ", xuất cho BN: " + HoSoBNVM.HoSoBN.BenhNhanId; // user.Username
                     await _thietBiService.UpdateAsync(thietBi);
 
                     // save BenhNhanThietBi
@@ -140,7 +141,7 @@ namespace ThietBiYeuThuong.Web.Controllers
                         NguoiTao = user.Username,
                         CTHoSoBNId = HoSoBNVM.CTHoSoBN.SoPhieuCT
                     };
-                    await _benhNhanThietBiService.DeleteAsync(benhNhanThietBi);
+                    await _benhNhanThietBiService.CreateAsync(benhNhanThietBi);
                 }
                 //else
                 //{

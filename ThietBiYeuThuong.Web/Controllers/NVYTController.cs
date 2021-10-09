@@ -31,6 +31,14 @@ namespace ThietBiYeuThuong.Web.Controllers
             return View();
         }
 
+        public IActionResult SearchNVYTs_Code_Edit(string code)
+        {
+            code ??= "";
+            NVYT_VM.IEnumNVYT = _nVYTService.SearchNVYTs_Code(code);
+            NVYT_VM.MaNVYTText = code;
+            return PartialView(NVYT_VM);
+        }
+
         public IActionResult SearchNVYTs_Code(string code)
         {
             code ??= "";

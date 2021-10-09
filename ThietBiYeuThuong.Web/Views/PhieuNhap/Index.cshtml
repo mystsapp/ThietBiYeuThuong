@@ -40,7 +40,7 @@
 
                     <div class="row rounded pl-2" style="padding-bottom:5px; background-color: aliceblue;" id="search">
 
-                        <div class="col-md-3 text-sm">
+                        <div class="col-md-2 text-sm">
                             <label>Nhập thông tin</label>
                             <input class="form-control form-control-sm" name="searchString" value="@ViewBag.searchString" id="testSearch" />
                         </div>
@@ -55,16 +55,16 @@
                             <input class="form-control form-control-sm maskInput" name="searchToDate" value="@ViewBag.searchToDate" />
                         </div>
 
-                        <div class="col-md-5 text-sm">
+                        <div class="col-md-6 text-sm">
                             <label>&nbsp;</label>
                             <div class=" btn-block ">
                                 <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit">
                                     <i class="fas fa-search"></i>
                                 </button>
-                                <a class="btn btn-outline-info btn-sm" asp-action="Create_Day" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm đầy"><i class="fas fa-plus"></i> Đầy</a>
-                                <a class="btn btn-outline-warning btn-sm" asp-action="Create_ThuHoi" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm thu hồi"><i class="fas fa-plus"></i> Thu hồi</a>
-                                <a class="btn btn-outline-success btn-sm" asp-action="Create_VuaBomVe" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm vừa bơm về"><i class="fas fa-plus"></i> Vừa bơm về</a>
-                                <a class="btn btn-outline-danger btn-sm" asp-action="Create_GoiBom" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Gởi bơm"><i class="fas fa-plus"></i> Gởi bơm</a>
+                                <a class="btn btn-outline-info btn-sm" asp-action="Create_Day" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm đầy"><i class="fas fa-plus"></i> Nhập đầy</a>
+                                <a class="btn btn-outline-warning btn-sm" asp-action="Create_ThuHoi" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm thu hồi"><i class="fas fa-plus"></i> Nhập thu hồi</a>
+                                <a class="btn btn-outline-success btn-sm" asp-action="Create_VuaBomVe" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Thêm vừa bơm về"><i class="fas fa-plus"></i> Nhập vừa bơm về</a>
+                                <a class="btn btn-outline-danger btn-sm" asp-action="Create_GoiBom" asp-route-strUrl="@Model.StrUrl" asp-route-page="@Model.Page" title="Gởi bơm"><i class="fas fa-plus"></i> Xuất gởi bơm</a>
                             </div>
                         </div>
                     </div>

@@ -56,81 +56,65 @@
                     <input asp-for="HoSoBN.LapPhieu" type="hidden" />
                     <input asp-for="HoSoBN.NgayLap" type="hidden" />
                     <input asp-for="HoSoBN.LogFile" type="hidden" />
-                    @*<div class="form-group row">
+                    <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="0" />
 
-                            <div class="col-md-2">
-                                <label asp-for="HoSoBN.LoaiPhieu" class="control-label"></label>
-                                <input asp-for="HoSoBN.LoaiPhieu" class="form-control form-control-sm " readonly />
-                                <span asp-validation-for="HoSoBN.LoaiPhieu" class="text-danger"></span>
-                            </div>
-                        </div>*@
+                    <div class="form-group row">
 
-                    <div id="txtXuat">
-
-                        <div class="form-group row">
-
-                            <div class="col-md-2">
-                                <label asp-for="HoSoBN.MaNVYT" class="control-label "></label>
-                                <div class="input-group">
-                                    <input asp-for="HoSoBN.MaNVYT" class="form-control form-control-sm text-uppercase" id="txtNVYT_Create">
-                                    <span class="input-group-btn">
-                                        <a href="javascript:;" class="btn btn-default btn-sm" id="btnNVYTSearch_Create" data-nvytid="NVYTId" title="Tìm thông tin bệnh nhân"><i class="fa fa-search"></i></a>
-                                    </span>
-                                </div>
-                                <span asp-validation-for="HoSoBN.MaNVYT" class="text-danger"></span>
+                        <div class="col-md-2">
+                            <label asp-for="HoSoBN.BenhNhanId" class="control-label "></label>
+                            <div class="input-group">
+                                <input asp-for="HoSoBN.BenhNhanId" class="form-control form-control-sm text-uppercase" id="txtBenhNhanId_Edit">
+                                <span class="input-group-btn">
+                                    <a href="javascript:;" class="btn btn-default btn-sm" id="btnBenhNhanSearch_Edit" data-benhnhanid="BenhNhanId" title="Tìm thông tin bệnh nhân"><i class="fa fa-search"></i></a>
+                                </span>
                             </div>
-
-                            <div class="col-md-4">
-                                <label class="control-label ">Họ tên NV Y Tế</label>
-                                <input type="text" class="form-control form-control-sm" id="txtHoTenNVYT" readonly />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="control-label ">SĐT</label>
-                                <input type="text" class="form-control form-control-sm" id="txtSĐT" readonly />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="control-label ">Đơn vị</label>
-                                <input type="text" class="form-control form-control-sm" id="txtDonVi" readonly />
-                            </div>
+                            <span asp-validation-for="HoSoBN.BenhNhanId" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group row">
-
-                            <div class="col-md-6">
-                                <label asp-for="HoSoBN.STT" class="control-label "></label>
-                                <input asp-for="HoSoBN.STT" class="form-control form-control-sm" id="txtSTT" />
-                                <span asp-validation-for="HoSoBN.STT" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label asp-for="HoSoBN.NVTruc" class="control-label "></label>
-                                <input asp-for="HoSoBN.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
-                                <span asp-validation-for="HoSoBN.NVTruc" class="text-danger"></span>
-                            </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Họ tên.BN</label>
+                            <input type="text" class="form-control form-control-sm" id="txtHoTenBN_Edit" readonly />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Họ tên.TN</label>
+                            <input type="text" class="form-control form-control-sm" id="txtHoTenTN_Edit" readonly />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label ">Năm sinh</label>
+                            <input type="text" class="form-control form-control-sm" id="txtNamSinh_Edit" readonly />
                         </div>
                     </div>
 
-                    <div id="txtNhap">
-                        <input type="hidden" asp-for="CTHoSoBN.HoSoBNId" value="0" />
-                        <div class="form-group row">
+                    <div class="form-group row">
 
-                            <div class="col-md-2">
-                                <label asp-for="CTHoSoBN.ThietBiId" class="control-label"></label>@*(<strong class="text-red">*</strong>)*@ <!--@*asp-format="{0:dd/MM/yyyy}"*@-->
-                                <input asp-for="CTHoSoBN.ThietBiId" class="form-control form-control-sm" id="txtThietBi" />
-                                <span asp-validation-for="CTHoSoBN.ThietBiId" class="text-danger"></span>
+                        <div class="col-md-2">
+                            <label asp-for="HoSoBN.MaNVYT" class="control-label "></label>
+                            <div class="input-group">
+                                <input asp-for="HoSoBN.MaNVYT" class="form-control form-control-sm text-uppercase" id="txtNVYT_Edit">
+                                <span class="input-group-btn">
+                                    <a href="javascript:;" class="btn btn-default btn-sm" id="btnNVYTSearch_Edit" data-nvytid="NVYTId" title="Tìm thông tin bệnh nhân"><i class="fa fa-search"></i></a>
+                                </span>
                             </div>
+                            <span asp-validation-for="HoSoBN.MaNVYT" class="text-danger"></span>
+                        </div>
 
-                            <div class="col-md-2">
-                                <label asp-for="CTHoSoBN.SoLuong" class="control-label"></label>
-                                <input asp-for="CTHoSoBN.SoLuong" class="form-control form-control-sm" id="txtSoLuong" readonly />
-                                <span asp-validation-for="CTHoSoBN.SoLuong" class="text-danger"></span>
-                            </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Họ tên NV Y Tế</label>
+                            <input type="text" class="form-control form-control-sm" id="txtHoTenNVYT_Edit" readonly />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">SĐT</label>
+                            <input type="text" class="form-control form-control-sm" id="txtSĐT_Edit" readonly />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label ">Đơn vị</label>
+                            <input type="text" class="form-control form-control-sm" id="txtDonVi_Edit" readonly />
+                        </div>
 
-                            <div class="col-md-8">
-                                <label asp-for="CTHoSoBN.GhiChu" class="control-label"></label>
-                                <input asp-for="CTHoSoBN.GhiChu" class="form-control form-control-sm " id="txtGhiChu" />
-                                <span asp-validation-for="CTHoSoBN.GhiChu" class="text-danger"></span>
-                            </div>
+                        <div class="col-md-3">
+                            <label asp-for="HoSoBN.NVTruc" class="control-label "></label>
+                            <input asp-for="HoSoBN.NVTruc" class="form-control form-control-sm" id="txtNVTruc" />
+                            <span asp-validation-for="HoSoBN.NVTruc" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -146,6 +130,9 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
+
+<partial name="~/Views/Shared/_BenhNhanPartial_Edit.cshtml" />
+<partial name="~/Views/Shared/_NVYTPartial_Edit.cshtml" />
 
 @section Scripts{
     @*<script>
@@ -176,7 +163,7 @@
     <!-- Validation -->
     <script>
 
-        $('#frmHoSoBNCreate').validate({
+        $('#frmHoSoBNEdit').validate({
             //rules: {
             //    email: {
             //        required: true,
@@ -239,6 +226,69 @@
                 $('#txtNhap').hide(500);
                 $('#txtXuat').show(500);
             }*@
+
+        // btnNVYTSearch_Edit
+        $('#btnNVYTSearch_Edit').click(function () {
+
+            var maNVYTtext = $('#txtNVYT_Edit').val();
+
+            NVYTSearch_Edit(maNVYTtext);
+        })
+
+        // btnBenhNhanSearch_Edit
+        $('#btnBenhNhanSearch_Edit').click(function () {
+
+            var maBNtext = $('#txtBenhNhanId_Edit').val();
+
+            BenhNhanSearch_Edit(maBNtext);
+        })
+
+        $('#txtBenhNhanId_Edit').blur(function () {
+
+            maKhtext = $(this).val();
+            BenhNhan_By_Code(maKhtext);
+        })
+
+        function BenhNhan_By_Code(code) {
+
+            $.ajax({
+                url: '/BanhNhan/GetBenhNhans_By_Code',
+                type: 'GET',
+                data: { code: code },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status) {
+                        var data = response.data;
+                        // console.log(data);
+
+                        $('#txtHoTenBN_Edit').val(data.taxsign);
+                        $('#txtHoTenTN_Edit').val(data.taxform);
+                        $('#txtNamSinh_Edit').val(data.taxcode);
+
+                    }
+
+                }
+            });
+
+        }
+
+        function BenhNhanSearch_Edit(code) {
+            $.get('/BenhNhan/SearchBenhNhans_Code_Edit', { code: code }, function (data) {
+
+                $('#benhNhanh_Modal_Edit').modal('show');
+                $('.benhNhan_Modal_Body_Edit').html(data);
+                $('#benhNhanh_Modal_Edit').draggable();
+            });
+        }
+
+        function NVYTSearch_Edit(code) {
+            $.get('/NVYT/SearchNVYTs_Code_Edit', { code: code }, function (data) {
+
+                $('#nVYTSearch_Modal_Edit').modal('show');
+                $('.nVYTSearch_Modal_Body_Edit').html(data);
+                $('#nVYTSearch_Modal_Edit').draggable();
+            });
+        }
     </script>
 
 }
